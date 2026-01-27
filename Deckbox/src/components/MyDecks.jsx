@@ -112,7 +112,8 @@ fetchDecks();
 
           // if the card has an image_uris field, use art_crop else use placeholder
 
-          const imageUrl = firstCard?.image_uris?.art_crop || 'placement_image_url_here';
+          const imageUrl = firstCard?.image_uris?.art_crop || firstCard?.card_faces?.[0]?.image_uris.art_crop || 'placement_image_url_here';
+          console.log(imageUrl)
           return (
           <Link to={`/deck/${deck._id}`} key={deck._id} style={{ textDecoration: 'none', color: 'inherit' }}>
           <div key={deck._id} className="deck-card" style=
