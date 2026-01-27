@@ -1,0 +1,103 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.box{
+  transform-style:preserve-3d;
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.side{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+.longside{
+  position: absolute;
+  width: 50px;
+  height: 100px;
+}
+.zside{
+  position: absolute;
+  width:100px;
+  height: 50px;
+}
+.front.side{
+  background: hsl(175deg,100%,70%);
+  transform: translateZ(25px);
+}
+.back.side{
+  background: hsl(195deg,100%,70%);
+  transform: translateZ(-25px);
+}
+.left.longside{
+  background: hsl(105deg,100%,70%);
+  transform: translateX(-25px) rotateY(-90deg);
+}
+.right.longside{
+  background: hsl(195deg,100%,30%);
+  transform: translateX(75px) rotateY(90deg);
+}
+.top.zside{
+  background: hsl(15deg,100%,30%);
+
+  transform: translateY(-25px) rotateX(90deg);
+}
+.bottom.zside{
+  background: hsl(225deg,100%,30%);
+
+  transform: translateY(75px) rotateX(-90deg);
+  box-shadow: 15px 15px 5px  hsl(105deg,100%,70%);
+}
+
+@keyframes rotate-box{
+  0% {transform: rotateX(45deg) rotateY(45deg);}
+  25% {transform: rotateX(-45deg) rotateY(45deg);}
+  50% {transform: rotateX(-45deg) rotateY(-45deg);}
+  75% {transform: rotateX(45deg) rotateY(-45deg);}
+  100% {transform: rotateX(45deg) rotateY(45deg);}
+}
+
+.container{
+  animation: rotate-box 20s infinite linear;
+} */

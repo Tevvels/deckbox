@@ -1,0 +1,39 @@
+deckbox, 
+
+contains
+
+-decks / list
+-life counters
+-dice
+
+decks / decklist 
+
+be able to access cards values, 
+store card values in a object that allows specific amounts of cards. 
+allow extra amount for editing, choose how to display it. 
+
+life counter 
+ a counter that starts a specific time for up to 6 different players. 
+ will also track other values including 
+ - commander damage
+ - poison counters. 
+
+Dice.
+Random number generator for 7 different types ranges
+4 6 8 10 12 20 100
+
+allowed to add multiple dice to get a final number
+
+optional - make the plus/minus dice
+allow grouping to show specific dice values. 
+
+
+
+12/2/25
+
+things to focus on 
+- forgot my password button.
+- how to give more of a choice on art for the card. 
+- a system that tracks the mana being used in the deck.
+- a more robust display on the deck, cards within it and options to add/delete/change art.
+

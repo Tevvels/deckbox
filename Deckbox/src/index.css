@@ -1,0 +1,21 @@
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline-color: transparent;
+  overflow-x: hidden;
+  text-decoration: none;
+
+/* // Color Variables */
+--dark-bg-color : #13262F;
+--light-bg-color: #3e78b2;
+--primary-color: #004ba8;
+--text-color:#ccdbe1;
+}
+
+#root{
+  width: 100%;
+}
+
+

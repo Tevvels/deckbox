@@ -1,0 +1,38 @@
+.App{
+    height: 100%;
+    width: 100%;
+    display: grid;   
+    grid-template-areas: 
+    " a "
+    " b "
+    " c "
+    " d "
+    ;
+    color: var(--text-color);
+    background:(var(--light-bg-color));
+}
+.Hero{
+    height: 100vh;
+    width: 100%;
+    display:grid;
+    grid-area:b;
+    justify-content: center;
+    align-items: center;
+
+}
+.Navigation{
+    height:10vh;
+    width: 100%;
+    grid-area:a;
+}
+.Public{
+    height: 100vh;
+    width: 100%;   
+    background: var(--dark-bg-color);
+    grid-area:c;
+}
+.Footer{
+    grid-area:d;
+    width: 100%;   
+
+}
