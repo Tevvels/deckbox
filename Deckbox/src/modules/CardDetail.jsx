@@ -5,6 +5,15 @@ import React, { useEffect,useState } from 'react'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
+const getCardImage = (card, size = "small") =>{
+  if(card.image_uris) {
+    return card.image_uris[size];
+  }
+  if(card.card_faces && card.card_faces[0].image_uris){
+    return card.card_faces[0].image_uris[size];
+  }
+  return 'https://placeholod.co'
+}
 
 function CardDetail({card,onClose,onUpdateSuccess}) {
   const [AllPrints, setAllPrints] = useState([]);
@@ -21,7 +30,7 @@ function CardDetail({card,onClose,onUpdateSuccess}) {
         },
         body: JSON.stringify({
           scryfallId: currentImage.id,
-          image_uris: currentImage.image_uris,
+          image_uris: currentImage.image_uris || currentImage.card_faces[0].image_uris,
         }),
     })
     if(response.ok){
@@ -78,7 +87,7 @@ if(!card || !currentImage) return null;
           {AllPrints.length > 0 ? (AllPrints.map((print) => (
             <img 
               key={print.id} 
-              src={print.image_uris ? print.image_uris.small : ''} 
+              src={getCardImage(print, 'small')} 
               alt={print.name}  
               style={{border: print.id === currentImage.id ? '2px solid blue' : '1px solid gray', cursor: 'pointer', margin: '5px'}}
               onClick={() => setCurrentImage(print)}
