@@ -9,8 +9,6 @@ function Dashboard() {
   return (
   
   <>
-    <ul className='Navigation'>
-   </ul>
     <div className='Hero'>
       <div className='dashboardContainer'>
 

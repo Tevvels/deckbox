@@ -104,11 +104,11 @@ function App() {
   return (
     <div className={"App"}>
       <main>
-    <Navigation />
+    <Navigation onLogout={handleLogout}/>
     <Routes>
-      <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
+      <Route path="/" element={<Dashboard  />} />
       <Route path='/publicdecks' element={<PublicDeckDisplay/>}/>
-      <Route path="/dashboard" element={<Dashboard onLogout={handleLogout} />} />
+      <Route path="/dashboard" element={<Dashboard  />} />
       <Route path="/deck/" element={<MyDecks/>} />
       <Route path="/deck/new" element={<CreateNewDeck onAdd={addItem}/>} />
       <Route path="/players" element={<Players />} />
