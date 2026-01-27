@@ -87,22 +87,57 @@ const deckCountMap = useMemo(() => {
 // const cancelTokenSource = useParams();
 
 
-const fetchAutocompleteSuggestions = async(searchQuery)=>{
-    if(!searchQuery || searchQuery.length < 2) {
+// const fetchAutocompleteSuggestions = async(searchQuery)=>{
+//     if(!searchQuery || searchQuery.length < 2) {
+//         setSuggestions([]);
+//         return;
+//     }
+//     try{
+//         const response = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(searchQuery)}`)
+//         if(!response.ok){
+//             throw new Error(`Http error! status :${response.status}`)
+//         }
+//         const json = await response.json();
+//         setSuggestions(json.data || []);
+//     } catch(error) {
+//         console.error("Autocomplete fetch error:",error);
+//         setSuggestions([]);
+//     }
+// };
+
+const fetchAutocompleteSuggestions = async (searchQuery) => {
+    const isLongEnough = searchQuery && searchQuery.length > 1;
+    if(!isLongEnough) {
         setSuggestions([]);
         return;
     }
     try{
-        const response = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(searchQuery)}`)
+        // Build the search query with color identity constraint if filtering is enabled
+        const identityPart = (filterByIdentity && colorIdentity && colorIdentity.trim() !== "") ? ` id<=${colorIdentity}` : '';
+        const fullQuery = `${searchQuery}${identityPart}`;
+        
+        // Fetch matching cards from Scryfall
+        const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=prints&order=released&page=1`);
+        
         if(!response.ok){
-            throw new Error(`Http error! status :${response.status}`)
+            throw new Error(`Http error! status: ${response.status}`);
         }
+        
         const json = await response.json();
-        setSuggestions(json.data || []);
-    } catch(error) {
-        console.error("Autocomplete fetch error:",error);
-        setSuggestions([]);
+        
+        // Extract unique card names and limit to 15 suggestions
+        if(json.data && json.data.length > 0) {
+            const uniqueNames = Array.from(new Set(json.data.map(card => card.name))).slice(0, 15);
+            setSuggestions(uniqueNames);
+        } else {
+            setSuggestions([]);
+        }
+
     }
+        catch(error){
+        console.error("search error:",error);
+        setSuggestions([]);
+        }
 };
 
 const debouncedAutocompleteFetch = useDebounce(fetchAutocompleteSuggestions, 300);

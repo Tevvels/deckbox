@@ -2,6 +2,7 @@
 import React, { useEffect,useState } from 'react'
 // have it so when I click on the card it goes to this page with more details
 // import Card from '../data/Card.json'
+import "../styles/CardDetail.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -65,7 +66,7 @@ if(!card || !currentImage) return null;
   return (
 
       
-<div className="card-detail-modal">
+<div className="Card_Detail">
   <button onClick={handleUpdateArt}>Update Card Art</button>
 
       <div className="close-button" onClick={onClose}>X</div>
