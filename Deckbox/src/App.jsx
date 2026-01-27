@@ -9,12 +9,12 @@ import { Routes,Route } from 'react-router-dom'
 import MyDecks from './components/MyDecks'
 import CreateNewDeck from './components/CreateNewDeck'
 import Players from './components/Players'
-import Dice from './components/Dice'
 import SingleDeck from './components/SingleDeck'
 import Storage from './modules/Storage.jsx'
 import PublicDeckDisplay from './components/PublicDeckDisplay.jsx'
 import './styles/GridDisplay.css';
 import Footer from './modules/Footer.jsx';
+import Navigation from './modules/Navigation.jsx'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -104,10 +104,11 @@ function App() {
   return (
     <div className={"App"}>
       <main>
+    <Navigation onLogout={handleLogout}/>
     <Routes>
-      <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
+      <Route path="/" element={<Dashboard  />} />
       <Route path='/publicdecks' element={<PublicDeckDisplay/>}/>
-      <Route path="/dashboard" element={<Dashboard onLogout={handleLogout} />} />
+      <Route path="/dashboard" element={<Dashboard  />} />
       <Route path="/deck/" element={<MyDecks/>} />
       <Route path="/deck/new" element={<CreateNewDeck onAdd={addItem}/>} />
       <Route path="/players" element={<Players />} />

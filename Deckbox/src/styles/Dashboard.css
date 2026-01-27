@@ -5,14 +5,7 @@
     text-align: center;
 
 }
-.Navigation{
-    background-color: var(--dark-bg-color);
-    color: var(--text-color);
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
 
-}
 .Public{
     background: var(--dark-bg-color)
 }

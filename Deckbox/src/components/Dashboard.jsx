@@ -4,13 +4,11 @@ import PublicDeckDisplay from './PublicDeckDisplay'
 import '../styles/Dashboard.css';
 
 // Dashboard component
-function Dashboard({onLogout}) {
+function Dashboard() {
+  
   return (
+  
   <>
-    <ul className='Navigation'>
-      <Navigation />
-      <button onClick={()=>onLogout()}>Logout</button>
-   </ul>
     <div className='Hero'>
       <div className='dashboardContainer'>
 

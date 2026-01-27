@@ -1,9 +1,35 @@
-.CreateDeck{
+.Navigation{
+    background-color: var(--dark-bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-around;
+
+}
+.Navigation_Container{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    
+}
+.Navigation_Link{
+    text-decoration: none;
+    text-transform: uppercase;
+    color:var(--text-color);
+    border:1px solid black;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0  2.5px;
+}
+.Navigation_Link:hover{
+    color:var(--primary-color);
+    background-color: var(--dark-bg-color);
+}
+.Navigation_Link-Create{
     margin-left: auto;
     background: var(--primary-color);
     color: var(--text-color);
-    padding: 10px 15px;
-    border-radius: 5px;
     font-size: 1rem;
-    
+    overflow: hidden;
 }
