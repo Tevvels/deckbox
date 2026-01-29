@@ -1,5 +1,5 @@
 .Hero{
-    background-color: var(--light-bg-color);
+    background-color: var(--med-bg-color);
     color: var(--text-color);
     padding: 20px;
     text-align: center;

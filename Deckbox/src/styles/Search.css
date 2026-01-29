@@ -5,16 +5,25 @@
     border-radius: 10px 0 0 10px;
     color: var(--text-color);
     text-transform: uppercase;
+    margin-top:5px;
 
 }
 .SearchBarButton{
     padding: 10px 5px;
     text-transform: uppercase;
-    background: var(--med-bg-color);
+    background: var(--dark-bg-color);
     border: none;
     color: var(--text-color);
     border-radius: 0  10px 10px 0;
+    border-left: 1px solid var(--primary-color);
 }
-.SearchBar:focus-visible{
-    box-shadow: 0 0 10px white;
+.SearchBarButton:hover{
+    background:var(--dark-bg-color);
+    color: var(--text-color);
+    
+}
+.SearchBarButton:active{
+    background: var(--primary-color);
+    color: var(--text-color);
+    
 }
