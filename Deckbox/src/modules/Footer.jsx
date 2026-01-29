@@ -3,7 +3,11 @@ import '../styles/Footer.css';
 
 function Footer() {
   return (
-    <div className={`Footer`}>Footer</div>
+    <div className={`Footer`}>
+    <ul>
+      <span>made by Chris Watkins</span>
+    </ul>
+    </div>
   )
 }
 
