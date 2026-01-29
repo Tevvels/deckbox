@@ -1,0 +1,20 @@
+.SearchBar{
+    background:var(--dark-bg-color);
+    padding: 10px 5px;
+    border: none;
+    border-radius: 10px 0 0 10px;
+    color: var(--text-color);
+    text-transform: uppercase;
+
+}
+.SearchBarButton{
+    padding: 10px 5px;
+    text-transform: uppercase;
+    background: var(--med-bg-color);
+    border: none;
+    color: var(--text-color);
+    border-radius: 0  10px 10px 0;
+}
+.SearchBar:focus-visible{
+    box-shadow: 0 0 10px white;
+}
