@@ -65,26 +65,26 @@ fetchDecks();
 // Function to determine deck color style
   const getColorValue = (char) =>{
     const colorMap = {
-      'W': 'white',
-      'U': 'blue',
-      'B': 'black',
-      'R': 'red',
-      'G': 'green',
-      'C': 'colorless'
+      'W': '#fdf1a2',
+      'U': '#00a2e8',
+      'B': '#000000',
+      'R': '#e3312b',
+      'G': '#00a650',
+      'C': '#a9a9a9'
     };
-    return colorMap[char] || '#90adbb';
+    return colorMap[char] || '#a9a9a9';
   };
 
   const getDeckColorStyle = (colorIdentity) =>{
     if(!colorIdentity || colorIdentity.length === 0){
-      return  {backgroundColor: '#90adbb'};
+      return  {backgroundColor: '#a9a9a9'};
     }
     
     if(colorIdentity.length ===1){
       return {backgroundColor : getColorValue(colorIdentity[0])};
     }
     const gradientColors = colorIdentity.map(char => getColorValue(char)).join(', ');
-    return {background: `linear-gradient(45deg, ${gradientColors})`};
+    return {background: `linear-gradient(45deg, ${gradientColors})`, boxShadow: `0 0 15px ${gradientColors}`};
   };
 
   if (loading) {
@@ -98,10 +98,10 @@ fetchDecks();
 
 
  return (
-    <div className="my-decks-container">
-      <Link to="/deck/new"><button className="create-deck-button">+</button></Link>
+    <div className="My_Decks-Container">
+      <Link to="/deck/new"><button className="My_Decks-CreateNewButton">+</button></Link>
       <h2>My Decks</h2>
-      <div className="deck-list">
+      <div className="My_Decks-list">
         
         {decks.map((deck) => {
           // Get first card's image for deck art
@@ -113,19 +113,19 @@ fetchDecks();
           // if the card has an image_uris field, use art_crop else use placeholder
 
           const imageUrl = firstCard?.image_uris?.art_crop || firstCard?.card_faces?.[0]?.image_uris.art_crop || 'placement_image_url_here';
-          console.log(imageUrl)
           return (
           <Link to={`/deck/${deck._id}`} key={deck._id} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div key={deck._id} className="deck-card" style=
+          <div key={deck._id} className="My_Decks-information-block" style=
           {getDeckColorStyle(deck.color_identity)}>
-          <img className={`deckArt`} alt="deckArt" src={imageUrl}/>
-
+          <img className={`My_Decks-deckArt`} alt="deckArt" src={imageUrl}/>
+            <div className='My_Decks-information-sub-block'>
             <h3>{deck.name}</h3>
             <p>Format: {deck.format}</p>
             <p>Commander: {deck.commander || 'N/A'}</p>
             <p>Cards in Deck: {deck.cards.length}</p>
-            <div className="deck-card-buttons">
+            <div className="My_Decks-card-buttons">
               <button onClick={() => deleteDeck(deck._id)}>Delete Deck</button>
+            </div>
             </div>
           </div>
         </Link>

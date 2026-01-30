@@ -1,5 +1,6 @@
 import React, { useEffect, useState,useRef,useCallback, useMemo } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom';
+import "../styles/Search.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -246,6 +247,7 @@ if (error) return(<div>Error {error.message}</div>)
             )}
            <input 
             id={'cardSearch'}
+            className={`SearchBar`}
             type="text"
             value={cardQuery}
             onChange={handleInputChange}
@@ -254,7 +256,7 @@ if (error) return(<div>Error {error.message}</div>)
             aria-expanded={suggestions.length > 0 ? true: false}
             />
 
-            <button type='submit'>search</button>
+            <button className='SearchBarButton' type='submit'>search</button>
 
             {suggestions.length > 0 && (
                 <ul style={{ border: '1px solid #ccc', listStyle: 'none', padding: 0 }}>
@@ -329,13 +331,13 @@ if (error) return(<div>Error {error.message}</div>)
                 
                 {/* Detailed view indicator */}
                 <div style={{ marginBottom: '10px', padding: '5px', border: '1px solid #ddd' }}>
-                    {currentInDeckCount > 0 ? (
+                    {cameFromDeck ? (currentInDeckCount > 0 ? (
                         <span style={{ color: 'green', fontWeight: 'bold' }}>
                             ✓ You have {currentInDeckCount} copy{currentInDeckCount > 1 ? 'ies' : ''} in your deck.
                         </span>
                     ) : (
                         <span style={{ color: '#666' }}>This card is not yet in your deck.</span>
-                    )}
+                    )):""}
                 </div>
 
                     {deckId ? (
@@ -360,7 +362,7 @@ if (error) return(<div>Error {error.message}</div>)
                 )}
             </div>
         )}
-         {cameFromDeck ? (<Link to={`/deck/${deckId}`}> Back to Deck </Link>): (<Link to="/dashboard"> Back to My Decks </Link>)}
+         {cameFromDeck ? (<Link to={`/deck/${deckId}`}> Back to Deck </Link>): ""}
     </>
     );
 }

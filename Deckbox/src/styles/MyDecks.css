@@ -18,4 +18,18 @@
 }
 .My_Decks-list{
     display: flex;
+    justify-content: space-around;
+}
+.My_Decks-information-block{
+    height: 250px;
+    width: 400px;
+    display: flex;
+    border-radius: 10px;
+
+}
+.My_Decks-information-sub-block{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 25px rgba(0,0,0.15);
+
 }
