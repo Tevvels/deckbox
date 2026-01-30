@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CardDetail from '../modules/CardDetail';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
@@ -10,9 +10,28 @@ function SingleDeck({deck,setDeck}) {
     const [error, setError] = useState(null);
     const [isOwner,setIsOwner] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const navigate = useNavigate();
+  
+  
+    const deleteDeck = async (idtowait) => {
+        if(!window.confirm("are you sure you want to delete this deck?")) return;
+  const token = localStorage.getItem('userToken');
+  try {
+    await axios.delete(`${API_BASE}/cardStorage/${idtowait}`, {
+      headers: { 
+        Authorization: `Bearer ${token}`
+      }
+    });
+    navigate('/mydecks')
+  }
+  catch (err) {
+    console.error('Error deleting deck:', err);
+  }
+};
 
 
     useEffect(()=>{
+  
         const loadDeckData = async()=>{
             setIsLoading(true);
             setIsOwner(false);
@@ -171,7 +190,7 @@ if(!deck) return <p>Deck not found</p>
                            {isOwner &&(
                            <div>
 
-
+                                <button onClick={()=> deleteDeck(deck._id)}>delete deck</button>
                                <button onClick={() => handleDeleteClick(deckEntry.cardId._id)}>Remove Card</button>
                            </div> 
                            )}
@@ -186,7 +205,6 @@ if(!deck) return <p>Deck not found</p>
         )}  
             <Link to="/publicdecks">Back to Public Decks</Link>
           
-          {  console.log(isOwner)}
         {isOwner && <Link to="/mydecks"> Back to My Decks </Link>}
  
     </>
