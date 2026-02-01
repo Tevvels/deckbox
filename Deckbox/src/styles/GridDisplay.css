@@ -12,7 +12,7 @@
     background:(var(--light-bg-color));
 }
 .Hero{
-    height: 100vh;
+    height: 60vh;
     width: 100%;
     display:grid;
     grid-area:b;
