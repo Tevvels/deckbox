@@ -229,15 +229,16 @@ const handleAddClick = async() =>{
 
 const currentInDeckCount = selectedCard ? (deckCountMap[selectedCard.name] || 0) : 0;
 
-if (loading && !cardData) return(<div>it's loading</div>)
-if (error) return(<div>Error {error.message}</div>)
+if (loading && !cardData) return(<div className='loading'>it's loading</div>)
+if (error) return(<div className='loading_error'>Error {error.message}</div>)
 
     return (
-    <>
-        <form onSubmit={handleSubmit}>
+    <div className="search search_container">
+        <form className='forms search_form' onSubmit={handleSubmit}>
             {showCommanderFilter && (
-            <label>
+            <label className='labels search_label'>
                 <input 
+                    className='inputs search_input search_input-checkmark'
                     type="checkbox"
                     checked={filterByIdentity}  
                     onChange={(e)=> setFilterByIdentity(e.target.checked)}
@@ -246,8 +247,9 @@ if (error) return(<div>Error {error.message}</div>)
             </label>
             )}
            <input 
+
             id={'cardSearch'}
-            className={`SearchBar`}
+            className={`inputs search_input search_input-text`}
             type="text"
             value={cardQuery}
             onChange={handleInputChange}
@@ -256,12 +258,14 @@ if (error) return(<div>Error {error.message}</div>)
             aria-expanded={suggestions.length > 0 ? true: false}
             />
 
-            <button className='SearchBarButton' type='submit'>search</button>
+            <button className='buttons submit search_button ' type='submit'>search</button>
 
             {suggestions.length > 0 && (
-                <ul style={{ border: '1px solid #ccc', listStyle: 'none', padding: 0 }}>
+                <ul className='search_list ' style={{ border: '1px solid #ccc', listStyle: 'none', padding: 0 }}>
                     {suggestions.map((name)=>(
-                        <li key={name}
+                        <li
+                        className='search_listItem'
+                        key={name}
                         onClick={()=> handleSuggestionClick(name)}
                         onMouseEnter={(e)=> e.target.style.backgroundColor = '#f0f0f0'}
                         onMouseLeave={(e)=> e.target.style.backgroundColor = ''}
@@ -269,7 +273,7 @@ if (error) return(<div>Error {error.message}</div>)
                          >
                         {name}
                         {/* Indicator in suggestion list */}
-                        {deckCountMap[name] > 0 && <span style={{color: 'green', fontSize: '0.8em', marginLeft: '10px'}}>(In Deck: {deckCountMap[name]})</span>}
+                        {deckCountMap[name] > 0 && <span className='spans' style={{color: 'green', fontSize: '0.8em', marginLeft: '10px'}}>(In Deck: {deckCountMap[name]})</span>}
                     </li>
                     ))}
                 </ul>
@@ -277,19 +281,20 @@ if (error) return(<div>Error {error.message}</div>)
 
         </form>
     
-        {loading && <div>loading card data...</div>}
+        {loading && <div className='loading'>loading card data...</div>}
       
         {/* Artwork Navigation */}
-        {error && <div>Error: {error.message}</div>}
+        {error && <div className='loading_error'>Error: {error.message}</div>}
 
         {sameNameCard.length > 0 && (
-            <div>
-                <h3>Prints found:</h3>
-                <div style={{ display: 'flex', overflowX: 'auto', padding: '10px' }}>
+            <div className='search_container-sub'>
+                <h3 className='search_header '>Prints found:</h3>
+                <div className='search_container-sub search_container-card' style={{ display: 'flex', overflowX: 'auto', padding: '10px' }}>
                     {sameNameCard.map((card) => (
 
-                        <div key={card.id} style={{ position: 'relative', marginRight: '10px' }}>
+                        <div className='search_card' key={card.id} style={{ position: 'relative', marginRight: '10px' }}>
                             <img
+                                className='card search_card-img'
                                 src={card.image_uris ? card.image_uris.small : card.card_faces[0].image_uris.small} 
                                 alt={card.name}
                                 style={{
@@ -301,7 +306,7 @@ if (error) return(<div>Error {error.message}</div>)
                             />
                              {/* The Quantity Badge */}
                             {deckCountMap[card.name] > 0 && (
-                                <div style={{ 
+                                <div className='search_card-name' style={{ 
                                     position: 'absolute', 
                                     top: '5px', 
                                     right: '5px', 
@@ -326,44 +331,44 @@ if (error) return(<div>Error {error.message}</div>)
         )}
 
         {selectedCard && (
-            <div style={{marginTop: '20px'}}>
-                <h2>{selectedCard.name}</h2>
+            <div className='search_card card  search_card-selected' style={{marginTop: '20px'}}>
+                <h2 className='search_card-name search_card-selected-name'>{selectedCard.name}</h2>
                 
                 {/* Detailed view indicator */}
-                <div style={{ marginBottom: '10px', padding: '5px', border: '1px solid #ddd' }}>
+                <div className="search_card-selected-indeck" style={{ marginBottom: '10px', padding: '5px', border: '1px solid #ddd' }}>
                     {cameFromDeck ? (currentInDeckCount > 0 ? (
-                        <span style={{ color: 'green', fontWeight: 'bold' }}>
+                        <span className='spans ' style={{ color: 'green', fontWeight: 'bold' }}>
                             ✓ You have {currentInDeckCount} copy{currentInDeckCount > 1 ? 'ies' : ''} in your deck.
                         </span>
                     ) : (
-                        <span style={{ color: '#666' }}>This card is not yet in your deck.</span>
+                        <span className='spans ' style={{ color: '#666' }}>This card is not yet in your deck.</span>
                     )):""}
                 </div>
 
                     {deckId ? (
-                <button disabled={!deckId} onClick={handleAddClick}>
+                <button className='buttons search_card-selected-button' disabled={!deckId} onClick={handleAddClick}>
                     Add {selectedCard.name} to Deck
                 </button>
                     ):(
-                        <p>generals</p>
+                        <p className='search_public'>generals</p>
                     )}
                 {selectedCard.card_faces ? (
                     selectedCard.card_faces.map((face, index) => (
                         <div key={index}>
-                            <img src={face.image_uris.large} alt={face.name} style={{ maxWidth: '300px', marginTop: '10px' }} /> 
-                            <p>{face.oracle_text}</p>
+                            <img className="card search_card-img" src={face.image_uris.large} alt={face.name} style={{ maxWidth: '300px', marginTop: '10px' }} /> 
+                            <p className='search_card-oracle'>{face.oracle_text}</p>
                         </div>
                     ))
                 ) : (
                     <div>
-                        <img src={selectedCard.image_uris.large} alt={selectedCard.name} style={{ maxWidth: '300px', marginTop: '10px' }} />     
-                        <p>{selectedCard.oracle_text}</p>
+                        <img className="card search_card-img" src={selectedCard.image_uris.large} alt={selectedCard.name} style={{ maxWidth: '300px', marginTop: '10px' }} />     
+                        <p className='search_card-oracle'>{selectedCard.oracle_text}</p>
                     </div>
                 )}
             </div>
         )}
-         {cameFromDeck ? (<Link to={`/deck/${deckId}`}> Back to Deck </Link>): ""}
-    </>
+         {cameFromDeck ? (<Link className='links search_link' to={`/deck/${deckId}`}> Back to Deck </Link>): ""}
+    </div>
     );
 }
 

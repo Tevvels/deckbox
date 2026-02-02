@@ -29,11 +29,12 @@ function Players() {
     const players = createPlayers(playerCount, gametype.value);
 
   return (
-    <div>
+    <div className='player player_container'>
       <Dice />
       <Dropdown options={gameTypes} onSelect={(option) => setGametype(option)} />
-        <label>number of players
+        <label className='player_label'>number of players
           <input
+            className='inputs player_input'
             type={'number'} 
             value={playerCount} 
             onChange={handleInputChange} 
@@ -43,14 +44,14 @@ function Players() {
 
         </label>
 
-    <ul>
+    <ul className='player_list'>
       {players.map((player) => (
-        <li key={player.id}>
+        <li className='player_listItem' key={player.id}>
           <PlayerComponent player={player} />
         </li>
       ))}
     </ul>
-    <Link to ="/dashboard"> Back to Dashboard </Link>
+    <Link className='links player_link' to ="/dashboard"> Back to Dashboard </Link>
     </div>
   )
 }

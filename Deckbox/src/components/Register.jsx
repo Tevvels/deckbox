@@ -25,15 +25,15 @@ export default function Register({ onRegistered, onCancel }) {
   }
 
   return (
-    <div>
-      <h3>Create account</h3>
-      <form onSubmit={handleSubmit}>
-        <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
-        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-        <button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
-        <button type="button" onClick={onCancel} style={{marginLeft:8}}>Cancel</button>
+    <div className='register register_container'>
+      <h3 className='headers register_header'>Create account</h3>
+      <form className='form register_form' onSubmit={handleSubmit}>
+        <input className='inputs register_username' placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
+        <input className='inputs register_password' placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
+        <button className='buttons submit' type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
+        <button className='buttons cancel' type="button" onClick={onCancel} style={{marginLeft:8}}>Cancel</button>
       </form>
-      {error && <div style={{color:'red'}}>{error}</div>}
+      {error && <span className='span' style={{color:'red'}}>{error}</span>}
     </div>
   )
 }

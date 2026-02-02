@@ -32,23 +32,23 @@ function PublicDeckDisplay() {
     fetchPublicDecks();
   }, []);
 
-  if (loading) return <div>Loading public decks...</div>;
-  if (error) return <div>Error loading public decks: {error.message}</div>;
+  if (loading) return <div className='loading'>Loading public decks...</div>;
+  if (error) return <div className='loading_error'>Error loading public decks: {error.message}</div>;
 
   return (<>
-    <div className="Public">
+    <div className="public public_container">
       {publicDecks.map((deck) => (
-        <div key={deck._id} className="public-deck"> 
-          <h3>{deck.name}</h3>
-          <h2>By: {deck.user?.username || 'unknown'}</h2>  
-          <p>Format: {deck.format}</p>
-          <p>Commander: {deck.commander || 'N/A'}</p>
-          <p>Cards in Deck: {deck.cards.length}</p>
-          <Link to={`/deck/${deck._id}`}> View Deck </Link>
+        <div key={deck._id} className="public_container-sub public_deck"> 
+          <h3 className='public_deck-name'>{deck.name}</h3>
+          <h2 className='public_deck-owner'>By: {deck.user?.username || 'unknown'}</h2>  
+          <p className='public_deck-format'>Format: {deck.format}</p>
+          <p className='public_deck-commander'>Commander: {deck.commander || 'N/A'}</p>
+          <p className="public_deck-count">Cards in Deck: {deck.cards.length}</p>
+          <Link className='links public_link' to={`/deck/${deck._id}`}> View Deck </Link>
         </div>
       ))}
 
-      <Link to ="/dashboard"> Back to Dashboard </Link>
+      <Link className='links public_link' to ="/dashboard"> Back to Dashboard </Link>
     </div>
     
 </>

@@ -98,10 +98,11 @@ fetchDecks();
 
 
  return (
-    <div className="My_Decks-Container">
-      <Link to="/deck/new"><button className="My_Decks-CreateNewButton">+</button></Link>
-      <h2>My Decks</h2>
-      <div className="My_Decks-list">
+    <div className="my_Deck my_Deck-container">
+      <Link className="links my_Deck-link my_Deck-link-new" to="/deck/new">
+        <button className="buttons my_Deck-button my_Deck-add">+</button></Link>
+      <h2 className='header my_Deck-header'>My Decks</h2>
+      <div className="list my_Deck-list">
         
         {decks.map((deck) => {
           // Get first card's image for deck art
@@ -114,25 +115,23 @@ fetchDecks();
 
           const imageUrl = firstCard?.image_uris?.art_crop || firstCard?.card_faces?.[0]?.image_uris.art_crop || 'placement_image_url_here';
           return (
-          <Link to={`/deck/${deck._id}`} key={deck._id} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div key={deck._id} className="My_Decks-information-block" style=
+          <Link className='links my_Deck-link my_Deck-toSpecificDeck' to={`/deck/${deck._id}`} key={deck._id} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div key={deck._id} className="my_Deck my_Deck-container-sub my_Deck-informationBlock" style=
           {getDeckColorStyle(deck.color_identity)}>
-          <img className={`My_Decks-deckArt`} alt="deckArt" src={imageUrl}/>
-            <div className='My_Decks-information-sub-block'>
-            <h3>{deck.name}</h3>
-            <p>Format: {deck.format}</p>
-            <p>Commander: {deck.commander || 'N/A'}</p>
-            <p>Cards in Deck: {deck.cards.length}</p>
-            <div className="My_Decks-card-buttons">
-              <button onClick={() => deleteDeck(deck._id)}>Delete Deck</button>
-            </div>
+          <img  className={`img My_Deck-deckArt`} alt="deckArt" src={imageUrl}/>
+            <div className='my_Deck-container-sub my_Deck-informationBlock-sub'>
+            <h3 className="headers my_Deck-header my_Decker-header-sub">{deck.name}</h3>
+            <p className='my_Deck-format'>Format: {deck.format}</p>
+            <p className='my_Deck-commander' >Commander: {deck.commander || 'N/A'}</p>
+            <p className='my_Deck-cardCount'>Cards in Deck: {deck.cards.length}</p>
+              <button className='buttons my_Deck-button my_Deck-delete' onClick={() => deleteDeck(deck._id)}>Delete Deck</button>
             </div>
           </div>
         </Link>
           )
 })}
       </div>
-      <Link to="/dashboard"> Back to Dashboard </Link>
+      <Link className='links my_Deck-link ' to="/dashboard"> Back to Dashboard </Link>
 
     </div>
   )
