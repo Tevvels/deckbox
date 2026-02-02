@@ -3,7 +3,7 @@ import { Link, useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CardDetail from '../modules/CardDetail';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
-
+import '../styles/SingleDeck.css';
 function SingleDeck({deck,setDeck}) {
     const {deckId} = useParams();
     const [isLoading, setIsLoading] = useState(false);
@@ -152,7 +152,7 @@ if(error) return <p> Error loading deck: {error} </p>
 if(!deck) return <p>Deck not found</p>
 
     return (
-    <>
+    <div className="SingleDeck_Container">
         {isOwner &&(
             <div>
                 <div>Add a card</div>
@@ -172,13 +172,13 @@ if(!deck) return <p>Deck not found</p>
                       const colors = (deckEntry.cardId.color_identity && deckEntry.cardId.color_identity.length > 0) ? deckEntry.cardId.color_identity : [];
                         // console.log("Card colors:", colors);  
                       return (
-                      <li key={deckEntry.cardId._id || index}>
-                <div onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
+                      <li className='SingleDeck_Container-Card' key={deckEntry.cardId._id || index}>
+                <div className='SingleDeck_Container-Card ' onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
 
                            <span> {deckEntry.cardId.name} </span>
                            <span> - Quantity: {deckEntry.quantity} </span>
                             <span> - color identity {deckEntry.cardId.color_identity}</span>
-                           <span> {deckEntry.cardId.image_uris && <img src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
+                           <span> {deckEntry.cardId.image_uris && <img className="SingleDeck_Container-Card-Img" src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
                            <div className="card-colors">
                            {
                             colors.map((color, idx) => (
@@ -207,7 +207,7 @@ if(!deck) return <p>Deck not found</p>
           
         {isOwner && <Link to="/mydecks"> Back to My Decks </Link>}
  
-    </>
+    </div>
   )
 }
 

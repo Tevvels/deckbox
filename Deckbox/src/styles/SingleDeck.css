@@ -1,0 +1,10 @@
+.SingleDeck_Container{
+    background: var(--dark-bg-color);
+}
+.SingleDeck_Container-Card{
+    display: flex;
+    border: 1px solid yellow;
+}
+.SingleDeck_Container-Card-Img{
+    border-radius: 10px;
+}
