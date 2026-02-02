@@ -74,18 +74,19 @@ if(!card || !currentImage) return null;
   return (
 
       
-<div className="card-detail-modal">
-  <button onClick={handleUpdateArt}>Update Card Art</button>
+<div className="card_detail card_detail-container">
+  <button className='buttons card_detail-button card_detail-updateArt' onClick={handleUpdateArt}>Update Card Art</button>
 
-      <div className="close-button" onClick={onClose}>X</div>
+      <button  className="buttons button-close" onClick={onClose}>X</button>
         
         {/* card detail includes name, oracle text, selection for images */}
 
-        <h1>{currentImage?.name}</h1>
-        <p>{currentImage?.oracle_text}</p>
-        <div>
+        <h1 className='card_detail-name'>{currentImage?.name}</h1>
+        <p className='card_detail-oracle'>{currentImage?.oracle_text}</p>
+        <div className='card_detail-container-sub card_detail-container-imageList'>
           {AllPrints.length > 0 ? (AllPrints.map((print) => (
             <img 
+              className='card_detail-img'
               key={print.id} 
               src={getCardImage(print, 'small')} 
               alt={print.name}  
@@ -94,7 +95,7 @@ if(!card || !currentImage) return null;
             />
           ))
          ) : (
-            <p>No other prints available.</p>
+            <p className='card_detail-none'>No other prints available.</p>
           )
               }
         </div>

@@ -147,51 +147,51 @@ const handleUpdateCardArt = (cardId,newCardData) => {
 
     
 
-if(isLoading) return <p> loading deck details... </p>
-if(error) return <p> Error loading deck: {error} </p>
-if(!deck) return <p>Deck not found</p>
+if(isLoading) return <p className='loading'> loading deck details... </p>
+if(error) return <p className='loading loading_error'> Error loading deck: {error} </p>
+if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 
     return (
-    <>
+    <div className="deck deck_container">
         {isOwner &&(
-            <div>
-                <div>Add a card</div>
+            <div className='deck_container-sub deck_container-ownerCheck'>
+                <div className='deck_header deck_addCard-header'>Add a card</div>
 
-                <Link to={`/deck/${deckId}/search`} state={{fromDeck:true ,isCommander: deck.format ==='commander'}}> + card </Link>
+                <Link className='links deck_link deck_addCard-link' to={`/deck/${deckId}/search`} state={{fromDeck:true ,isCommander: deck.format ==='commander'}}> + card </Link>
             </div>
         )}
         {/* {console.log("Rendering SingleDeck with deck:", deck)} */}
         <CardDetail card={selectedCard} onClose={handleCloseDetail}  onUpdateSuccess={handleUpdateCardArt}/>
         {deck ? (
-            <div>
-                <h2>{deck.title || deck.name}</h2>
-                <p>{deck.description}</p>
-                <ul>
+            <div className='deck_container-sub'>
+                <h2 className='deck_title'>{deck.title || deck.name}</h2>
+                <p className='deck_desc' >{deck.description}</p>
+                <ul className='lists deck_list'>
+                    {/* the map that get the color identity of our commander, then displays those here in a background gradient */}
                     {deck.cards && deck.cards.map((deckEntry, index) => {
                       if(!deckEntry.cardId) return null;
                       const colors = (deckEntry.cardId.color_identity && deckEntry.cardId.color_identity.length > 0) ? deckEntry.cardId.color_identity : [];
-                        // console.log("Card colors:", colors);  
                       return (
-                      <li key={deckEntry.cardId._id || index}>
-                <div onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
+                      <li className='listItem deck_listItem' key={deckEntry.cardId._id || index}>
+                <div className='deck_card deck_card-button' onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
 
-                           <span> {deckEntry.cardId.name} </span>
-                           <span> - Quantity: {deckEntry.quantity} </span>
-                            <span> - color identity {deckEntry.cardId.color_identity}</span>
-                           <span> {deckEntry.cardId.image_uris && <img src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
-                           <div className="card-colors">
+                           <span className='span deck_card-name'> {deckEntry.cardId.name} </span>
+                           <span className='span deck_card-count'> - Quantity: {deckEntry.quantity} </span>
+                            <span className='span deck_card-colorId'> - color identity {deckEntry.cardId.color_identity}</span>
+                           <span className='span deck_card-img-container'> {deckEntry.cardId.image_uris && <img className='card deck_card-img' src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
+                           <div className="deck_container-sub deck_container-color">
                            {
                             colors.map((color, idx) => (
-                                <span key={idx} className={`color-circle ${color.toLowerCase()}`} title={color}></span>
+                                <span key={idx} className={`span deck_card-color-circle color-circle ${color.toLowerCase()}`} title={color}></span>
                             ))
                            }
                            </div>
                            </div>
                            {isOwner &&(
-                           <div>
+                           <div className='deck_container-sub deck_container-ownerCheck'>
 
-                                <button onClick={()=> deleteDeck(deck._id)}>delete deck</button>
-                               <button onClick={() => handleDeleteClick(deckEntry.cardId._id)}>Remove Card</button>
+                                <button className='buttons deck_button deck_button-delete-deck' onClick={()=> deleteDeck(deck._id)}>delete deck</button>
+                               <button className='buttons deck_button deck_button-delete-card' onClick={() => handleDeleteClick(deckEntry.cardId._id)}>Remove Card</button>
                            </div> 
                            )}
                         </li>
@@ -201,13 +201,13 @@ if(!deck) return <p>Deck not found</p>
 
             </div>
         ) : (
-            <p>Loading deck...</p>
+            <p className='loading'>Loading deck...</p>
         )}  
-            <Link to="/publicdecks">Back to Public Decks</Link>
+            <Link className='links deck_link' to="/publicdecks">Back to Public Decks</Link>
           
-        {isOwner && <Link to="/mydecks"> Back to My Decks </Link>}
+        {isOwner && <Link  className='links deck_link' to="/mydecks"> Back to My Decks </Link>}
  
-    </>
+    </div>
   )
 }
 

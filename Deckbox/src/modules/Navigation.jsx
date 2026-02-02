@@ -16,20 +16,20 @@ function Navigation({onLogout}) {
   ];
   console.log(navLinks)
   return (
-    <div className='Navigation'>
-    <nav className={`Navigation_Container`}>
+    <div className='navigation'>
+    <nav className={`navigation_container`}>
     {navLinks.map((link)=>(
       location.pathname !== link.path && (
         <Link
         key={link.path}
-        className='Navigation_Link'
+        className=' links navigation_link'
         to={link.path}
         >{link.name}</Link>
       )
     ))}
 
 
-      <button onClick={()=>onLogout()}>Logout</button>
+      <button className='buttons navigation_button' onClick={()=>onLogout()}>Logout</button>
 
       </nav>
     </div> 

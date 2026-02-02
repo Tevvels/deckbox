@@ -26,8 +26,8 @@ function LifeCounter() {
         let players=[];
         for (let i = 0; i < playerCount && playerCount <= 6; i++){
             players.push(<>
-            <div key={i}>Player {i +1}</div>
-            <button onClick={()=>setLifeTotal(lifeTotal=> lifeTotal+1)}>{lifeTotal}
+            <div className='life_counter-player' key={i}>Player {i +1}</div>
+            <button className='buttons life_counter-player-setLife' onClick={()=>setLifeTotal(lifeTotal=> lifeTotal+1)}>{lifeTotal}
                 </button>
                 </>)
         }
@@ -35,14 +35,14 @@ function LifeCounter() {
     };
 
   return (
-    <div>
-    <div>lifeCounter</div>
-    <input type="number" value={handleInput} onChange={inputValueChange} placeholder="What is the number of players?"/>
-    <button onClick={handleSubmit}>Display Players</button>
+    <div className='life_counter life_counter-container'>
+    <h1 className='headers life_counter life_counter-header'>lifeCounter</h1>
+    <input className='inputs life_counter-player-count' type="number" value={handleInput} onChange={inputValueChange} placeholder="What is the number of players?"/>
+    <button className='buttons submit life_counter-player-countsub' onClick={handleSubmit}>Display Players</button>
     {renderPlayers()}
 
     <Players  players={playerCount}/>
-    <Dice>hello</Dice>
+    <Dice/>
 
     
     </div>

@@ -43,18 +43,18 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className="Login">
-      <h3>Login</h3>
-      <form onSubmit={handleLogin} className='Login_Form'>
-        <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='Login_Form-Input Login_Form-Username' />
-        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='Login_Form-Input Login_Form-Password' />
-        <button type="submit" className='Login_Form-Button Login_Form-Submit'>Login</button>
+    <div className="login">
+      <h3 className="headers login_header">Login</h3>
+      <form className="forms login_form" onSubmit={handleLogin}>
+        <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='inputs login_input login_input-username' />
+        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='input login_input login_input-password' />
+        <button type="submit" className='buttons submit login_button login_button-submit'>Login</button>
       </form>
       <div style={{marginTop:8}}>
-        <button onClick={()=>{ setError(null); onShowRegister && onShowRegister(); }} className='Login_Form-Button Login_Form-Create'>Create account</button>
-        <button onClick={()=>{ setError(null); onShowForgot && onShowForgot(); }} style={{marginLeft:8}} className='Login_Form-Button Login_Form-Forgot'>Forgot password</button>
+        <button onClick={()=>{ setError(null); onShowRegister && onShowRegister(); }} className='login_button login_button-create'>Create account</button>
+        <button onClick={()=>{ setError(null); onShowForgot && onShowForgot(); }} style={{marginLeft:8}} className='login_button login_button-forgot'>Forgot password</button>
       </div>
-      {error && <div style={{color:'red', marginTop:8}}>{error}</div>}
+      {error && <span className="span login_span" style={{color:'red', marginTop:8}}>{error}</span>}
     </div>
   )
 }

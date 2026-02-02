@@ -34,25 +34,25 @@ export default function ForgotPassword({ onDone, onCancel, onLogin }) {
   }
 
   return (
-    <div>
-      <h3>Forgot password</h3>
-      <form onSubmit={requestReset}>
-        <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
-        <button type="submit">Request reset</button>
+    <div className='login login_forgot'>
+      <h3 className='header login_header login_header-forgot'>Forgot password</h3>
+      <form className='forms login_form login_form-forgot' onSubmit={requestReset}>
+        <input className="inputs login_input login_input-forgot" placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
+        <button className='buttons login_button login_button-submit login_button-forgot' type="submit">Request reset</button>
       </form>
-      {message && <div style={{color:'green'}}>{message}</div>}
+      {message && <span className=" spans login_span login_span-forgot" style={{color:'green'}}>{message}</span>}
       {token && (
-        <div style={{marginTop:8}}>
-          <div>Dev reset token: <code>{token}</code></div>
-          <form onSubmit={doReset} style={{marginTop:8}}>
-            <input placeholder="reset token" value={token} onChange={e=>setToken(e.target.value)} />
-            <input placeholder="new password" type="password" value={newPassword} onChange={e=>setNewPassword(e.target.value)} />
-            <button type="submit">Reset password</button>
+        <div className="login_container-sub" style={{marginTop:8}}>
+          <span className="login_span login_span-forgot">Dev reset token: <code>{token}</code></span>
+          <form className=" forms login_form login_form-forgot" onSubmit={doReset} style={{marginTop:8}}>
+            <input className='inputs login_input login_input-forgot' placeholder="reset token" value={token} onChange={e=>setToken(e.target.value)} />
+            <input className='inputs login_input login_input-forgot' placeholder="new login" type="login" value={newlogin} onChange={e=>setNewPassword(e.target.value)} />
+            <button className='buttons submit login_button login_button-submit login_button-forgot' type="submit">Reset login</button>
           </form>
         </div>
       )}
-      {error && <div style={{color:'red'}}>{error}</div>}
-      <div style={{marginTop:8}}><button onClick={onCancel}>Cancel</button></div>
+      {error && <span className="spans login_span login_span-forgot" style={{color:'red'}}>{error}</span>}
+      <div style={{marginTop:8}}><button className='buttons cancel login_button login_button-cancel login_button-forgot' onClick={onCancel}>Cancel</button></div>
     </div>
   )
 }

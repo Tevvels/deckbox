@@ -8,29 +8,16 @@ function Dashboard() {
   
   return (
   
-  <>
-    <div className='Hero'>
-      <div className='dashboardContainer'>
-
-      
-      <h1> Welcome to Deckbox Dashboard </h1>
-      <Storage />
-      </div>
-
-      <div className='box container'>
-        <div className='front xside'/>
-        <div className='back xside'/>
-        <div className='left yside'/>
-        <div className='right yside'/>
-        <div className='top zside'/>
-        <div className='bottom zside'/>
-      </div>
-    </div>
-   <div className='Public'>
-   <PublicDeckDisplay />
-   </div>
+    <div className='dashboard'>
+      <div className='dashboard_container'>
+       <h1 className='header dashboard_header'> Welcome to Deckbox Dashboard </h1>
+       <Storage />
+        </div>
    
-    </>
+       <div className='dashboard_container dashboard_container-Public'>
+     <PublicDeckDisplay />
+    </div>
+    </div>
   )
 }
 

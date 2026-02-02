@@ -22,19 +22,18 @@ function PlayerComponent({player}) {
     } 
 
     return (
-  <div>
-    <h2>{player.name}</h2>
-    <div>
-        <h3>Life Total: {count}</h3>
-        <button onClick={increaselife}> + </button>
-        <button onClick={decreaselife}> - </button>
-    </div>
-    <div>
-        <h3>Poison Counters: {poison}</h3>
-        <button onClick={increasepoison}> + </button>
-        <button onClick={decreasepoison}> - </button>
-      
-    </div>
+  <div className="player player_container">
+    <h2 className="header player_header">{player.name}</h2>
+        <div className='player_container-sub player_life'>
+            <h3 className='header player_header-sub'>Life Total: {count}</h3>
+            <button className='buttons player_life-plus' onClick={increaselife}> + </button>
+            <button className='buttons player_life-minus' onClick={ decreaselife}> - </button>
+        </div>
+        <div className='header player_container-sub player_poison'>
+            <h3 className='header player_header-sub'>Poison Counters: {poison}</h3>
+            <button className='buttons player_poison-plus' onClick={increasepoison}> + </button>
+            <button className='buttons player_poison-minus' onClick={decreasepoison}> - </button>
+        </div>
     </div>
   );
 

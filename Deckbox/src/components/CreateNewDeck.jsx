@@ -130,14 +130,14 @@ const createDeck = async()=>{
     }
 }
 return (
-    <div className="create-deck-container">
-        <h2>Create New Deck</h2>
-        <label>Deck Name:</label>
-        <input type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
+    <div className="create_Deck create_Deck-container">
+        <h2 className='header create_Deck-header'>Create New Deck</h2>
+        <label className='labels create_Deck-label'>Deck Name:</label>
+        <input className='inputs create_Deck-input' type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
 
-        <label>Deck Format:</label>
-        <input type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} /> Make Deck Public
-    <Dropdown options={[
+        <label className='labels create_Deck-label'>Deck Format:</label>
+        <input className='inputs create_Deck-input' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} /> Make Deck Public
+    <Dropdown className="create_Deck-dropdown" options={[
         {value:'Standard', label:'Standard'},
         {value:'Modern', label:'Modern'},
         {value:'Commander', label:'Commander'},
@@ -150,15 +150,15 @@ return (
 
 
     {deckFormat === 'Commander' && (
-        <div className="commander-input-container">
-            <input type="text" placeholder="Commander Name" value={commanderName} onChange={handleInputChange}
+        <div className="create_Deck-Commander-container">
+            <input className='inputs create_Deck-input' type="text" placeholder="Commander Name" value={commanderName} onChange={handleInputChange}
             onBlur={()=>setTimeout(()=>setShowSuggestions(false),300)}
             onFocus={()=>setShowSuggestions(true)} />
 
         {showSuggestions && suggestions.length >0 && (
-            <ul className="suggestions-list">
+            <ul className=" list create_Deck-list create_Deck-list-Suggestions-list">
                 {suggestions.map((suggestion) =>(
-                    <li key={suggestion.id} onClick={() => handleSelectSuggestion(suggestion)}>
+                    <li className="listItem create_Deck-list create_Deck-list-Suggestions-listItem" key={suggestion.id} onClick={() => handleSelectSuggestion(suggestion)}>
                         {suggestion.name}
                     </li>
                 ))}
@@ -170,8 +170,8 @@ return (
 
 
 
-    <button onClick={createDeck}>Create Deck</button>
-        <Link to="/mydecks"> Back to My Decks </Link>
+    <button className='buttons create_Deck-button' onClick={createDeck}>Create Deck</button>
+        <Link className='links create_Deck-link' to="/mydecks"> Back to My Decks </Link>
     
     </div>
   )

@@ -25,15 +25,15 @@ function Dropdown({options, onSelect}) {
     }, [dropdownref]);
     
   return (
-    <div>
-        <div ref={dropdownref} className="dropdown">
-            <button onClick={toggleDropdown} className="dropdown-toggle">
+    <div className="dropdown dropdown_container">
+        <div ref={dropdownref} className="dropdown_container-sub">
+            <button onClick={toggleDropdown} className="buttons dropdown_toggle">
                 {selectedOption ? selectedOption.label : 'Select an option'}
             </button>
             {isOpen && (
-                <ul className="dropdown-menu">
+                <ul className="list dropdown_list">
                     {options.map((option) => (
-                        <li key={option.value} onClick={() => handleOptionSelect(option)}>
+                        <li className='listItem dropdown_listItem' key={option.value} onClick={() => handleOptionSelect(option)}>
                             {option.label}
                         </li>   
                     ))}

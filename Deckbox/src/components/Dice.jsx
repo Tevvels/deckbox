@@ -31,24 +31,24 @@ const resetDice = () => {
 
 
   return (
-    <div>Dice
+    <div className='dice dice_container'>
 
-    <button onClick={()=> addDie(4)}> (4 SIDED) </button>
-    <button onClick={()=> addDie(6)}> (6 SIDED) </button>
-    <button onClick={()=> addDie(8)}> (8 SIDED) </button>
-    <button onClick={()=> addDie(10)}> (10 SIDED) </button>
-    <button onClick={()=> addDie(12)}> (12 SIDED) </button>
-    <button onClick={()=> addDie(20)}> (20 SIDED) </button>
-    <button onClick={()=> addDie(100)}> (100 SIDED) </button>
-    <button onClick={rollDice}> roll the dice </button>
-    <button onClick={resetDice}>Reset Dice</button>
-    <div>number of dice {groupOfDice.length}</div>
-    <div>{total}</div>
+    <button className='dice_button dice_button-four' onClick={()=> addDie(4)}> (4 SIDED) </button>
+    <button className='dice_button dice_button-six' onClick={()=> addDie(6)}> (6 SIDED) </button>
+    <button className='dice_button dice_button-eight' onClick={()=> addDie(8)}> (8 SIDED) </button>
+    <button className='dice_button dice_button-ten' onClick={()=> addDie(10)}> (10 SIDED) </button>
+    <button className='dice_button dice_button-twelve' onClick={()=> addDie(12)}> (12 SIDED) </button>
+    <button className='dice_button dice_button-twenty' onClick={()=> addDie(20)}> (20 SIDED) </button>
+    <button className='dice_button dice_button-hundred' onClick={()=> addDie(100)}> (100 SIDED) </button>
+    <button className='dice_button dice_button-roll' onClick={rollDice}> roll the dice </button>
+    <button className='dice_button dice_button-reset' onClick={resetDice}>Reset Dice</button>
+    <span className='dice_span dice_span-number' >number of dice {groupOfDice.length}</span>
+    <span className="dice_span dice_span-total">{total}</span>
     {dieResults.map((result,index) => (
-        <div key={index}> Die {index + 1}: {result} </div>
+        <span className='dice_span dice_span-die' key={index}> Die {index + 1}: {result} </span>
     ))}
 
-    <Link to ="/dashboard"> Back to Dashboard </Link>
+    <Link className='links dice_link' to ="/dashboard"> Back to Dashboard </Link>
 
     </div>
   )
