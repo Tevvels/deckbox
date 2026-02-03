@@ -6,6 +6,8 @@
   outline-color: transparent;
   overflow-x: hidden;
   text-decoration: none;
+  background:rgba(0,0,0,0.1);
+  border:none;
 
 /* // Color Variables */
 --dark-bg-color : #13262F;
@@ -21,7 +23,9 @@ font-family: "Spline Sans", sans-serif;
 #root{
   width: 100%;
 }
-
+.card{
+  border-radius:10px;
+}
 /* 
 
 ------======++++ CLASSNAMES   ++++++=======-------

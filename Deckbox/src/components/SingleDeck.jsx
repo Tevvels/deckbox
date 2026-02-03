@@ -175,14 +175,14 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
                       <li className='listItem deck_listItem' key={deckEntry.cardId._id || index}>
                 <div className='deck_card deck_card-button' onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
 
-                           <span className='span deck_card-name'> {deckEntry.cardId.name} </span>
-                           <span className='span deck_card-count'> - Quantity: {deckEntry.quantity} </span>
-                            <span className='span deck_card-colorId'> - color identity {deckEntry.cardId.color_identity}</span>
-                           <span className='span deck_card-img-container'> {deckEntry.cardId.image_uris && <img className='card deck_card-img' src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
+                           <span className='spans deck_card-name'> {deckEntry.cardId.name} </span>
+                           <span className='spans deck_card-count'> - Quantity: {deckEntry.quantity} </span>
+                            <span className='spans deck_card-colorId'> - color identity {deckEntry.cardId.color_identity}</span>
+                           <span className='spans deck_card-img-container'> {deckEntry.cardId.image_uris && <img className='card deck_card-img' src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
                            <div className="deck_container-sub deck_container-color">
                            {
                             colors.map((color, idx) => (
-                                <span key={idx} className={`span deck_card-color-circle color-circle ${color.toLowerCase()}`} title={color}></span>
+                                <span key={idx} className={`spans deck_card-color-circle color-circle ${color.toLowerCase()}`} title={color}></span>
                             ))
                            }
                            </div>

@@ -8,30 +8,27 @@
     " c "
     " d "
     ;
-    color: var(--text-color);
-    background:(var(--light-bg-color));
-}
-.Hero{
+
+    }
+    
+.dashboard{
     height: 60vh;
     width: 100%;
     display:grid;
     grid-area:b;
-    justify-content: center;
-    align-items: center;
 
-}
-.Navigation{
+    }
+    .navigation{
     height:10vh;
     width: 100%;
     grid-area:a;
 }
-.Public{
+.public{
     height: 100vh;
     width: 100%;   
-    background: var(--dark-bg-color);
     grid-area:c;
 }
-.Footer{
+.footer{
     grid-area:d;
     width: 100%;   
 

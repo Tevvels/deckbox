@@ -33,7 +33,7 @@ export default function Register({ onRegistered, onCancel }) {
         <button className='buttons submit' type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
         <button className='buttons cancel' type="button" onClick={onCancel} style={{marginLeft:8}}>Cancel</button>
       </form>
-      {error && <span className='span' style={{color:'red'}}>{error}</span>}
+      {error && <span className='spans' style={{color:'red'}}>{error}</span>}
     </div>
   )
 }

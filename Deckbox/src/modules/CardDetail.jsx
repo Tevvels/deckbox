@@ -86,7 +86,7 @@ if(!card || !currentImage) return null;
         <div className='card_detail-container-sub card_detail-container-imageList'>
           {AllPrints.length > 0 ? (AllPrints.map((print) => (
             <img 
-              className='card_detail-img'
+              className=' card card_detail-img'
               key={print.id} 
               src={getCardImage(print, 'small')} 
               alt={print.name}  
