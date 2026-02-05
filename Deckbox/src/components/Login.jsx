@@ -44,10 +44,11 @@ useEffect(() => {
 
   return (
     <div className="login">
+      <div className='login_container'>
       <h3 className="headers login_header">Login</h3>
       <form className="forms login_form" onSubmit={handleLogin}>
         <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='inputs login_input login_input-username' />
-        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='input login_input login_input-password' />
+        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='inputs login_input login_input-password' />
         <button type="submit" className='buttons submit login_button login_button-submit'>Login</button>
       </form>
       <div style={{marginTop:8}}>
@@ -55,6 +56,7 @@ useEffect(() => {
         <button onClick={()=>{ setError(null); onShowForgot && onShowForgot(); }} style={{marginLeft:8}} className='login_button login_button-forgot'>Forgot password</button>
       </div>
       {error && <span className="span login_span" style={{color:'red', marginTop:8}}>{error}</span>}
+      </div>
     </div>
   )
 }

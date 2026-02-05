@@ -84,7 +84,7 @@ fetchDecks();
       return {backgroundColor : getColorValue(colorIdentity[0])};
     }
     const gradientColors = colorIdentity.map(char => getColorValue(char)).join(', ');
-    return {background: `linear-gradient(45deg, ${gradientColors})`, boxShadow: `0 0 15px ${gradientColors}`};
+    return {background: `linear-gradient(270deg, ${gradientColors})`, boxShadow: `0 0 15px ${gradientColors}`};
   };
 
   if (loading) {
@@ -115,23 +115,23 @@ fetchDecks();
 
           const imageUrl = firstCard?.image_uris?.art_crop || firstCard?.card_faces?.[0]?.image_uris.art_crop || 'placement_image_url_here';
           return (
-          <Link className='links my_Deck-link my_Deck-toSpecificDeck' to={`/deck/${deck._id}`} key={deck._id} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div key={deck._id} className="my_Deck my_Deck-container-sub my_Deck-informationBlock" style=
-          {getDeckColorStyle(deck.color_identity)}>
-          <img  className={`img My_Deck-deckArt`} alt="deckArt" src={imageUrl}/>
-            <div className='my_Deck-container-sub my_Deck-informationBlock-sub'>
-            <h3 className="headers my_Deck-header my_Decker-header-sub">{deck.name}</h3>
+            <div key={deck._id} className="my_Deck-container-sub my_Deck-informationBlock" >
+              <div className='my_Deck-color' style={getDeckColorStyle(deck.color_identity)} />
+            <Link className='links my_Deck-link my_Deck-toSpecificDeck' to={`/deck/${deck._id}`} key={deck._id} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className='my_Deck-informationBlock-sub'>
+            <img className={`img my_Deck-deckArt`} alt="deckArt" src={imageUrl}/>
+            <h3 className="headers my_Deck-header my_Deck-header-sub">{deck.name}</h3>
             <p className='my_Deck-format'>Format: {deck.format}</p>
             <p className='my_Deck-commander' >Commander: {deck.commander || 'N/A'}</p>
             <p className='my_Deck-cardCount'>Cards in Deck: {deck.cards.length}</p>
               <button className='buttons my_Deck-button my_Deck-delete' onClick={() => deleteDeck(deck._id)}>Delete Deck</button>
             </div>
-          </div>
         </Link>
+          </div>
           )
 })}
       </div>
-      <Link className='links my_Deck-link ' to="/dashboard"> Back to Dashboard </Link>
+      <Link className='links my_Deck-link my_Deck-link-dashboard ' to="/dashboard"> Back to Dashboard </Link>
 
     </div>
   )

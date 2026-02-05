@@ -1,0 +1,5 @@
+.footer{
+    background: var(--med-bg-color);
+    bottom:0;
+    height: 20vh;
+}

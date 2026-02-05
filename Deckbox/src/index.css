@@ -6,7 +6,6 @@
   outline-color: transparent;
   overflow-x: hidden;
   text-decoration: none;
-  background:rgba(0,0,0,0.1);
   border:none;
 
 /* // Color Variables */
@@ -19,12 +18,41 @@
 font-family: "Spline Sans", sans-serif;
 
 }
+main{
+  overflow: hidden;
+}
 
 #root{
   width: 100%;
+  background-color: var(--dark-bg-color);
+  color: var(--text-color);
 }
 .card{
   border-radius:10px;
+}
+
+.buttons{
+  padding: 10px 5px;
+  background: var(--med-bg-color);
+
+}
+.buttons:hover{
+  background: var(--dark-bg-color);
+}
+
+.inputs{
+  padding: 15px 5px; 
+  background: var(--dark-bg-color);
+  
+}
+.links{
+  color: var(--text-color);
+  padding: 0 5px 0  0;
+  height: 100%;
+}
+.links:hover{
+  background:var(--primary-color)
+
 }
 /* 
 
