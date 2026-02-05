@@ -1,0 +1,42 @@
+.my_Deck{
+    height: 100%;
+    width: 100vw;
+
+}
+
+.my_Deck-informationBlock-sub{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: var(--med-bg-color);
+}
+.my_Deck-informationBlock{
+    height: 400px;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 4px;
+}
+.my_Deck-deckArt{
+    width: 100%;
+}
+
+.my_Deck-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+.my_Deck-link{
+    overflow: hidden;
+}
+.my_Deck-link-new{
+    height: 10vh;
+}
+.my_Deck-link-dashboard{
+    height: 10vh;
+}
+.my_Deck-color{
+    height: 15px;
+    width: 100%;
+}

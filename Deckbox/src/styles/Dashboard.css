@@ -1,0 +1,24 @@
+.dashboard{
+    height: 100%;
+    width: 100%;
+    background: var(--med-bg-color);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dashboard_container{
+    height: 60vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard_container-Public{
+    height: 100vh;
+    background-color: var(--primary-color);
+    display: flex;
+    overflow: hidden;
+
+}
