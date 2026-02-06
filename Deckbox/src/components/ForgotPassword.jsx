@@ -34,7 +34,7 @@ export default function ForgotPassword({ onDone, onCancel, onLogin }) {
   }
 
   return (
-    <div className='login login_forgot'>
+    <div className='login login_forgot container'>
       <h3 className='header login_header login_header-forgot'>Forgot password</h3>
       <form className='forms login_form login_form-forgot' onSubmit={requestReset}>
         <input className="inputs login_input login_input-forgot" placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />

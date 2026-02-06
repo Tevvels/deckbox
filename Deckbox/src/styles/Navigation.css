@@ -3,4 +3,6 @@
     display: flex;
     justify-content: space-evenly;
     box-shadow: 1px 0 15px black;
+    position: relative;
+    z-index: 10;
 }

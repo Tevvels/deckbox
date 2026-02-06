@@ -1,6 +1,7 @@
 import React ,{useEffect, useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../styles/PublicDeckDisplay.css';
+import DeckCard from './DeckCard';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -11,6 +12,7 @@ function PublicDeckDisplay() {
   const [publicDecks, setPublicDecks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const location = useLocation();
   
   useEffect(() => {
     const fetchPublicDecks = async () => {
@@ -35,23 +37,20 @@ function PublicDeckDisplay() {
   if (loading) return <div className='loading'>Loading public decks...</div>;
   if (error) return <div className='loading_error'>Error loading public decks: {error.message}</div>;
 
-  return (<>
-    <div className="public public_container">
+  return (<div className='public'>
+      <h1 className='headers public_header'>What the community is doing</h1>
+    <div className=" public_container">
       {publicDecks.map((deck) => (
-        <div key={deck._id} className="public_container-sub public_deck"> 
-          <h3 className='public_deck-name'>{deck.name}</h3>
-          <h2 className='public_deck-owner'>By: {deck.user?.username || 'unknown'}</h2>  
-          <p className='public_deck-format'>Format: {deck.format}</p>
-          <p className='public_deck-commander'>Commander: {deck.commander || 'N/A'}</p>
-          <p className="public_deck-count">Cards in Deck: {deck.cards.length}</p>
-          <Link className='links public_link' to={`/deck/${deck._id}`}> View Deck </Link>
-        </div>
+        <DeckCard
+        key={deck._id}
+        deck={deck}
+        showOwner={true}
+        />
       ))}
 
-      <Link className='links public_link' to ="/dashboard"> Back to Dashboard </Link>
     </div>
     
-</>
+</div>
   );
 }
 

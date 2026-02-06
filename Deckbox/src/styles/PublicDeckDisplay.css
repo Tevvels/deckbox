@@ -1,14 +1,24 @@
+
+
 .public{
+    height:100%;
+    
+}
+.public_container{
     background-color: var(--dark-bg-color);
     display: flex;
-    height: 100vh;
+    height: 100%;
+    justify-content: space-evenly;
 }
 .public_container-sub{
     height: 250px;
     width: 250px;
-    background: var(--primary-color);
     border-radius: 10px;
     border: 2px solid var(--dark-bg-color);
     box-shadow: 0 0 5px var(--light-bg-color);
-    margin: 5px;
+}
+
+.public_header{
+    height: 15vh;
+    background: var(--dark-bg-color);
 }

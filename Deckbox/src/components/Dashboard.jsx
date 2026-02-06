@@ -14,7 +14,7 @@ function Dashboard() {
        <Storage />
         </div>
    
-       <div className='dashboard_container dashboard_container-Public'>
+       <div className='dashboard_container-Public'>
      <PublicDeckDisplay />
     </div>
     </div>

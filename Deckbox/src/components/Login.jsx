@@ -44,7 +44,7 @@ useEffect(() => {
 
   return (
     <div className="login">
-      <div className='login_container'>
+      <div className='login_container container'>
       <h3 className="headers login_header">Login</h3>
       <form className="forms login_form" onSubmit={handleLogin}>
         <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='inputs login_input login_input-username' />
