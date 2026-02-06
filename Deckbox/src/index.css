@@ -14,6 +14,7 @@
 --light-bg-color: #3e78b2;
 --primary-color: #004ba8;
 --text-color:#ccdbe1;
+--is-active:1;
 
 font-family: "Spline Sans", sans-serif;
 
@@ -53,6 +54,13 @@ main{
 .links:hover{
   background:var(--primary-color)
 
+}
+.container{
+   height: max(100%,100vh);
+}
+.search_input{
+  padding: 15px 50px;
+  border-radius: 10px;
 }
 /* 
 

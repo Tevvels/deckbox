@@ -1,5 +1,5 @@
 .App{
-    height: 100%;
+    height: max(150vh,100%);
     width: 100%;
     display: grid;   
     grid-template-areas: 
@@ -14,19 +14,37 @@
 .dashboard{
     width: 100%;
     display:grid;
-    grid-area:b;
+    grid-template-areas: 
+    "hero"
+    "public";
+}
 
-    }
+.dashboard_container{
+    grid-area: hero;
+}
+.dashboard_container-Public{
+    grid-area: public;
+}
 .navigation{
     width: 100%;
     grid-area:a;
-}
-.public{
-    width: 100%;   
-    grid-area:c;
 }
 .footer{
     grid-area:d;
     width: 100%;   
 
+}
+.public{
+    width: 100%;   
+    display:grid;
+    grid-template-areas: 
+    "publicA"
+    "publicB";
+
+}
+.public_header{
+    grid-area: publicA;
+}
+.public_container{
+    grid-area:publicB;
 }

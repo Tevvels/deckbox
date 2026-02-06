@@ -76,7 +76,7 @@ fetchDecks();
 
 
  return (
-    <div className="my_Deck my_Deck-container">
+    <div className="my_Deck container my_Deck-container">
       <Link className="links my_Deck-link my_Deck-link-new" to="/deck/new">
         <button className="buttons my_Deck-button my_Deck-add">+</button></Link>
       <h2 className='header my_Deck-header'>My Decks</h2>

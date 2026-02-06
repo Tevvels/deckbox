@@ -130,21 +130,21 @@ const createDeck = async()=>{
     }
 }
 return (
-    <div className="create_Deck create_Deck-container">
+    <div className="create_Deck container create_Deck-container">
         <h2 className='header create_Deck-header'>Create New Deck</h2>
-        <label className='labels create_Deck-label'>Deck Name:</label>
+        <div className='divs create_Deck-div'>Deck Name:</div>
         <input className='inputs create_Deck-input' type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
 
-        <label className='labels create_Deck-label'>Deck Format:</label>
+        <div className='divs create_Deck-div'>Deck Format:</div>
         <input className='inputs create_Deck-input' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} /> Make Deck Public
     <Dropdown className="create_Deck-dropdown" options={[
-        {value:'Standard', label:'Standard'},
-        {value:'Modern', label:'Modern'},
-        {value:'Commander', label:'Commander'},
-        {value:'Legacy', label:'Legacy'},
-        {value:'Vintage', label:'Vintage'},
-        {value:'Pauper', label:'Pauper'},
-        {value:'Other', label:'Other'},
+        {value:'Standard', div:'Standard'},
+        {value:'Modern', div:'Modern'},
+        {value:'Commander', div:'Commander'},
+        {value:'Legacy', div:'Legacy'},
+        {value:'Vintage', div:'Vintage'},
+        {value:'Pauper', div:'Pauper'},
+        {value:'Other', div:'Other'},
     ]} onSelect={(option)=>setDeckFormat(option.value)} />
 
 

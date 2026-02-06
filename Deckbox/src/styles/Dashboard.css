@@ -1,6 +1,4 @@
 .dashboard{
-    height: 100%;
-    width: 100%;
     background: var(--med-bg-color);
     display: flex;
     align-items: center;
@@ -8,17 +6,15 @@
 }
 
 .dashboard_container{
-    height: 60vh;
     overflow: hidden;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .dashboard_container-Public{
-    height: 100vh;
-    background-color: var(--primary-color);
     display: flex;
     overflow: hidden;
-
+    height: min(100%,150vh)
 }
