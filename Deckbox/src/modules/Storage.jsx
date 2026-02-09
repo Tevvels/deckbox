@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef,useCallback, useMemo } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import "../styles/Search.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
@@ -32,7 +32,38 @@ const {deckId} = useParams();
 const [filterByIdentity,setFilterByIdentity] = useState(true);
 
 
+
 const location = useLocation();
+const navigate = useNavigate();
+
+const handleSearchSubmission = async(e) =>{
+    e.preventDefault();
+    if(!cardQuery.trim()) return;
+    setLoading(true);
+    setError(null);
+
+        try{
+            const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(cardQuery)}`)
+            const data = await response.json();
+            if(data.object === 'error'){
+                throw new Error(data.details);
+            }
+        
+        //navigation//
+        navigate(`/search?q=${encodeURIComponent(cardQuery)}&deckId=${deckId}`,{
+            state: {
+                results: data.data,
+                query: cardQuery,
+                deckId: deckId // pass deckid to add card later
+            }
+        });
+} catch (err) {
+    setError(err.message);
+} finally {
+    setLoading(false); 
+}
+}
+
 const showCommanderFilter = location.state?.fromDeck && location.state?.isCommander;
 
 const cameFromDeck = location.state?.fromDeck;
@@ -65,24 +96,6 @@ useEffect(()=>{
 
 
 
-const deckCountMap = useMemo(() => {
- const countMap = {};
- if(Array.isArray(currentDeckList)){
-        currentDeckList.forEach(entry =>{
-            if(entry.cardId &&entry.cardId.name){
-                const name = entry.cardId.name;
-                const qty = entry.quantity || 1;
-                if(countMap[name]){
-                    countMap[name] += qty;
-                } else {
-                    countMap[name] = qty;
-                }
-            }
-        });
-    } else {
-        console.warn('currentDeckList is not an array');  // Log a warning if currentDeckList is not an array
-    }   return countMap;
-}, [currentDeckList]);
 
 
 // const cancelTokenSource = useParams();
@@ -125,34 +138,7 @@ const fetchAutocompleteSuggestions = async (searchQuery) => {
 
 const debouncedAutocompleteFetch = useDebounce(fetchAutocompleteSuggestions, 300);
 
-const fetchCardDataForSelection = async(cardName) =>{
-    setLoading(true);
-    setError(null);
-    try{
-        
-        const idQuery = (colorIdentity && colorIdentity.trim() !== "") ? colorIdentity : null;
 
-        const identityPart = (filterByIdentity && idQuery) ? ` id<=${idQuery}` : '';
-        const fullQuery = `!"${cardName}"${identityPart}`;
-        const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=prints`)
-        if(!response.ok){
-            throw new Error(`Http error! status:${response.status}`);
-        }
-        const json = await response.json();
-        if(json.data && json.data.length > 0){
-            // Set the full list of prints
-            setCardData(json.data); 
-        } else {
-            throw new Error("no card was found");
-        }
-    } catch (error){
-        setError(error);
-        setCardData(null);
-    } finally{
-        setLoading(false);
-    }
-
-}
 
 
 
@@ -183,49 +169,7 @@ const handleInputChange = (event) =>{
 }
 
 
-const handleArtworkClick = (clickedCard) => {
-    setSelectedCard(clickedCard);
-};
 
-const handleAddClick = async() =>{
-    if(selectedCard && deckId) {
-        try{
-            // Sync card details to your backend database
-            const syncResponse = await fetch(`${API_BASE}/cardStorage/sync-card`,{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-                },
-                body: JSON.stringify(selectedCard),
-            });
-            if(!syncResponse.ok){
-                throw new Error('Failed to sync card with backend database')
-            }
-            
-            const {mongoId} = await syncResponse.json();
-            
-
-            const addCardResponse = await fetch(`${API_BASE}/cardStorage/${deckId}/add-card`,{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
-                    'Authorization':`Bearer ${localStorage.getItem('userToken')}`
-                },
-                body: JSON.stringify({cardId:mongoId}),
-            });
-            if(!addCardResponse.ok){
-                throw new Error('Failed to add card to deck backend');
-            }
-
-            addCardToDeck({mongoId, name: selectedCard.name})
-
-        } catch(error){
-            console.error("error during card sync:" ,error); 
-            setError(error);
-        }
-    }
-};
 
 const currentInDeckCount = selectedCard ? (deckCountMap[selectedCard.name] || 0) : 0;
 
@@ -234,53 +178,17 @@ if (error) return(<div className='loading_error'>Error {error.message}</div>)
 
     return (
     <div className="search search_container">
-        <form className='forms search_form' onSubmit={handleSubmit}>
-            {showCommanderFilter && (
-            <label className='labels search_label'>
-                <input 
-                    className='inputs search_input search_input-checkmark'
-                    type="checkbox"
-                    checked={filterByIdentity}  
-                    onChange={(e)=> setFilterByIdentity(e.target.checked)}
-                />  
-                Filter by Commander Identity ({colorIdentity || 'None'})
-            </label>
-            )}
-           <input 
-
-            id={'cardSearch'}
-            className={`inputs search_input search_input-text`}
+        <form onSubmit={handleSearchSubmission}>
+            <input 
             type="text"
             value={cardQuery}
-            onChange={handleInputChange}
+            onChange={(e)=>setCardQuery(e.target.value)}
             placeholder='Search for a card..'
-            role="combobox"
-            aria-expanded={suggestions.length > 0 ? true: false}
             />
-
-            <button className='buttons submit search_button ' type='submit'>search</button>
-
-            {suggestions.length > 0 && (
-                <ul className='search_list ' style={{ border: '1px solid #ccc', listStyle: 'none', padding: 0 }}>
-                    {suggestions.map((name)=>(
-                        <li
-                        className='search_listItem'
-                        key={name}
-                        onClick={()=> handleSuggestionClick(name)}
-                        onMouseEnter={(e)=> e.target.style.backgroundColor = '#f0f0f0'}
-                        onMouseLeave={(e)=> e.target.style.backgroundColor = ''}
-                        style={{ padding: '5px', cursor: 'pointer' }}
-                         >
-                        {name}
-                        {/* Indicator in suggestion list */}
-                        {deckCountMap[name] > 0 && <span className='spans' style={{color: 'green', fontSize: '0.8em', marginLeft: '10px'}}>(In Deck: {deckCountMap[name]})</span>}
-                    </li>
-                    ))}
-                </ul>
-            )}
-
+            <button className='buttons' type='submit' disabled={loading}>
+                {loading ? 'Searching...':'search'}
+                </button>
         </form>
-    
         {loading && <div className='loading'>loading card data...</div>}
       
         {/* Artwork Navigation */}
