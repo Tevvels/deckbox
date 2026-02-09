@@ -5,7 +5,6 @@ import '../styles/Navigation.css'
 function Navigation({onLogout}) {
   
   const location = useLocation();
-  console.log(location);
 
   const navLinks = [
     {name: 'Dashboard', path:'/'},
@@ -14,7 +13,6 @@ function Navigation({onLogout}) {
     {name: 'Public Decks',path:'/publicdecks'},
     {name: 'New Deck',path:'/deck/new'},
   ];
-  console.log(navLinks)
   return (
     <div className='navigation'>
     <nav className={`navigation_container`}>

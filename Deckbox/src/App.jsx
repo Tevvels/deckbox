@@ -15,6 +15,7 @@ import PublicDeckDisplay from './components/PublicDeckDisplay.jsx'
 import './styles/GridDisplay.css';
 import Footer from './modules/Footer.jsx';
 import Navigation from './modules/Navigation.jsx'
+import SearchResults from './components/SearchResults.jsx'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -118,6 +119,7 @@ function App() {
       <Route path="/storage" element={<Storage addCardToDeck={cardAdded} deckCards={activeDeck?.cards || []} />} />
       <Route path="/deck/:deckId" element={<SingleDeck deck={activeDeck} setDeck={setActiveDeck}/>} />
       <Route path="/deck/:deckId/search" element={<Storage addCardToDeck={addCardToActiveDeck} currentDeckList={activeDeck?.cards || []}/>} />   
+      <Route path='/search' element={<SearchResults />} />
     </Routes>
     </main>
     <Footer />
