@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
 const cardSchema = new mongoose.Schema({
-    task: String,
     method: String,
     oracle_id: String,
-    ip: String,
     url: String,
     name: String,
-    headers: Object,
-    body: Object,
-    responseStatus: Number,
-    responseTime: Number,
+    type_line: String,
+    cmc:Number,
+    mana_cost: String,
     color_identity: {
     type: [String], // This defines an array of strings
     default: []     // Colorless cards will be an empty array
