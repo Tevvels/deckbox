@@ -23,7 +23,7 @@ function Dropdown({options, onSelect}) {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [dropdownref]);
-    
+    console.log(options)
   return (
     <div className="dropdown dropdown_container">
         <div ref={dropdownref} className="dropdown_container-sub">
@@ -34,7 +34,7 @@ function Dropdown({options, onSelect}) {
                 <ul className="list dropdown_list">
                     {options.map((option) => (
                         <li className='listItem dropdown_listItem' key={option.value} onClick={() => handleOptionSelect(option)}>
-                            {option.label}
+                            {option.div}
                         </li>   
                     ))}
                 </ul>

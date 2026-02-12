@@ -146,8 +146,7 @@ return (
         {value:'Pauper', div:'Pauper'},
         {value:'Other', div:'Other'},
     ]} onSelect={(option)=>setDeckFormat(option.value)} />
-
-
+    
 
     {deckFormat === 'Commander' && (
         <div className="create_Deck-Commander-container">

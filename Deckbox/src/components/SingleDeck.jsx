@@ -2,7 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CardDetail from '../modules/CardDetail';
+import DeckDetail from './DeckDetail';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+
+const AddCardButton = ({ deckId,isCommander}) =>(
+    <div className='deck_container-sub deck_container-ownerCheck'>
+        <div className='deck_header deck_addCard-header'>Add a card</div>
+        <Link className='links deck_link deck_addCard-link'
+        state={{ fromDeck:"true", isCommander}}
+        >
+            + card
+        </Link>
+    </div>
+)
+
 
 function SingleDeck({deck,setDeck}) {
     const {deckId} = useParams();
@@ -10,6 +23,7 @@ function SingleDeck({deck,setDeck}) {
     const [error, setError] = useState(null);
     const [isOwner,setIsOwner] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [sortBy,setSortBy] = useState('none');
     const navigate = useNavigate();
   
   
@@ -41,7 +55,6 @@ function SingleDeck({deck,setDeck}) {
                 let data = null;
         
             try{
-                console.log(data)
                 if(token){
                     try{
                     const privRes = await fetch(`${API_BASE}/cardStorage/${deckId}`,{
@@ -51,7 +64,6 @@ function SingleDeck({deck,setDeck}) {
                         data = await privRes.json();
                         setIsOwner(true);
                     }
-                    {console.log(`"data.user" ${data.user}`)}
 
                 } catch(e){
                     console.error("Error fetching private deck:", e);
@@ -152,63 +164,91 @@ if(error) return <p className='loading loading_error'> Error loading deck: {erro
 if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 
     return (
-    <div className="deck deck_container">
-        {isOwner &&(
-            <div className='deck_container-sub deck_container-ownerCheck'>
-                <div className='deck_header deck_addCard-header'>Add a card</div>
+    // <div className="deck deck_container">
+    //     {isOwner &&(
+    //         <div className='deck_container-sub deck_container-ownerCheck'>
+    //             <div className='deck_header deck_addCard-header'>Add a card</div>
 
-                <Link className='links deck_link deck_addCard-link' to={`/deck/${deckId}/search`} state={{fromDeck:true ,isCommander: deck.format ==='commander'}}> + card </Link>
-            </div>
-        )}
-        {/* {console.log("Rendering SingleDeck with deck:", deck)} */}
-        <CardDetail card={selectedCard} onClose={handleCloseDetail}  onUpdateSuccess={handleUpdateCardArt}/>
-        {deck ? (
-            <div className='deck_container-sub'>
-                <h2 className='deck_title'>{deck.title || deck.name}</h2>
-                <p className='deck_desc' >{deck.description}</p>
-                <ul className='lists deck_list'>
-                    {/* the map that get the color identity of our commander, then displays those here in a background gradient */}
-                    {deck.cards && deck.cards.map((deckEntry, index) => {
-                      if(!deckEntry.cardId) return null;
-                      const colors = (deckEntry.cardId.color_identity && deckEntry.cardId.color_identity.length > 0) ? deckEntry.cardId.color_identity : [];
-                      return (
-                      <li className='listItem deck_listItem' key={deckEntry.cardId._id || index}>
-                <div className='deck_card deck_card-button' onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
+    //             <Link className='links deck_link deck_addCard-link' to={`/deck/${deckId}/search`} state={{fromDeck:true ,isCommander: deck.format ==='commander'}}> + card </Link>
+    //         </div>
+    //     )}
+    //     {/* {console.log("Rendering SingleDeck with deck:", deck)} */}
+    //     <CardDetail card={selectedCard} onClose={handleCloseDetail}  onUpdateSuccess={handleUpdateCardArt}/>
+    //     {deck ? (
+    //         <div className='deck_container-sub'>
+    //             <h2 className='deck_title'>{deck.title || deck.name}</h2>
+    //             <p className='deck_desc' >{deck.description}</p>
+    //             <ul className='lists deck_list'>
+    //                 {/* the map that get the color identity of our commander, then displays those here in a background gradient */}
+    //                 {deck.cards && deck.cards.map((deckEntry, index) => {
+    //                   if(!deckEntry.cardId) return null;
+    //                   const colors = (deckEntry.cardId.color_identity && deckEntry.cardId.color_identity.length > 0) ? deckEntry.cardId.color_identity : [];
+    //                   return (
+    //                   <li className='listItem deck_listItem' key={deckEntry.cardId._id || index}>
+    //             <div className='deck_card deck_card-button' onClick={()=>handleCardClick(deckEntry.cardId)} style={{cursor:'pointer'}}>
 
-                           <span className='spans deck_card-name'> {deckEntry.cardId.name} </span>
-                           <span className='spans deck_card-count'> - Quantity: {deckEntry.quantity} </span>
-                            <span className='spans deck_card-colorId'> - color identity {deckEntry.cardId.color_identity}</span>
-                           <span className='spans deck_card-img-container'> {deckEntry.cardId.image_uris && <img className='card deck_card-img' src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
-                           <div className="deck_container-sub deck_container-color">
-                           {
-                            colors.map((color, idx) => (
-                                <span key={idx} className={`spans deck_card-color-circle color-circle ${color.toLowerCase()}`} title={color}></span>
-                            ))
-                           }
-                           </div>
-                           </div>
-                           {isOwner &&(
-                           <div className='deck_container-sub deck_container-ownerCheck'>
+    //                        <span className='spans deck_card-name'> {deckEntry.cardId.name} </span>
+    //                        <span className='spans deck_card-count'> - Quantity: {deckEntry.quantity} </span>
+    //                         <span className='spans deck_card-colorId'> - color identity {deckEntry.cardId.color_identity}</span>
+    //                        <span className='spans deck_card-img-container'> {deckEntry.cardId.image_uris && <img className='card deck_card-img' src={deckEntry.cardId.image_uris.small} alt={deckEntry.cardId.name} />} </span> 
+    //                        <div className="deck_container-sub deck_container-color">
+    //                        {
+    //                         colors.map((color, idx) => (
+    //                             <span key={idx} className={`spans deck_card-color-circle color-circle ${color.toLowerCase()}`} title={color}></span>
+    //                         ))
+    //                        }
+    //                        </div>
+    //                        </div>
+    //                        {isOwner &&(
+    //                        <div className='deck_container-sub deck_container-ownerCheck'>
 
-                                <button className='buttons deck_button deck_button-delete-deck' onClick={()=> deleteDeck(deck._id)}>delete deck</button>
-                               <button className='buttons deck_button deck_button-delete-card' onClick={() => handleDeleteClick(deckEntry.cardId._id)}>Remove Card</button>
-                           </div> 
-                           )}
-                        </li>
+    //                             <button className='buttons deck_button deck_button-delete-deck' onClick={()=> deleteDeck(deck._id)}>delete deck</button>
+    //                            <button className='buttons deck_button deck_button-delete-card' onClick={() => handleDeleteClick(deckEntry.cardId._id)}>Remove Card</button>
+    //                        </div> 
+    //                        )}
+    //                     </li>
                         
-                    )})}
-                   </ul>
+    //                 )})}
+    //                </ul>
 
-            </div>
-        ) : (
-            <p className='loading'>Loading deck...</p>
-        )}  
-            <Link className='links deck_link' to="/publicdecks">Back to Public Decks</Link>
+    //         </div>
+    //     ) : (
+    //         <p className='loading'>Loading deck...</p>
+    //     )}  
+    //         <Link className='links deck_link' to="/publicdecks">Back to Public Decks</Link>
           
-        {isOwner && <Link  className='links deck_link' to="/mydecks"> Back to My Decks </Link>}
+    //     {isOwner && <Link  className='links deck_link' to="/mydecks"> Back to My Decks </Link>}
  
-    </div>
-  )
+    // </div>
+
+    
+
+
+    <div className="deck deck_container">
+        {isOwner && <AddCardButton deckId={deckId} isCommander={deck?.format === "commander"} />}
+
+
+        <CardDetail
+        card={selectedCard}
+        onClose={handleCloseDetail}
+        onUpdateSuccess={handleUpdateCardArt}
+        />
+        {
+            deck? (
+                <div className='deck_conatainer-sub'>
+                    <h2 className='deck_title'>{deck.title}</h2>
+                    <DeckDetail
+                    cards={deck.cards ||[]}
+                    sortBy={sortBy}
+                    isOwner={isOwner}
+                    setSoryBy={setSortBy}
+                    onCardClick={handleCardClick}
+                    onDeleteCard={handleCardClick}
+                    />
+                    </div>
+            ) : <p>loading ...</p>}
+            </div>
+)
 }
 
 export default SingleDeck
