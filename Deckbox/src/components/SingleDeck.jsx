@@ -3,12 +3,15 @@ import { Link, useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CardDetail from '../modules/CardDetail';
 import DeckDetail from './DeckDetail';
+import DeckCard from './DeckCard';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
-const AddCardButton = ({ deckId,isCommander}) =>(
+const AddCardButton = ({ deckId,isCommander,colorIdentity}) =>(
     <div className='deck_container-sub deck_container-ownerCheck'>
         <div className='deck_header deck_addCard-header'>Add a card</div>
-        <Link className='links deck_link deck_addCard-link'
+        <Link 
+        to={`/deck/${deckId}/search`}
+        className='links deck_link deck_addCard-link'
         state={{ fromDeck:"true", isCommander}}
         >
             + card
@@ -25,6 +28,8 @@ function SingleDeck({deck,setDeck}) {
     const [selectedCard, setSelectedCard] = useState(null);
     const [sortBy,setSortBy] = useState('none');
     const navigate = useNavigate();
+    const commanderEntry = deck?.cards?.find(entry => entry.isCommander || entry?.cardId?.type_line?.includes("legendary Creature"));
+    const colorIdentity = commanderEntry?.cardId?.color_identity?.join("").toLowerCase() || "";
   
   
     const deleteDeck = async (idtowait) => {
@@ -225,29 +230,27 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 
 
     <div className="deck deck_container">
-        {isOwner && <AddCardButton deckId={deckId} isCommander={deck?.format === "commander"} />}
-
-
-        <CardDetail
-        card={selectedCard}
-        onClose={handleCloseDetail}
-        onUpdateSuccess={handleUpdateCardArt}
-        />
-        {
-            deck? (
-                <div className='deck_conatainer-sub'>
-                    <h2 className='deck_title'>{deck.title}</h2>
-                    <DeckDetail
-                    cards={deck.cards ||[]}
-                    sortBy={sortBy}
-                    isOwner={isOwner}
-                    setSoryBy={setSortBy}
-                    onCardClick={handleCardClick}
-                    onDeleteCard={handleCardClick}
-                    />
-                    </div>
-            ) : <p>loading ...</p>}
-            </div>
+        <DeckDetail
+        deck={deck}
+        isOwner={isOwner}
+        onCardClick={handleCardClick}
+        onDeleteDeck={()=> deleteDeck(deck._id)}
+        onCardDelete={handleDeleteClick}
+        /> 
+        {selectedCard && (
+            <CardDetail
+            card={selectedCard}
+            onClose={handleCloseDetail}
+            onUpdateSuccess={handleUpdateCardArt}
+            />
+        )} 
+        {isOwner && (
+            <AddCardButton
+            deckId={deckId}
+            isCommander={deck.format === 'commander'}
+            />
+        )}
+    </div>
 )
 }
 
