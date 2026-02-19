@@ -5,8 +5,8 @@ function DeckDetail({cards =[], isOwner, onCardClick,OnDeleteCard}) {
  const [sortBy, setSortBy] = useState('none');
 
  const sortedCards = useMemo(()=>{
-    console.log("sorting triggered",sortBy)
     let list = cards ? cards.filter(entry => entry && entry.cardId): [];
+    console.log("Original cards:", list);
     if(sortBy === 'cmc') {
         return [...list].sort((a,b)=>(a.cardId.cmc || 0) - (b.cardId.cmc || 0));
     }
@@ -16,13 +16,13 @@ function DeckDetail({cards =[], isOwner, onCardClick,OnDeleteCard}) {
                 const typeA = a.cardId?.type_line || "";
                 const typeB = b.cardId?.type_line || "";
                 return typeA.localeCompare(typeB);
+   
             });
         }
-        console.log(list)
         return list;
     
  },[cards,sortBy]);
- 
+ console.log("Sorted cards:", sortedCards);
  
     return (
 
@@ -37,13 +37,15 @@ function DeckDetail({cards =[], isOwner, onCardClick,OnDeleteCard}) {
 
             <ul className='list deck_list'>
                 {sortedCards.map((deckEntry, index) =>{
+                    const uniqueKey = `${deckEntry.cardId._id}-${index}`;
                     if(!deckEntry.cardId) return null;
                     const colors = deckEntry.cardId.color_identity || [];
 
                     return (
-                        <li className='listItem deck_listItem' key={deckEntry.cardId._id || index}>
+                        <li className='listItem deck_listItem' key={uniqueKey}>
                             <div className='deck_card' onClick={() => onCardClick(deckEntry.cardId)}>
                                 <span className='deck_card-name'>{deckEntry.cardId.name}</span>
+                                <img className='deck_card-img' src={deckEntry.cardId.image_uris?.small || "https://via.placeholder.com/150"} alt={deckEntry.cardId.name} />
                             </div>
                             {isOwner && (
                                 <button onClick={() => OnDeleteCard(deckEntry.cardId._id)}>Remove</button>

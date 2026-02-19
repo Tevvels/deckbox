@@ -7,6 +7,7 @@ const cardSchema = new mongoose.Schema({
     type_line: String,
     cmc:Number,
     mana_cost: String,
+    oracle_text: String,
     color_identity: {
     type: [String], // This defines an array of strings
     default: []     // Colorless cards will be an empty array

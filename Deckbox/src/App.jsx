@@ -113,13 +113,13 @@ function App() {
       <Route path="/deck/" element={<MyDecks/>} />
       <Route path="/deck/new" element={<CreateNewDeck onAdd={addItem}/>} />
       <Route path="/players" element={<Players />} />
-      <Route path="*" element={<div>404 Not Found</div>} />
       <Route path="/mydecks" element={<MyDecks />} />
       <Route path="/login" element={<Login onLogin={handleLogin} onShowRegister={showRegister} onShowForgot={showForgot} />} />
       <Route path="/storage" element={<Storage addCardToDeck={cardAdded} deckCards={activeDeck?.cards || []} />} />
       <Route path="/deck/:deckId" element={<SingleDeck deck={activeDeck} setDeck={setActiveDeck}/>} />
       <Route path="/deck/:deckId/search" element={<Storage addCardToDeck={addCardToActiveDeck} currentDeckList={activeDeck?.cards || []}/>} />   
       <Route path='/search' element={<SearchResults />} />
+      <Route path="*" element={<div>404 Not Found</div>} />
     </Routes>
     </main>
     <Footer />

@@ -1,3 +1,4 @@
+import { set } from 'mongoose';
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -54,41 +55,63 @@ export const UseCardSearch = () => {
 
     const handleArtworkClick = (card) =>{
         setSelectedCard(card);
-        if(cameFromDeck){
-            navigate(`/card/${card.id}`, {state: {cameFromDeck:true, colorIdentity: colorIdentity}});
-        } else {
-            navigate(`/card/${card.id}`);
-        }
+        const sameName = suggestions.filter(c => c === card.name);
+        setSameNameCard(sameName);  
+            
     };
 
-const handleAddClick = async (card) =>{
+const handleAddClick = async () =>{ 
     const token = getSafeToken();
+    if(!selectedCard) return;
     try{
-        const response = await fetch(`${API_BASE}/cardStorage/${deckId}/add`,{
+
+        const syncResponse = await fetch(`${API_BASE}/cardStorage/sync-card`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization' : token ? `Bearer ${token}` : ''
             },
-            body: JSON.stringify({cardId: card.id})
-        })
-        if(response.ok){
-            const data = await response.json();
-            setDeckCountMap(prev => ({...prev, [card.id]: data.newCount}));
+            body: JSON.stringify(selectedCard)
+        });
+        const syncedCard = await syncResponse.json();
+        const mongoId = syncedCard.mongoId; 
+        if(!mongoId) throw new Error("Failed to sync card with server.");
+
+        const addRes = await fetch(`${API_BASE}/cardStorage/${deckId}/add-card`,{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : token ? `Bearer ${token}` : ''
+            },
+            body: JSON.stringify({cardId: mongoId})
+        });
+
+        if(addRes.ok){
+            const updatedDeck = await addRes.json();
+            setDeckCountMap(prev => {
+                const newMap = {...prev};
+                const cardName = selectedCard.name;
+                newMap[cardName] = (newMap[cardName] || 0) + 1;
+                return newMap;
+            });
         }
-    } catch (err) {
+    } catch (err){
         console.error("Error adding card to deck:", err);
     }
 };
 
 
+
     useEffect(()=>{
         const fetchDeckColors = async () =>{
+    const token = getSafeToken();
+
             if(!deckId || colorIdentity) return;
+
             try{
                 const response = await fetch(`${API_BASE}/cardStorage/${deckId}`,{
                     headers: {
-                        'Authorization' : Token ? `Bearer ${Token}` : '',
+                        'Authorization' : token ? `Bearer ${token}` : '',
                     }
                 });
                 if(response.ok) {
@@ -113,7 +136,7 @@ const fetchSuggestions = useCallback(async (query) => {
     try{
         let identityFilter = "";
         if(filterByIdentity && colorIdentity){
-            identityFilter = "identity:" + colorIdentity;  
+            identityFilter = " id<=" + colorIdentity;  
         }
         const fullQuery = cleanQuery + identityFilter;
         const finalUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}`;
