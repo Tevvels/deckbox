@@ -29,13 +29,14 @@ function Storage() {
         setSelectedCard,
         handleArtworkClick,
         deckCountMap,
-        cameFromDeck
+        cameFromDeck,
+        handleAddClick,
     
     } = UseCardSearch();
 
 
 
-
+const currentInDeckCount = (selectedCard && deckCountMap) ?(deckCountMap[selectedCard?.name] || 0)  : 0; 
 
 
 
@@ -48,12 +49,12 @@ const handleSearchSubmission = async(e) =>{
     setError(null);
 
         try{
-            const identityFilter = (filterByIdentity && colorIdentity) ? `+identity:${colorIdentity}` : '';
+            const identityFilter = (filterByIdentity && colorIdentity) ? ` +identity:${colorIdentity}` : '';
             const fullQuery = cardQuery + identityFilter;
             
             const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=prints`);
             const data = await response.json();
-            if(!data.object === "error") throw new Error (data.details);
+            if(data.object === "error") throw new Error (data.details);
             setSuggestions([]);
             setSameNameCard(data.data);
             if(data.data.length > 0) setSelectedCard(data.data[0]);
@@ -80,7 +81,7 @@ const handleSuggestionClick = (name)=>{
             <input 
             type="text"
             value={cardQuery}
-            onChange={(e)=>setCardQuery(e.target.value)}
+            onChange={handleInputChange}
             placeholder='Search for a card..'
             autoComplete="off"
             />

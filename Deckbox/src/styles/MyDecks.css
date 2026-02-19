@@ -39,3 +39,7 @@
     border-radius: 4px;
     margin-bottom: 1.5px;
 }
+.deck_list{
+    display: flex;
+    flex-wrap: wrap;
+}

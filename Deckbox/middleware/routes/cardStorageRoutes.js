@@ -64,24 +64,28 @@ router.post('/', async (req,res) =>{
         let initialCards = [];
 
         if(format === 'Commander' && commander){
-            let cardRecord = await Card.findOne({name: commander, user: req.user.id});
+            const cardRecord = await Card.findOneAndUpdate({name: commander, user: req.user.id}
 
-            if(!cardRecord && scryFallCardData){
-                cardRecord = new Card({
+            ,{
                     name: scryFallCardData.name,
                     color_identity: scryFallCardData.color_identity,
+                    cmc: scryFallCardData.cmc,
+                    type_line: scryFallCardData.type_line,
+                    mana_cost: scryFallCardData.mana_cost,
+                    oracle_text: scryFallCardData.oracle_text,
                     scryfallId: scryFallCardData.id,
                     image_uris: scryFallCardData.image_uris,
                     user:req.user.id
-                });
-                await cardRecord.save();
-            }
+                },
+                {new:true, upsert:true}
+);
             
            
             if(cardRecord){ 
                 initialCards.push({cardId: cardRecord._id, quantity:1, color_identity: cardRecord.color_identity});
-            }
+
         }
+    }
 
 
       // Create and save the new Deck  
@@ -240,20 +244,27 @@ router.post('/sync-card',async(req,res)=>{
     const scryFallCardData = req.body;
     try{
         const userId = req.user.id
-        let card = await Card.findOne({scryfallId: scryFallCardData.id,
+        const card = await Card.findOneAndUpdate({scryfallId: scryFallCardData.id,
         user:userId
 
-        })
-        if (!card){
-            card = new Card({
+        },
+        
+           {
                 name: scryFallCardData.name,
                 color_identity: scryFallCardData.color_identity,
                 scryfallId: scryFallCardData.id,
                 image_uris: scryFallCardData.image_uris,
-                user:userId
-            });
+                user:userId,
+                cmc: scryFallCardData.cmc,
+                type_line: scryFallCardData.type_line,
+                mana_cost: scryFallCardData.mana_cost,
+                oracle_text: scryFallCardData.oracle_text
+
+            },
+            {new:true, upsert:true}
+);
             await card.save();
-        }
+        
         return res.json({mongoId: card._id});
     } catch(err){
         res.status(500).json({error: err.message});
@@ -279,6 +290,28 @@ router.patch('/update-art/:id', async (req,res) => {
     } catch (err){
         return res.status(500).json({error: err.message});
 
+    }
+});
+
+router.get('/admin/repair-cards',async (req,res) => {
+    try{
+        const allCards = await Card.find({cmc:{$exists:false}});
+        let updatedCount = 0;
+        for(let card of allCards){
+            const scryFallData = await fetch(`https://api.scryfall.com/cards/${card.scryfallId}`).then(r=>r.json());
+            if(scryFallData && scryFallData.cmc !== undefined){
+                card.cmc = scryFallData.cmc;
+                card.type_line = scryFallData.type_line;
+                card.mana_cost = scryFallData.mana_cost;        
+
+                card.oracle_text = scryFallData.oracle_text;
+                await card.save();
+                updatedCount++;
+            }
+        }
+        return res.json({message: `Updated ${updatedCount} cards with missing CMC`});
+    } catch(err){
+        return res.status(500).json({error: err.message});
     }
 });
 
