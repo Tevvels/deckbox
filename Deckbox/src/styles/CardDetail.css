@@ -1,5 +1,26 @@
-.deck-list{
+.deck_container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+}
+.card_preview {
+    position:absolute;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    top:20px;
+    left: 60%;
+    width: 350px;
+    min-height:550px;
+}
+.card_preview img {
+    width:100%;
+    height:auto;
+    aspect-ratio: 2.5/3.5;
+    object-fit: contain;
 }

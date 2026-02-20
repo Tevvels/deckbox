@@ -172,10 +172,11 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
     <div className="deck deck_container">
         <DeckDetail
         cards={deck.cards}
+        name={deck.name}
         isOwner={isOwner}
         onCardClick={handleCardClick}
         onDeleteDeck={()=> deleteDeck(deck._id)}
-        onCardDelete={handleDeleteClick}
+        OnDeleteCard={handleDeleteClick}
         />
         {selectedCard && (
             <CardDetail
