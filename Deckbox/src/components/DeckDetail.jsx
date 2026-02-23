@@ -125,8 +125,8 @@ const stats = useMemo(()=>{
 
             <ul className='list deck_list'>
 {Object.entries(sortedCards).map(([category, entries])=>(
-    <li key={category}>
-        <h3>{category}({entries.reduce((sum,i) => sum +(i.quantity  ||1),0)})</h3>
+    <li className='deck_list-categoryList' key={category}>
+        <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +(i.quantity  ||1),0)})</h3>
         <ul className='list deck_list'>
             {console.log(entries)}
             {entries.map(entry =>(
@@ -158,7 +158,7 @@ const stats = useMemo(()=>{
 key={mana} 
 className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
 >
-{mana} mana
+{mana} 
 </span>
             )
         })}

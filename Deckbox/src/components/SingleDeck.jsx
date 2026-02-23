@@ -169,7 +169,7 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
   
 
 
-    <div className="deck deck_container">
+    <div className="deck">
         <DeckDetail
         cards={deck.cards}
         name={deck.name}

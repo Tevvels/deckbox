@@ -1,4 +1,4 @@
-.deck_container {
+.deck {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,6 +8,7 @@
 }
 .card_preview {
     position:absolute;
+    display: flex;
     background-size: cover;
     background-position: center;
     border-radius: 8px;
@@ -24,4 +25,22 @@
     height:auto;
     aspect-ratio: 2.5/3.5;
     object-fit: contain;
+}
+.deck_header-sub{
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+  white-space: nowrap; /
+}
+.deck_list-categoryList{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+.deck_list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
