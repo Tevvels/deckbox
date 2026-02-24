@@ -1,4 +1,4 @@
-import React, {useState,useMemo} from 'react'
+import React, {useState,useMemo,useEffect} from 'react'
 import '../styles/CardDetail.css';
 
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
@@ -6,26 +6,64 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
 
 const [sortBy, setSortBy] = useState('none');
 const [cardPreview, setCardPreview] = useState(null);
- const sortedCards = useMemo(()=>{
-    let list = cards ? cards.filter(entry => entry && entry.cardId): [];
-    console.log("Original cards:", list);
-    if(sortBy === 'cmc') {
-        return [...list].sort((a,b)=>(a.cardId.cmc || 0) - (b.cardId.cmc || 0));
-    }
-
-    if(sortBy === "type") {
-            return [...list].sort((a,b)=>{
-                const typeA = a.cardId?.type_line || "";
-                const typeB = b.cardId?.type_line || "";
-                return typeA.localeCompare(typeB);
-   
-            });
+const Mana_Colors = {
+    "W": "White",
+    "U": "Blue",
+    "B": "Black",
+    "R": "Red",
+    "G": "Green",
+    "C": "Colorless"
+};
+const activeColors = useMemo(()=>{
+    const colors = new Set();
+    cards.forEach(entry => {
+        if(entry.cardId?.color_identity) {
+            entry.cardId.color_identity.forEach(color => colors.add(color));
         }
-        return list;
-    
- },[cards,sortBy]);
- const stats = useMemo(()=>{
+    });
+    if(colors.size === 0) colors.add("C");
+    return colors;
+},[cards]);
+
+
+ 
+
+const sortedCards = useMemo(()=>{
+    let list = cards ? cards.filter(entry => entry && entry.cardId): [];
+
+        list.sort((a,b)=> a.cardId.name.localeCompare(b.cardId.name));
+
+    const groups = {};
+if(sortBy === "type") {
+    list.forEach(entry => {
+        const type = entry.cardId.type_line.toLowerCase();
+    let category = "other";
+    if(type.includes("creature")) category = "creature";
+    else if(type.includes("planeswalker")) category = "planeswalker";
+    else if(type.includes("instant")) category = "instant";
+    else if(type.includes("sorcery")) category = "sorcery";
+    else if(type.includes("enchantment")) category = "enchantment";
+    else if(type.includes("artifact")) category = "artifact";
+    else if(type.includes("land")) category = "land";
+    if(!groups[category]) groups[category] = [];
+    groups[category].push(entry);
+});
+}  else if(sortBy === "cmc") {
+    list.forEach(entry => {
+        const category = `Mana Value ${entry.cardId.cmc || 0 }`;
+        if(!groups[category]) groups[category] = [];
+        groups[category].push(entry);
+    });
+}
+else {
+    groups["All Cards"] = list;
+}
+return groups;
+},[cards,sortBy]);
+
+const stats = useMemo(()=>{
     const counts = {
+        total: 0,
         creature: 0,
         planeswalker: 0,
         instant: 0,
@@ -33,26 +71,45 @@ const [cardPreview, setCardPreview] = useState(null);
         enchantment: 0,
         artifact: 0,
         land: 0,
-        other: 0,
-        total: 0
+        other: 0
     };
     cards.forEach(entry => {
-        if(entry && entry.cardId) {
-            const typeLine = entry.cardId.type_line.toLowerCase();
-            if(typeLine.includes('creature')) counts.creature++;
-            else if(typeLine.includes('planeswalker')) counts.planeswalker++;
-            else if(typeLine.includes('instant')) counts.instant++;
-            else if(typeLine.includes('sorcery')) counts.sorcery++;
-            else if(typeLine.includes('enchantment')) counts.enchantment++;
-            else if(typeLine.includes('artifact')) counts.artifact++;
-            else if(typeLine.includes('land')) counts.land++;
-            else counts.other++;
-            counts.total++;
+        if(entry?.cardId) {
+            const type = entry.cardId.type_line.toLowerCase();
+            const qty = entry.quantity || 1;
+            counts.total += qty;
+            if(type.includes("creature")) counts.creature += qty;
+            else if(type.includes("planeswalker")) counts.planeswalker += qty;
+            else if(type.includes("instant")) counts.instant += qty;
+            else if(type.includes("sorcery")) counts.sorcery += qty;
+            else if(type.includes("enchantment")) counts.enchantment += qty;
+            else if(type.includes("artifact")) counts.artifact += qty;
+            else if(type.includes("land")) counts.land += qty;
+            else counts.other += qty;
+
         }
     });
-    return counts;
+
+
+
+        return counts;
+    
+
  },[cards]);
- 
+
+
+ useEffect(()=>{
+    if(cards.length > 0 && !cardPreview) {
+        const commanderEntry = cards.find(entry => entry.cardId?.name === name);
+        if(commanderEntry) {
+            setCardPreview(commanderEntry.cardId);
+        } else if(cards[0].cardId) {
+            setCardPreview(cards[0].cardId);
+        }
+    }
+ }, [cards,name, cardPreview]);
+
+
     return (
         <>
 
@@ -60,7 +117,6 @@ const [cardPreview, setCardPreview] = useState(null);
         
     <div className='deck_container'>
         <div className='deck_header'>{name}</div>
-        <ul className={`Deck_list Deck_list-inDeck`}>
             <div className="sort_controls">
                 <button className='buttons' onClick={()=>{console.log("button clicked"); setSortBy('type');}}>Type</button>
                 <button className='buttons' onClick={()=>setSortBy('cmc')}>Mana </button>
@@ -68,44 +124,54 @@ const [cardPreview, setCardPreview] = useState(null);
             </div>
 
             <ul className='list deck_list'>
-                {sortedCards.map((deckEntry, index) =>{
-                const card = deckEntry.cardId;
-                const qty = deckEntry.quantity || 1;
-                    // const uniqueKey = `${deckEntry.cardId._id}-${index}`;
-                    // if(!deckEntry.cardId) return null;
-                    // const colors = deckEntry.cardId.color_identity || [];
-
-                    return (
-                        <li className='listItem deck_listItem' key={`${card._id}-${index}`}
-                        onMouseEnter={()=> setCardPreview(card)}
-                            onClick={()=> onCardClick(card)}
-                        
-                        >
-                            <div className='deck_card' onClick={() => onCardClick(deckEntry.cardId)}>
-                                <span className='deck_card-name'>{deckEntry.cardId.name}</span>
-                                <span className='deck_card-qty'> x {qty}</span>
-                                <img className='deck_card-img' src={deckEntry.cardId.image_uris?.small || "https://via.placeholder.com/150"} alt={deckEntry.cardId.name} />
-                            </div>
-                            {isOwner && (
-                                <button className="delete_button" 
-                                        onClick={(e) =>{e.stopPropagation();
-                                        if(window.confirm(`Remove ${card.name} from deck?`)) {
-                                            OnDeleteCard(card._id);
-                                        }
-                                    }}
-                            >
-                                remove
-                            </button>
+{Object.entries(sortedCards).map(([category, entries])=>(
+    <li className='deck_list-categoryList' key={category}>
+        <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +(i.quantity  ||1),0)})</h3>
+        <ul className='list deck_list'>
+            {console.log(entries)}
+            {entries.map(entry =>(
+                <li 
+                key={entry._id}
+                className='card_entry'
+                onClick={()=> onCardClick(entry.cardId)}
+                onMouseEnter={()=> setCardPreview(entry.cardId)}
+                // onMouseLeave={()=> setCardPreview(null)}
+                >
+                    {entry.quantity}x {entry.cardId.name} 
+                    {isOwner && (
+                        <button 
+                        className='buttons buttons_delete'
+                        onClick={(e)=>{e.stopPropagation(); OnDeleteCard(entry._id)}
+                        }                        >X</button>
                     )}
-                        </li>
-                    )
-                })}
+                </li>
+            ))}
             </ul>
-
-
-        </ul>
+        </li>
+    ))}
+     </ul>
     </div>
     <div className='card_preview'>
+        {Object.keys(Mana_Colors).map((mana)=>{
+            const isActive = activeColors.has(mana);
+            return (<span 
+key={mana} 
+className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
+>
+{mana} 
+</span>
+            )
+        })}
+        {cardPreview ? (
+            <div className='card-preview'>
+                <h3>{cardPreview.name}</h3>
+                <img src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
+                <p>{cardPreview.type_line}</p>
+                <p>{cardPreview.oracle_text}</p>
+            </div>
+        ) : (
+            <p>Hover over a card to see details</p>
+        )}
           <div className='deck_stats'>
             <h3>Deck Statistics</h3>
             <p>Total Cards: {stats.total}</p>
@@ -118,18 +184,9 @@ const [cardPreview, setCardPreview] = useState(null);
             <p>Lands: {stats.land}</p>
             <p>Other: {stats.other}</p>
         </div>
-        {cardPreview ? (
-            <div className='card-preview'>
-                <h3>{cardPreview.name}</h3>
-                <img src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
-                <p>{cardPreview.type_line}</p>
-                <p>{cardPreview.oracle_text}</p>
-            </div>
-        ) : (
-            <p>Hover over a card to see details</p>
-        )}
     </div>
 </>
+ 
     )
 }
 
