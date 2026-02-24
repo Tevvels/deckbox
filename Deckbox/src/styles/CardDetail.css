@@ -31,7 +31,10 @@
     font-size: 1.5em;
     font-weight: bold;
     writing-mode: vertical-rl;
-  white-space: nowrap; /
+  white-space: nowrap; 
+  display: inline-block;
+  border-left: 4px double rgba(255,255,255.80);
+  padding-bottom: 2px; /* Optional */
 }
 .deck_list-categoryList{
     display: flex;
