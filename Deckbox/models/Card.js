@@ -3,6 +3,7 @@ const cardSchema = new mongoose.Schema({
     method: String,
     oracle_id: String,
     url: String,
+    all_parts: {type:Array,default:[]},
     name: String,
     type_line: String,
     cmc:Number,

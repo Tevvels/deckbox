@@ -1,4 +1,4 @@
-import React, {useState,useMemo,useEffect} from 'react'
+import React, {useState,useMemo,useEffect, use} from 'react'
 import '../styles/CardDetail.css';
 
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
@@ -110,6 +110,27 @@ const stats = useMemo(()=>{
  }, [cards,name, cardPreview]);
 
 
+const tokens = useMemo(()=>{
+    const tokenMap = new Map();
+    cards.forEach(entry => {
+        if(entry.cardId?.all_parts) {
+            entry.cardId.all_parts.forEach(part => {
+                if(part.component === "token"|| part.component === "combo") {
+                    if(!tokenMap.has(part.id)) {
+                    tokenMap.set(part.id, {
+                        name:part.name,
+                        image: `https://api.scryfall.com/cards/${part.id}?format=image&version=normal`
+                    }
+                    );
+                    }
+                }
+            });
+        }
+    });
+    return Array.from(tokenMap.values());
+}, [cards]);
+
+
     return (
         <>
 
@@ -118,7 +139,7 @@ const stats = useMemo(()=>{
     <div className='deck_container'>
         <div className='deck_header'>{name}</div>
             <div className="sort_controls">
-                <button className='buttons' onClick={()=>{console.log("button clicked"); setSortBy('type');}}>Type</button>
+                <button className='buttons' onClick={()=>{setSortBy('type');}}>Type</button>
                 <button className='buttons' onClick={()=>setSortBy('cmc')}>Mana </button>
                 <button className='buttons' onClick={()=>setSortBy('none')}>Reset</button>
             </div>
@@ -128,7 +149,6 @@ const stats = useMemo(()=>{
     <li className='deck_list-categoryList' key={category}>
         <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +(i.quantity  ||1),0)})</h3>
         <ul className='list deck_list'>
-            {console.log(entries)}
             {entries.map(entry =>(
                 <li 
                 key={entry._id}
@@ -151,6 +171,17 @@ const stats = useMemo(()=>{
     ))}
      </ul>
     </div>
+    <div className="tokens_preview">
+        <h3>Tokens</h3>
+        <div className='tokens_container'>
+            {tokens.length > 0 ? tokens.map((token, index) => ( 
+                <div key={index} className='token'>
+                    <p>{token.name}</p>
+                    <img src={token.image} alt={token.name} />
+                </div>
+            )) : <p>No tokens in this deck</p>}
+        </div>
+    </div>
     <div className='card_preview'>
         {Object.keys(Mana_Colors).map((mana)=>{
             const isActive = activeColors.has(mana);
@@ -158,14 +189,14 @@ const stats = useMemo(()=>{
 key={mana} 
 className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
 >
-{mana} 
+<i className={`ms ms-${mana.toLowerCase()} ms-cost`}/>
 </span>
             )
         })}
         {cardPreview ? (
             <div className='card-preview'>
                 <h3>{cardPreview.name}</h3>
-                <img src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
+                <img className='card' src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
                 <p>{cardPreview.oracle_text}</p>
             </div>
