@@ -22,7 +22,7 @@
 }
 .card_preview img {
     width:100%;
-    height:auto;
+    height:300px;
     aspect-ratio: 2.5/3.5;
     object-fit: contain;
 }
@@ -35,7 +35,6 @@
 }
 .deck_list-categoryList{
     display: flex;
-    align-items: center;
     padding: 10px;
     gap: 10px;
 }

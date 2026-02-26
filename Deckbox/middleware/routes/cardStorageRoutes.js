@@ -295,7 +295,12 @@ router.patch('/update-art/:id', async (req,res) => {
 
 router.get('/admin/repair-cards',async (req,res) => {
     try{
-        const allCards = await Card.find({cmc:{$exists:false}});
+        const allCards = await Card.find({
+            $or:[
+            {cmc:{$exists:false}},
+            {all_parts: {$exists:false}}
+            ]
+        });
         let updatedCount = 0;
         for(let card of allCards){
             const scryFallData = await fetch(`https://api.scryfall.com/cards/${card.scryfallId}`).then(r=>r.json());
@@ -303,11 +308,13 @@ router.get('/admin/repair-cards',async (req,res) => {
                 card.cmc = scryFallData.cmc;
                 card.type_line = scryFallData.type_line;
                 card.mana_cost = scryFallData.mana_cost;        
-
+            
                 card.oracle_text = scryFallData.oracle_text;
+                card.all_parts = scryFallData.all_parts || [];
                 await card.save();
                 updatedCount++;
             }
+            await new Promise(resolve => setTimeout(resolve, 100));
         }
         return res.json({message: `Updated ${updatedCount} cards with missing CMC`});
     } catch(err){

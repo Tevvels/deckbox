@@ -30,6 +30,7 @@ main{
 }
 .card{
   border-radius:10px;
+  display: block;
 }
 
 .buttons{
@@ -63,7 +64,10 @@ main{
   border-radius: 10px;
 }
 
-
+.inactive{
+  opacity: 0.5;
+  filter: grayscale(100%);
+} 
 
 /* 
 

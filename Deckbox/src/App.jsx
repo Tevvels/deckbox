@@ -16,6 +16,8 @@ import './styles/GridDisplay.css';
 import Footer from './modules/Footer.jsx';
 import Navigation from './modules/Navigation.jsx'
 import SearchResults from './components/SearchResults.jsx'
+import 'mana-font/css/mana.min.css';
+
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 

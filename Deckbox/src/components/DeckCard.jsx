@@ -22,7 +22,6 @@ const getDeckColorIdentity = (colorIdentity) =>{
     const sortedIdentity = [...colorIdentity].sort((a,b)=> {
         return wubrgOrder.indexOf(a) - wubrgOrder.indexOf(b);
     });
-
     // if there is a color identity return this sorted color.
     if(sortedIdentity.length === 1) {
         return {backgroundColor: getColorIdentity(sortedIdentity[0])}
@@ -54,10 +53,13 @@ function DeckCard({deck,onDelete,showOwner = false}) {
     
     const imageUrl = firstCard?.image_uris?.art_crop || firstCard?.card_faces?.[0]?.image_uris?.art_crop || "placeholder_url";
 
-
   return (
 
+    
+
     <div className='deck_card-container'>
+{console.log(deck.color_identity)}
+
         <Link className='deck_card-link' to={`/deck/${deck._id}`}>
             <div className="deck_card-content">
         <div className='my_Deck-color' style={colorIdentityStyle} />
