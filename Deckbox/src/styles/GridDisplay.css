@@ -55,7 +55,35 @@
     ". deck_header"
     "sort_controls card_preview"
     "deck_list card_preview"
-    "tokens tokens"
+    "tokens_preview tokens_preview"
     ;
     gap: 20px;
+}
+
+.deck_header{
+    grid-area: deck_header;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.sort_controls{
+    grid-area: sort_controls;
+    display: flex;
+    gap: 10px;
+}
+.deck_list{
+    grid-area: deck_list;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.card_preview{
+    grid-area: card_preview;
+
+}
+.tokens_preview{
+    grid-area: tokens_preview;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
 }
