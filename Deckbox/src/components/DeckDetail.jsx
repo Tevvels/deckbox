@@ -1,103 +1,165 @@
 import React, {useState,useMemo,useEffect, use} from 'react'
 import '../styles/CardDetail.css';
+import { data } from 'react-router-dom';
+import { set } from 'mongoose';
 
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
- 
-
-const [sortBy, setSortBy] = useState('none');
-const [cardPreview, setCardPreview] = useState(null);
-const Mana_Colors = {
-    "W": "White",
-    "U": "Blue",
-    "B": "Black",
-    "R": "Red",
-    "G": "Green",
-    "C": "Colorless"
-};
-const activeColors = useMemo(()=>{
-    const colors = new Set();
-    cards.forEach(entry => {
-        if(entry.cardId?.color_identity) {
-            entry.cardId.color_identity.forEach(color => colors.add(color));
-        }
-    });
-    if(colors.size === 0) colors.add("C");
-    return colors;
-},[cards]);
-
-
- 
-
-const sortedCards = useMemo(()=>{
-    let list = cards ? cards.filter(entry => entry && entry.cardId): [];
-
-        list.sort((a,b)=> a.cardId.name.localeCompare(b.cardId.name));
-
-    const groups = {};
-if(sortBy === "type") {
-    list.forEach(entry => {
-        const type = entry.cardId.type_line.toLowerCase();
-    let category = "other";
-    if(type.includes("creature")) category = "creature";
-    else if(type.includes("planeswalker")) category = "planeswalker";
-    else if(type.includes("instant")) category = "instant";
-    else if(type.includes("sorcery")) category = "sorcery";
-    else if(type.includes("enchantment")) category = "enchantment";
-    else if(type.includes("artifact")) category = "artifact";
-    else if(type.includes("land")) category = "land";
-    if(!groups[category]) groups[category] = [];
-    groups[category].push(entry);
-});
-}  else if(sortBy === "cmc") {
-    list.forEach(entry => {
-        const category = `Mana Value ${entry.cardId.cmc || 0 }`;
+    
+    const [sortBy, setSortBy] = useState('none');
+    const [cardPreview, setCardPreview] = useState(null);
+    const [decksTokens, setDecksTokens] = useState([]);
+    const Mana_Colors = {
+        "W": "White",       
+        "U": "Blue",
+        "B": "Black",
+        "R": "Red",
+        "G": "Green",
+        "C": "Colorless"
+    };
+    const sortedCards = useMemo(()=>{
+        let list = cards ? cards.filter(entry => entry && entry.cardId): [];
+    
+            list.sort((a,b)=> a.cardId.name.localeCompare(b.cardId.name));
+    
+        const groups = {};
+    if(sortBy === "type") {
+        list.forEach(entry => {
+            const type = entry.cardId.type_line.toLowerCase();
+        let category = "other";
+        if(type.includes("creature")) category = "creature";
+        else if(type.includes("planeswalker")) category = "planeswalker";
+        else if(type.includes("instant")) category = "instant";
+        else if(type.includes("sorcery")) category = "sorcery";
+        else if(type.includes("enchantment")) category = "enchantment";
+        else if(type.includes("artifact")) category = "artifact";
+        else if(type.includes("land")) category = "land";
         if(!groups[category]) groups[category] = [];
         groups[category].push(entry);
     });
-}
-else {
-    groups["All Cards"] = list;
-}
-return groups;
-},[cards,sortBy]);
+    }  else if(sortBy === "cmc") {
+        list.forEach(entry => {
+            const category = `Mana Value ${entry.cardId.cmc || 0 }`;
+            if(!groups[category]) groups[category] = [];
+            groups[category].push(entry);
+        });
+    }
+    else {
+        groups["All Cards"] = list;
+    }
+    return groups;
+    },[cards,sortBy]);
+    const [tokenImg,setTokenImg] = useState(null);
+    const activeColors = useMemo(()=>{
+        const colors = new Set();
+        cards.forEach(entry => {
+            if(entry.cardId?.color_identity) {
+                entry.cardId.color_identity.forEach(color => colors.add(color));
+            }
+        });
+        if(colors.size === 0) colors.add("C");
+        return colors;
+    },[cards]);
 
-const stats = useMemo(()=>{
-    const counts = {
-        total: 0,
-        creature: 0,
-        planeswalker: 0,
-        instant: 0,
-        sorcery: 0,
-        enchantment: 0,
-        artifact: 0,
-        land: 0,
-        other: 0
-    };
-    cards.forEach(entry => {
-        if(entry?.cardId) {
-            const type = entry.cardId.type_line.toLowerCase();
-            const qty = entry.quantity || 1;
-            counts.total += qty;
-            if(type.includes("creature")) counts.creature += qty;
-            else if(type.includes("planeswalker")) counts.planeswalker += qty;
-            else if(type.includes("instant")) counts.instant += qty;
-            else if(type.includes("sorcery")) counts.sorcery += qty;
-            else if(type.includes("enchantment")) counts.enchantment += qty;
-            else if(type.includes("artifact")) counts.artifact += qty;
-            else if(type.includes("land")) counts.land += qty;
-            else counts.other += qty;
+
+    
+    
+    
+    
+    
+    const stats = useMemo(()=>{
+        const counts = {
+            total: 0,
+            creature: 0,
+            planeswalker: 0,
+            instant: 0,
+            sorcery: 0,
+            enchantment: 0,
+            artifact: 0,
+            land: 0,
+            other: 0
+        };
+        cards.forEach(entry => {
+            if(entry?.cardId) {
+                const type = entry.cardId.type_line.toLowerCase();
+                const qty = entry.quantity || 1;
+                counts.total += qty;
+                if(type.includes("creature")) counts.creature += qty;
+                else if(type.includes("planeswalker")) counts.planeswalker += qty;
+                else if(type.includes("instant")) counts.instant += qty;
+                else if(type.includes("sorcery")) counts.sorcery += qty;
+                else if(type.includes("enchantment")) counts.enchantment += qty;
+                else if(type.includes("artifact")) counts.artifact += qty;
+                else if(type.includes("land")) counts.land += qty;
+                else counts.other += qty;
+                
+            }
+        });
+        
+        
+        
+        return counts;
+        
+        
+    },[cards]);
+
+
+    useEffect(()=>{
+        const fetchRelatedTokens = async () => {
+            if(!sortedCards || Object.keys(sortedCards).length === 0) return;
+            const allEntries = Object.values(sortedCards).flat();
+            const tokenCreators = allEntries.filter(entry =>{
+                const card = entry.cardId;
+                if(!card) return false;
+
+                const hasTokenText = card.oracle_text && card.oracle_text.toLowerCase().includes("create") || card.oracle_text.toLowerCase().includes("token");
+                const hasParts = !!card.all_parts;
+                return hasTokenText || hasParts;
+
+
+            } );
+
+             if(tokenCreators.length === 0) return;
+
+             try{
+                 const uniqueSets = [...new Set(allEntries.map(entry => entry.cardId?.set).filter(Boolean))];
+                //  if(uniqueSets.length === 0) return;
+                //  const allEntries = Object.values(sortedCards).flat();
+                 const tokenNames = [];
+                 if(allEntries.some(e => e.cardId?.oracle_text?.toLowerCase().includes("investigate"))) {
+                         tokenNames.push("Clue");
+                        }
+                    if(allEntries.some(e => e.cardId?.oracle_text?.toLowerCase().includes("emblem"))) {
+                        tokenNames.push("Emblem");
+                    }
+                    if(allEntries.some(e => e.cardId?.oracle_text?.toLowerCase().includes("create") && e.cardId?.oracle_text?.toLowerCase().includes("zombie"))) {
+                        tokenNames.push("Zombie");
+                    }
+                    console.log("Unique Sets:", uniqueSets);
+                    console.log("Token Names:", tokenNames);
+                    console.log("Constructed Query:", `t:token (${uniqueSets.map(s => `set:${s} OR set:t${s}`).join(" OR ")}${tokenNames.length > 0 ? " OR " + tokenNames.map(n => `name:"${n}"`).join(" OR ") : ""}) includes:extras`);
+                const setPart = `(${uniqueSets.map(s => `set:${s} OR set:t${s}`).join(" OR ")})`;
+                const namePart = tokenNames.length > 0
+                    ? `(${tokenNames.map(n => `name:"${n}"`).join(" OR ")})`
+                    : "";
+                    const fullQuery = `t:token (${setPart}${namePart}) includes:extras`;
+
+            
+                const url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=prints`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if(data.data) {
+                    setDecksTokens(data.data);
+             }
+                } catch(err) {
+                    setDecksTokens([]);
+                    console.error("Error fetching tokens:", err);
+                }
 
         }
-    });
+        fetchRelatedTokens();
 
-
-
-        return counts;
+    }, [sortedCards]);
     
-
- },[cards]);
-
-
  useEffect(()=>{
     if(cards.length > 0 && !cardPreview) {
         const commanderEntry = cards.find(entry => entry.cardId?.name === name);
@@ -129,9 +191,6 @@ const tokens = useMemo(()=>{
     });
     return Array.from(tokenMap.values());
 }, [cards]);
-console.log(tokens);
-console.log(activeColors);
-console.log(cards);
 
     return (
         <>
@@ -176,12 +235,21 @@ console.log(cards);
     <div className="tokens_preview">
         <h3>Tokens</h3>
         <div className='tokens_container'>
-            {tokens.length > 0 ? tokens.map((token, index) => ( 
+            {decksTokens?.length > 0 ? decksTokens.map((token, index) => ( 
+                // console.log(token),
                 <div key={index} className='token'>
                     <p>{token.name}</p>
-                    <img src={token.image} alt={token.name} />
+                    <img src={token.image_uris?.small || token.image_uris?.normal} 
+                    alt={token.name} />
                 </div>
             )) : <p>No tokens in this deck</p>}
+            {tokenImg && (
+                <div className='card_preview'>
+                    <h3>Example Token</h3>
+                    <img className='card' src
+                    ={tokenImg.image_uris} alt="Token Preview" />
+                </div>
+            )}
         </div>
     </div>
     <div className='card_preview'>
@@ -196,7 +264,7 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
             )
         })}
         {cardPreview ? (
-            <div className='card-preview'>
+            <div className='card_preview'>
                 <h3>{cardPreview.name}</h3>
                 <img className='card' src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
