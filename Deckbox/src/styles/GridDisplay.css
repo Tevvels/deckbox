@@ -48,3 +48,14 @@
 .public_container{
     grid-area:publicB;
 }
+
+.deck_container{
+    display: grid;
+    grid-template-areas:
+    ". deck_header"
+    "sort_controls card_preview"
+    "deck_list card_preview"
+    "tokens tokens"
+    ;
+    gap: 20px;
+}

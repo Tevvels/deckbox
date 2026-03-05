@@ -129,7 +129,9 @@ const tokens = useMemo(()=>{
     });
     return Array.from(tokenMap.values());
 }, [cards]);
-
+console.log(tokens);
+console.log(activeColors);
+console.log(cards);
 
     return (
         <>
