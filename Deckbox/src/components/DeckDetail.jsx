@@ -48,6 +48,8 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
     }
     return groups;
     },[cards,sortBy]);
+
+
     const [tokenImg,setTokenImg] = useState(null);
     const activeColors = useMemo(()=>{
         const colors = new Set();
@@ -103,63 +105,80 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
     },[cards]);
 
 
-    useEffect(()=>{
-        const fetchRelatedTokens = async () => {
-            if(!sortedCards || Object.keys(sortedCards).length === 0) return;
-            const allEntries = Object.values(sortedCards).flat();
-            const tokenCreators = allEntries.filter(entry =>{
-                const card = entry.cardId;
-                if(!card) return false;
+useEffect(()=>{
+    const fetchRelatedTokens = async () => {
+        
+        if(!sortedCards || Object.keys(sortedCards).length === 0) return;
+        
+        const allEntries = Object.values(sortedCards).flat();
+        
+       const uniqueNames = [...new Set(allEntries.map(e => e.cardId?.name).filter(Boolean))]
+       if(uniqueNames.length === 0) return;
 
-                const hasTokenText = card.oracle_text && card.oracle_text.toLowerCase().includes("create") || card.oracle_text.toLowerCase().includes("token");
-                const hasParts = !!card.all_parts;
-                return hasTokenText || hasParts;
-
-
-            } );
-
-             if(tokenCreators.length === 0) return;
-
-             try{
-                 const uniqueSets = [...new Set(allEntries.map(entry => entry.cardId?.set).filter(Boolean))];
-                //  if(uniqueSets.length === 0) return;
-                //  const allEntries = Object.values(sortedCards).flat();
-                 const tokenNames = [];
-                 if(allEntries.some(e => e.cardId?.oracle_text?.toLowerCase().includes("investigate"))) {
-                         tokenNames.push("Clue");
-                        }
-                    if(allEntries.some(e => e.cardId?.oracle_text?.toLowerCase().includes("emblem"))) {
-                        tokenNames.push("Emblem");
-                    }
-                    if(allEntries.some(e => e.cardId?.oracle_text?.toLowerCase().includes("create") && e.cardId?.oracle_text?.toLowerCase().includes("zombie"))) {
-                        tokenNames.push("Zombie");
-                    }
-                    console.log("Unique Sets:", uniqueSets);
-                    console.log("Token Names:", tokenNames);
-                    console.log("Constructed Query:", `t:token (${uniqueSets.map(s => `set:${s} OR set:t${s}`).join(" OR ")}${tokenNames.length > 0 ? " OR " + tokenNames.map(n => `name:"${n}"`).join(" OR ") : ""}) includes:extras`);
-                const setPart = `(${uniqueSets.map(s => `set:${s} OR set:t${s}`).join(" OR ")})`;
-                const namePart = tokenNames.length > 0
-                    ? `(${tokenNames.map(n => `name:"${n}"`).join(" OR ")})`
-                    : "";
-                    const fullQuery = `t:token (${setPart}${namePart}) includes:extras`;
-
-            
-                const url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=prints`;
-                const res = await fetch(url);
-                const data = await res.json();
-                if(data.data) {
-                    setDecksTokens(data.data);
-             }
-                } catch(err) {
-                    setDecksTokens([]);
-                    console.error("Error fetching tokens:", err);
-                }
-
+  
+    try{
+        const chunkSize = 75;
+        const chunks = [];
+        for(let i = 0; i < uniqueNames.length; i+= chunkSize) {
+            chunks.push(uniqueNames.slice(i,i + chunkSize));
         }
-        fetchRelatedTokens();
 
-    }, [sortedCards]);
-    
+        let fullCards = [];
+        for (const chunk of chunks){
+            const res = await fetch("https://api.scryfall.com/cards/collection",{
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body:JSON.stringify({identifiers:chunk.map(name=> ({ name }))
+                })
+            });
+            const data = await res.json();
+            if(data.data) fullCards = [...fullCards,...data.data];
+            await new Promise(resolve => setTimeout(resolve,100));
+        }
+        const tokenIds = new Set();
+        const fallbackKeywords = new Set();
+        
+        fullCards.forEach(card =>{
+            if (card.all_parts) {
+                card.all_parts.forEach(part => {
+                    if(part.component === "token") tokenIds.add(part.id);
+                });
+            }
+            const text = card.oracle_text?.toLowerCase() || "";
+            if(text.includes("create")||text.includes("token")) {
+                if(text.includes("zombie")) fallbackKeywords.add("Zombie");
+            }
+        });
+
+        let finalTokens = [];
+         
+        if(tokenIds.size > 0) {
+            const tokenRes = await fetch("https://api.scryfall.com/cards/collection",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body: JSON.stringify({identifiers: Array.from(tokenIds).map(id => ({ id })) })
+            });
+            const tokenData = await tokenRes.json();
+            if(tokenData.data) finalTokens = [...tokenData.data];
+        }
+        // this is a generic search if nothing is found
+        if(finalTokens.length === 0 && fallbackKeywords.size > 0) {
+            const nameQuery = `t:token (${Array.from(fallbackTokenNames).map(n =>`name:"${n}"`).join(" OR ")})`;
+            const searchRes = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(nameQuery)}&unique=cards`);
+            const searchData = await searchRes.json();
+            if(searchData.data) finalTokens = searchData.data;
+        }
+        setDecksTokens(finalTokens);
+        console.log(finalTokens)
+    }catch (err) {
+        console.error("Error fetching tokens:",err);
+        setDecksTokens([]);
+        }
+    };
+    fetchRelatedTokens();
+   
+},[sortedCards])
+
  useEffect(()=>{
     if(cards.length > 0 && !cardPreview) {
         const commanderEntry = cards.find(entry => entry.cardId?.name === name);
