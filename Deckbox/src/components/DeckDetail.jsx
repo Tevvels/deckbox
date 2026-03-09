@@ -141,13 +141,16 @@ useEffect(()=>{
         fullCards.forEach(card =>{
             if (card.all_parts) {
                 card.all_parts.forEach(part => {
-                    if(part.component === "token") tokenIds.add(part.id);
+                    if(["token","emblem"].includes(part.component)) tokenIds.add(part.id);
                 });
             }
             const text = card.oracle_text?.toLowerCase() || "";
-            if(text.includes("create")||text.includes("token")) {
-                if(text.includes("zombie")) fallbackKeywords.add("Zombie");
-            }
+           if(text.includes("emblem")){
+            fallbackKeywords.add(card.name);
+           }
+           if(text.includes("create") && text.includes("zombie")){
+            fallbackKeywords.add("Zombie");
+           }
         });
 
         let finalTokens = [];
@@ -163,10 +166,14 @@ useEffect(()=>{
         }
         // this is a generic search if nothing is found
         if(finalTokens.length === 0 && fallbackKeywords.size > 0) {
-            const nameQuery = `t:token (${Array.from(fallbackTokenNames).map(n =>`name:"${n}"`).join(" OR ")})`;
+            const nameQuery = Array.from(fallbackKeywords).map(n => `(t:emblem "${n}") OR(t: token name: "${n}")`).join(" OR ");
             const searchRes = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(nameQuery)}&unique=cards`);
             const searchData = await searchRes.json();
-            if(searchData.data) finalTokens = searchData.data;
+            if(searchData.data) {
+                const existingIds = new Set(finalTokens.map(t => t.id));
+                const newTokens = searchData.data.filter( t=> !existingIds.has(t.id));
+                
+                finalTokens = [...finalTokens, ...newTokens]};
         }
         setDecksTokens(finalTokens);
         console.log(finalTokens)
