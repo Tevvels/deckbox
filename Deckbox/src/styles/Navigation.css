@@ -1,8 +1,30 @@
 .navigation{
     background: var(--dark-bg-color);
-    display: flex;
-    justify-content: space-evenly;
-    position: relative;
+    display:grid;
+    
+    grid-template-areas:
+    "menu menu . . login .";
     z-index: 10;
     padding: 5px 0;
+}
+.navigation_button{
+grid-area:login;
+background:var(--primary-color);
+height: 20px;
+width: 3rem;
+border-radius: .25rem;
+
+}
+
+.navigation_container{
+    width: 100vw;
+        display:grid;
+    grid-template-columns: 6rem 7rem 50rem 10rem 4rem;
+    grid-template-areas:
+    "menu menu . . login .";
+}
+.navigation_link{
+    color: var(--light-bg-color);
+    text-transform: uppercase;
+    overflow: hidden;
 }

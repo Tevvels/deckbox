@@ -1,14 +1,12 @@
-
 *{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  outline-color: transparent;
-  overflow-x: hidden;
-  text-decoration: none;
-  border:none;
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+outline-color: transparent;
+overflow-x: hidden;
+text-decoration: none;
+border:none;
 
-/* // Color Variables */
 --dark-bg-color : #13262F;
 --med-bg-color: #264b4f;
 --light-bg-color: #3e78b2;
@@ -17,8 +15,14 @@
 --is-active:1;
 
 font-family: "Spline Sans", sans-serif;
+#root{
+  background: var(--dark-bg-color);
+}
+
 
 }
+  /* 
+  
 main{
   overflow: hidden;
 }
@@ -67,7 +71,7 @@ main{
 .inactive{
   opacity: 0.5;
   filter: grayscale(100%);
-} 
+}  */
 
 /* 
 

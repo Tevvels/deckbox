@@ -20,7 +20,7 @@ function Navigation({onLogout}) {
       location.pathname !== link.path && (
         <Link
         key={link.path}
-        className=' links navigation_link'
+        className={` links navigation_link navigation_${link.name.replaceAll(" ","")}`}
         to={link.path}
         >{link.name}</Link>
       )

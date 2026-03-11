@@ -13,10 +13,13 @@ function Dashboard() {
        <h1 className='header dashboard_header'> Welcome to Deckbox Dashboard </h1>
        <Storage />
         </div>
-   
+        <div className='dashboard_container-sub'/>
+        <div className='dashboard_container-sub-2'/>
+        <div className='dashboard_container-sub-3'/>
+
        <div className='dashboard_container-Public'>
-     <PublicDeckDisplay />
-    </div>
+      <PublicDeckDisplay />
+      </div>
     </div>
   )
 }

@@ -1,89 +1,111 @@
-.App{
-    height: max(150vh,100%);
-    width: 100%;
-    display: grid;   
-    grid-template-areas: 
-    " a "
-    " b "
-    " c "
-    " d "
-    ;
+.dashboard{
+    display: grid;
+    height: 100%;
+    background-color: var(--dark-bg-color);
+    justify-content: center;
+    grid-template-columns:200px 200px 200px 200px;
+    grid-template-rows:200px 200px;
+    grid-template-areas:
+    "blob dashboard dashboard blort"
+    "blob public blocks blort";
+    margin: 1%;
+
+    gap:10px;
+
+}
+
+
+
+@media screen and (max-width:48rem){
+    .dashboard{
+        grid-template-columns:200px 200px 200px ;
+    grid-template-rows:200px 200px 200px;
+    grid-template-areas:
+    "blob dashboard dashboard"
+    "blob public blocks"
+    " blort public blocks";
 
     }
-    
-.dashboard{
-    width: 100%;
-    display:grid;
-    grid-template-areas: 
-    "hero"
-    "public";
 }
-
 .dashboard_container{
-    grid-area: hero;
+    border: 1px solid black;
+    border-radius:15px;
+    box-shadow: 0 0 5px black, 0 0 5px var(--light-bg-color) inset;
+    grid-area:dashboard;
+    background-color:var(--med-bg-color);
 }
 .dashboard_container-Public{
-    grid-area: public;
+    grid-area:public;
+    overflow: hidden;
+    border: 1px solid black;
+    border-radius:15px;
+    box-shadow: 0 0 5px black;
 }
-.navigation{
-    width: 100%;
-    grid-area:a;
+.dashboard_container-sub{
+    box-shadow: 0 0 5px black;
+    border-radius: 15px;
+    border: 1px solid black;
+    display: flex;
+    grid-area:blocks;
 }
-.footer{
-    grid-area:d;
-    width: 100%;   
+.dashboard_container-sub-2{
+    box-shadow: 0 0 5px black;
+    border-radius: 15px;
+    border: 1px solid black;
+    display: flex;
+    grid-area:blob;
+    background-color: var(--primary-color);
+}
+.dashboard_container-sub-3{
+    box-shadow: 0 0 5px black;
+    border-radius: 15px;
+    border: 1px solid black;
+    display: flex;
+    grid-area:blort;
+}
 
-}
-.public{
-    width: 100%;   
-    display:grid;
-    grid-template-areas: 
-    "publicA"
-    "publicB";
-
+.public_container{
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows:200px 200px 200px 200px;
+    grid-template-areas:
+    ". header ."
+    "deck1 deck2 deck2"
+    "deck1 deck3 deck4"
+    "deck1 deck3 deck5"
+    "deck6 deck7 deck7";
+    justify-content: center;
+    background:var(--dark-bg-color);
+    gap:5px;
 }
 .public_header{
-    grid-area: publicA;
-}
-.public_container{
-    grid-area:publicB;
+    grid-area:header;
 }
 
-.deck_container{
-    display: grid;
-    grid-template-areas:
-    ". deck_header"
-    "sort_controls card_preview"
-    "deck_list card_preview"
-    "tokens_preview tokens_preview"
-    ;
-    gap: 20px;
-}
-
-.deck_header{
-    grid-area: deck_header;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-.sort_controls{
-    grid-area: sort_controls;
-    display: flex;
-    gap: 10px;
-}
-.deck_list{
-    grid-area: deck_list;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.card_preview{
-    grid-area: card_preview;
+.deck1{
+    grid-area:deck1;
 
 }
-.tokens_preview{
-    grid-area: tokens_preview;
-    display: flex;
-    gap: 10px;
-    padding: 10px;
+.deck2{
+    grid-area:deck2
+}
+.deck3{
+    grid-area:deck3
+}
+.deck4{
+    grid-area:deck4
+}
+.deck5{
+    grid-area:deck5
+}
+.deck6{
+    grid-area:deck6
+}
+.deck7{
+    grid-area:deck7
+}
+
+.deck_card-container{
+    border-radius:15px;
+    background:var(--dark-bg-color)
 }
