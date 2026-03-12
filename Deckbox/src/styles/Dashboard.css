@@ -15,5 +15,5 @@
     flex-direction: column;
 }
 .dashboard_container-newDeck:hover{
-    background-color: linear-gradient(90deg,var(--med-bg-color),var(--light-bg-color));
+color:var(--primary-color)
 }

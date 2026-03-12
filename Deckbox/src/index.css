@@ -20,7 +20,14 @@ font-family: "Spline Sans", sans-serif;
   background: var(--dark-bg-color);
 }
 
-
+.gradient{
+      background:radial-gradient(
+        circle at var(--gradient-x,50%) var(--gradient-y,50%),
+        var(--dark-bg-color),
+        var(--med-bg-color)
+    );
+    transition: background 0.6s cubic-bezier(0.4,0,0.2,1);
+}
 }
   /* 
   
