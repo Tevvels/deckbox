@@ -6,8 +6,9 @@ outline-color: transparent;
 overflow-x: hidden;
 text-decoration: none;
 border:none;
+color: var(--text-color);
 
---dark-bg-color : #13262F;
+--dark-bg-color : #01030F;
 --med-bg-color: #264b4f;
 --light-bg-color: #3e78b2;
 --primary-color: #004ba8;

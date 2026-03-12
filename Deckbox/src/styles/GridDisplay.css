@@ -1,67 +1,71 @@
 .dashboard{
     display: grid;
     height: 100%;
-    background-color: var(--dark-bg-color);
     justify-content: center;
     grid-template-columns:200px 200px 200px 200px;
     grid-template-rows:200px 200px;
     grid-template-areas:
-    "blob dashboard dashboard blort"
-    "blob public blocks blort";
+    "upperBlock header header newDeck"
+    "public public lowerBlock newDeck";
     margin: 1%;
-
     gap:10px;
-
+    
+}
+.dashboard>div{
+    background:var(--med-bg-color);
+    border: 1px solid black;
+    border-radius:15px;
+    box-shadow: 0 0 5px black, 0 0 5px var(--light-bg-color) inset;
+    text-align: center;
+    justify-content: center;
 }
 
 
 
 @media screen and (max-width:48rem){
     .dashboard{
-        grid-template-columns:200px 200px 200px ;
+    grid-template-columns:200px 200px 200px ;
     grid-template-rows:200px 200px 200px;
     grid-template-areas:
-    "blob dashboard dashboard"
-    "blob public blocks"
-    " blort public blocks";
+    "blob header upperBlock"
+    "public header newDeck"
+    " public lowerBlock newDeck";
 
-    }
+   
 }
-.dashboard_container{
-    border: 1px solid black;
-    border-radius:15px;
-    box-shadow: 0 0 5px black, 0 0 5px var(--light-bg-color) inset;
-    grid-area:dashboard;
-    background-color:var(--med-bg-color);
 }
-.dashboard_container-Public{
+.dashboard_container-header{
+    grid-area:header;
+}
+.dashboard_container-public{
     grid-area:public;
     overflow: hidden;
     border: 1px solid black;
     border-radius:15px;
     box-shadow: 0 0 5px black;
+
 }
-.dashboard_container-sub{
+.dashboard_container-newDeck{
     box-shadow: 0 0 5px black;
     border-radius: 15px;
     border: 1px solid black;
     display: flex;
-    grid-area:blocks;
+    grid-area:newDeck;
+    
 }
-.dashboard_container-sub-2{
+.dashboard_container-lowerBlock{
     box-shadow: 0 0 5px black;
     border-radius: 15px;
     border: 1px solid black;
     display: flex;
-    grid-area:blob;
-    background-color: var(--primary-color);
+    grid-area:lowerBlock;
 }
 .dashboard_container-sub-3{
     box-shadow: 0 0 5px black;
     border-radius: 15px;
     border: 1px solid black;
     display: flex;
-    grid-area:blort;
+    grid-area:upperBlock;
 }
 
 .public_container{
@@ -75,7 +79,6 @@
     "deck1 deck3 deck5"
     "deck6 deck7 deck7";
     justify-content: center;
-    background:var(--dark-bg-color);
     gap:5px;
 }
 .public_header{
@@ -107,5 +110,4 @@
 
 .deck_card-container{
     border-radius:15px;
-    background:var(--dark-bg-color)
 }

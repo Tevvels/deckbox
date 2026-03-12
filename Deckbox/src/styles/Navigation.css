@@ -19,9 +19,9 @@ border-radius: .25rem;
 .navigation_container{
     width: 100vw;
         display:grid;
-    grid-template-columns: 6rem 7rem 50rem 10rem 4rem;
+    grid-template-columns: 5rem 7rem 50rem 10rem 4rem 4rem 10rem;
     grid-template-areas:
-    "menu menu . . login .";
+    ". menu menu . . login .";
 }
 .navigation_link{
     color: var(--light-bg-color);

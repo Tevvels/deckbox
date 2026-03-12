@@ -11,7 +11,6 @@ function Navigation({onLogout}) {
     {name: 'Players', path:'/players'},
     {name: 'My Decks', path:'/deck'},
     {name: 'Public Decks',path:'/publicdecks'},
-    {name: 'New Deck',path:'/deck/new'},
   ];
   return (
     <div className='navigation'>
