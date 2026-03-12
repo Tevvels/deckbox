@@ -12,7 +12,7 @@
     
 }
 .dashboard>div{
-    background:var(--med-bg-color);
+    background:radial-gradient(at 30% 20%,var(--primary-color),var(--dark-bg-color));
     border: 1px solid black;
     border-radius:15px;
     box-shadow: 0 0 5px black, 0 0 5px var(--light-bg-color) inset;
@@ -36,6 +36,13 @@
 }
 .dashboard_container-header{
     grid-area:header;
+
+    background:radial-gradient(
+        circle at var(--gradient-x,50%) var(--gradient-y,50%),
+        var(--dark-bg-color),
+        var(--primary-color)
+    );
+    transition: background 0.6s cubic-bezier(0.4,0,0.2,1);
 }
 .dashboard_container-public{
     grid-area:public;
@@ -51,7 +58,7 @@
     border: 1px solid black;
     display: flex;
     grid-area:newDeck;
-    
+
 }
 .dashboard_container-lowerBlock{
     box-shadow: 0 0 5px black;

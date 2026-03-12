@@ -1,17 +1,15 @@
 .navigation{
     background: var(--dark-bg-color);
     display:grid;
-    
-    grid-template-areas:
-    "menu menu . . login .";
+    grid-template-columns:1rem 10rem 4rem 1rem 4rem 1rem 1rem;
+    grid-template-rows:2rem;
     z-index: 10;
     padding: 5px 0;
 }
 .navigation_button{
 grid-area:login;
 background:var(--primary-color);
-height: 20px;
-width: 3rem;
+    padding: .5rem;
 border-radius: .25rem;
 
 }
@@ -19,7 +17,6 @@ border-radius: .25rem;
 .navigation_container{
     width: 100vw;
         display:grid;
-    grid-template-columns: 5rem 7rem 50rem 10rem 4rem 4rem 10rem;
     grid-template-areas:
     ". menu menu . . login .";
 }
