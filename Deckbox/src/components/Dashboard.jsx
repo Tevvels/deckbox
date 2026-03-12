@@ -5,16 +5,24 @@ import '../styles/Dashboard.css';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import Gradient from '../modules/Gradient';
+import TextPhaser from '../modules/TextPhaser';
 
 // Dashboard component
-function Dashboard({x,y}) {
+function Dashboard() {
 
- const positions = useMemo(()=>{
-    return Array.from({length:5},()=>({
-      x:Math.floor(Math.random() * 100),
-      y:Math.floor(Math.random() * 100)
-    }))
-  },[])
+  
+  const wubrgPhrases = [
+      {type:'symbol',value:"ms-w"},
+      {type:'symbol',value:"ms-u"},
+      {type:'symbol',value:"ms-b"},
+      {type:'symbol',value:"ms-r"},
+      {type:'symbol',value:"ms-g"},
+      {type:'symbol',value:"ms-c"},
+  
+  
+  ]
+
+
   
   return (
   
@@ -31,11 +39,13 @@ function Dashboard({x,y}) {
          <Storage />
 
         </Gradient>
-        <Gradient className='dashboard_container-sub-upperBlock'/>
+        <Gradient className='dashboard_container-sub-upperBlock'>
+          <TextPhaser phrases={wubrgPhrases} />
+        </Gradient>
  
 
        <Gradient className='dashboard_container-public'>
-      <PublicDeckDisplay />
+      <PublicDeckDisplay  />
       </Gradient>
     </div>
   )

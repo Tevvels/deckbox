@@ -58,7 +58,6 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
     
 
     <div className={`deck_card-container ${className}`}>
-{console.log(deck.color_identity)}
 
         <Link className='deck_card-link' to={`/deck/${deck._id}`}>
             <div className="deck_card-content">

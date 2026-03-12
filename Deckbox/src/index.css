@@ -16,10 +16,13 @@ color: var(--text-color);
 --is-active:1;
 
 font-family: "Spline Sans", sans-serif;
+}
 #root{
   background: var(--dark-bg-color);
 }
-
+html{
+  scrollbar-gutter:stable;
+}
 .gradient{
       background:radial-gradient(
         circle at var(--gradient-x,50%) var(--gradient-y,50%),
@@ -28,6 +31,35 @@ font-family: "Spline Sans", sans-serif;
     );
     transition: background 0.6s cubic-bezier(0.4,0,0.2,1);
 }
+
+.phasing-text{
+  min-height: 1.5rem;
+  display: flex;
+  transition: opacity 0.5s ease;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color:var(--text-color);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+  cursor:default;
+  caret-color: transparent;
+  overflow: hidden;
+}
+.phasing-text.visible {
+  opacity:1;
+
+}
+.phasing-text.hidden{
+  opacity: 0;
+}
+.symbols{
+    height:3.75rem !important;
+    width: 3.75rem !important;
+    opacity: 50%;
+  cursor:default;
+  caret-color: transparent;
 }
   /* 
   
