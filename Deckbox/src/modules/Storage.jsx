@@ -39,7 +39,7 @@ function Storage() {
 const currentInDeckCount = (selectedCard && deckCountMap) ?(deckCountMap[selectedCard?.name] || 0)  : 0; 
 
 
-
+const dashboardScreen =  useLocation();
 
 
 const handleSearchSubmission = async(e) =>{
@@ -59,7 +59,6 @@ const handleSearchSubmission = async(e) =>{
             setSameNameCard(data.data);
             if(data.data.length > 0) setSelectedCard(data.data[0]);
 
-            console.log("search results:", data.data)
            
     } catch (err) {
         setError(err.message);
@@ -75,7 +74,7 @@ const handleSuggestionClick = (name)=>{
 
     return (
     <div className="search search_container">
-        <h2 className='search_header'>Add Cards to deck</h2>
+        {dashboardScreen ? "":<h2 className='search_header'>Add Cards to deck</h2>}
         <form className='search_form' onSubmit={handleSearchSubmission}>
             <div className='search_input-wrapper'>
             <input 

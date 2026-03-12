@@ -11,7 +11,6 @@ function Navigation({onLogout}) {
     {name: 'Players', path:'/players'},
     {name: 'My Decks', path:'/deck'},
     {name: 'Public Decks',path:'/publicdecks'},
-    {name: 'New Deck',path:'/deck/new'},
   ];
   return (
     <div className='navigation'>
@@ -20,7 +19,7 @@ function Navigation({onLogout}) {
       location.pathname !== link.path && (
         <Link
         key={link.path}
-        className=' links navigation_link'
+        className={` links navigation_link navigation_${link.name.replaceAll(" ","")}`}
         to={link.path}
         >{link.name}</Link>
       )

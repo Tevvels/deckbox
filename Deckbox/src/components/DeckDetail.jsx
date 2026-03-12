@@ -176,7 +176,6 @@ useEffect(()=>{
                 finalTokens = [...finalTokens, ...newTokens]};
         }
         setDecksTokens(finalTokens);
-        console.log(finalTokens)
     }catch (err) {
         console.error("Error fetching tokens:",err);
         setDecksTokens([]);
@@ -262,7 +261,6 @@ const tokens = useMemo(()=>{
         <h3>Tokens</h3>
         <div className='tokens_container'>
             {decksTokens?.length > 0 ? decksTokens.map((token, index) => ( 
-                // console.log(token),
                 <div key={index} className='token'>
                     <p>{token.name}</p>
                     <img src={token.image_uris?.small || token.image_uris?.normal} 
@@ -285,7 +283,7 @@ const tokens = useMemo(()=>{
 key={mana} 
 className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
 >
-<i className={`ms ms-${mana.toLowerCase()} ms-cost`}/>
+<i className={`ms ms-${mana.toLowerCase()} ms-cost ms-3x`}/>
 </span>
             )
         })}

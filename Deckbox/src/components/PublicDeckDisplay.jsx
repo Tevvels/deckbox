@@ -41,11 +41,13 @@ function PublicDeckDisplay() {
   return (<div className='public'>
       <h1 className='headers public_header'>What the community is doing</h1>
     <div className=" public_container">
-      {publicDecks.map((deck) => (
+      {publicDecks.map((deck,index) => (
         <DeckCard
+
         key={deck._id}
         deck={deck}
         showOwner={true}
+        className={`deck${index + 1}`}
         />
       ))}
 

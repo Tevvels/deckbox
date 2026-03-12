@@ -46,7 +46,7 @@ return {background: `linear-gradient(110deg,${gradientStops})`,}
 
 
 
-function DeckCard({deck,onDelete,showOwner = false}) {
+function DeckCard({deck,onDelete,showOwner = false,className}) {
     const colorIdentityStyle = getDeckColorIdentity(deck.color_identity)
     const validCards = deck.cards?.filter(c => c && c.cardId) || [];
     const firstCard = validCards.length > 0 ? validCards[0].cardId : null;
@@ -57,8 +57,7 @@ function DeckCard({deck,onDelete,showOwner = false}) {
 
     
 
-    <div className='deck_card-container'>
-{console.log(deck.color_identity)}
+    <div className={`deck_card-container ${className}`}>
 
         <Link className='deck_card-link' to={`/deck/${deck._id}`}>
             <div className="deck_card-content">

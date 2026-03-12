@@ -1,15 +1,14 @@
-
 *{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  outline-color: transparent;
-  overflow-x: hidden;
-  text-decoration: none;
-  border:none;
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+outline-color: transparent;
+overflow-x: hidden;
+text-decoration: none;
+border:none;
+color: var(--text-color);
 
-/* // Color Variables */
---dark-bg-color : #13262F;
+--dark-bg-color : #01030F;
 --med-bg-color: #264b4f;
 --light-bg-color: #3e78b2;
 --primary-color: #004ba8;
@@ -17,8 +16,53 @@
 --is-active:1;
 
 font-family: "Spline Sans", sans-serif;
+}
+#root{
+  background: var(--dark-bg-color);
+}
+html{
+  scrollbar-gutter:stable;
+}
+.gradient{
+      background:radial-gradient(
+        circle at var(--gradient-x,50%) var(--gradient-y,50%),
+        var(--dark-bg-color),
+        var(--med-bg-color)
+    );
+    transition: background 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.phasing-text{
+  min-height: 1.5rem;
+  display: flex;
+  transition: opacity 0.5s ease;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color:var(--text-color);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+  cursor:default;
+  caret-color: transparent;
+  overflow: hidden;
+}
+.phasing-text.visible {
+  opacity:1;
 
 }
+.phasing-text.hidden{
+  opacity: 0;
+}
+.symbols{
+    height:3.75rem !important;
+    width: 3.75rem !important;
+    opacity: 50%;
+  cursor:default;
+  caret-color: transparent;
+}
+  /* 
+  
 main{
   overflow: hidden;
 }
@@ -67,7 +111,7 @@ main{
 .inactive{
   opacity: 0.5;
   filter: grayscale(100%);
-} 
+}  */
 
 /* 
 

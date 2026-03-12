@@ -69,8 +69,6 @@ useEffect(() => {
   }
 }, [card]);
 
-// console.log("Current Image in CardDetail:", currentImage);
-// console.log("All Prints in CardDetail:", AllPrints);
 if(!card || !currentImage) return null;
   return (
 
