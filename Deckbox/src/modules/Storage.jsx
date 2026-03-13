@@ -74,7 +74,7 @@ const handleSuggestionClick = (name)=>{
 
     return (
     <div className="search search_container">
-        {dashboardScreen ? "":<h2 className='search_header'>Add Cards to deck</h2>}
+        {dashboardScreen ? " ":<h2 className='search_header'>Add Cards to deck</h2>}
         <form className='search_form' onSubmit={handleSearchSubmission}>
             <div className='search_input-wrapper'>
             <input 

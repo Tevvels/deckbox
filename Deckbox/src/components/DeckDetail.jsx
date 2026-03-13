@@ -218,9 +218,7 @@ const tokens = useMemo(()=>{
 }, [cards]);
 
     return (
-        <>
-
-      
+        <div className="full_deck">
         
     <div className='deck_container'>
         <div className='deck_header'>{name}</div>
@@ -257,7 +255,7 @@ const tokens = useMemo(()=>{
     ))}
      </ul>
     </div>
-    <div className="tokens_preview">
+    <div className="deck_container-token">
         <h3>Tokens</h3>
         <div className='tokens_container'>
             {decksTokens?.length > 0 ? decksTokens.map((token, index) => ( 
@@ -276,7 +274,7 @@ const tokens = useMemo(()=>{
             )}
         </div>
     </div>
-    <div className='card_preview'>
+    <div className='deck_container-preview'>
         {Object.keys(Mana_Colors).map((mana)=>{
             const isActive = activeColors.has(mana);
             return (<span 
@@ -297,7 +295,8 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
         ) : (
             <p>Hover over a card to see details</p>
         )}
-          <div className='deck_stats'>
+    </div>
+    <div className='deck_container-stats'>
             <h3>Deck Statistics</h3>
             <p>Total Cards: {stats.total}</p>
             <p>Creatures: {stats.creature}</p>
@@ -308,9 +307,8 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
             <p>Artifacts: {stats.artifact}</p>
             <p>Lands: {stats.land}</p>
             <p>Other: {stats.other}</p>
-        </div>
     </div>
-</>
+</div>
  
     )
 }
