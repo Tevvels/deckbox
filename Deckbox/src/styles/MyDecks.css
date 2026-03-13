@@ -1,45 +1,9 @@
-/* .my_Deck{
-   
-    width: 100%;
-
+.deck_container{
+    background: blue;
 }
-
-
-
-.my_Deck-informationBlock,.deck_card-content{
-    height: 400px;
-    width: 300px;
-    overflow: hidden;
-    border-radius: 10px;
-    margin: 4px;
-    color:var(--text-color);
-    background-color: var(--med-bg-color);
+.deck_container-preview{
+    background: orange;
 }
-.my_Deck-deckArt,.deck_card-art{
-    width: 100%;
+.deck_container-token{
+    background: teal;
 }
-
-.my_Deck-list{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-.my_Deck-link{
-    overflow: hidden;
-}
-.my_Deck-link-new{
-    height: 10vh;
-}
-.my_Deck-link-dashboard{
-    height: 10vh;
-}
-.my_Deck-color{
-    height: 15px;
-    width: 100%;
-    border-radius: 4px;
-    margin-bottom: 1.5px;
-}
-.deck_list{
-    display: flex;
-    flex-wrap: wrap;
-} */

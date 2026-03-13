@@ -117,3 +117,48 @@
 .deck_card-container{
     border-radius:15px;
 }
+
+.deck{
+    display:grid;
+    grid-template-columns: 150rem;
+    grid-template-rows: 5rem 58rem 20rem;
+    grid-template-areas:
+    " addCard "
+    " deckDetail "
+    " cardDetail";
+
+    gap: .5rem;
+}
+
+
+
+.full_deck{
+    display: grid;
+    grid-template-columns: 30rem 25rem 20rem ;
+    grid-template-rows: 10rem 30rem 15rem ;
+    grid-template-areas:
+    "container container stats"
+    "container container preview"
+    "token token preview"
+    ;
+    gap: .5rem;
+    
+}
+.full_deck > div{
+    border:1px solid black;
+    border-radius:1rem;
+    box-shadow: 0 0 .3rem var(--light-bg-color);
+    overflow:hidden;
+}
+.deck_container{
+    grid-area:container;
+}
+.deck_container-preview{
+    grid-area:preview;
+}
+.deck_container-token{
+    grid-area:token;
+}
+.deck_container-stats{
+    grid-area:stats;
+}

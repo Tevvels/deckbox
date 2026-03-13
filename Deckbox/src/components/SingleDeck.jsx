@@ -7,8 +7,8 @@ import DeckCard from './DeckCard';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
 const AddCardButton = ({ deckId,isCommander,colorIdentity}) =>(
-    <div className='deck_container-sub deck_container-ownerCheck'>
-        <div className='deck_header deck_addCard-header'>Add a card</div>
+    <div className='add_card'>
+        <h3 className='add_card-header'>Add a card</h3>
         <Link 
         to={`/deck/${deckId}/search`}
         className='links deck_link deck_addCard-link'
@@ -170,6 +170,12 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 
 
     <div className="deck">
+        {isOwner && (
+            <AddCardButton
+            deckId={deckId}
+            isCommander={deck.format === 'commander'}
+            />
+        )}
         <DeckDetail
         cards={deck.cards}
         name={deck.name}
@@ -185,12 +191,6 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
             onUpdateSuccess={handleUpdateCardArt}
             />
         )} 
-        {isOwner && (
-            <AddCardButton
-            deckId={deckId}
-            isCommander={deck.format === 'commander'}
-            />
-        )}
     </div>
 )
 }
