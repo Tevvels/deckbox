@@ -118,17 +118,7 @@
     border-radius:15px;
 }
 
-.deck{
-    display:grid;
-    grid-template-columns: 150rem;
-    grid-template-rows: 5rem 58rem 20rem;
-    grid-template-areas:
-    " addCard "
-    " deckDetail "
-    " cardDetail";
 
-    gap: .5rem;
-}
 
 
 
@@ -152,13 +142,53 @@
 }
 .deck_container{
     grid-area:container;
+    display:grid;
+    grid-template-columns:40rem 12rem;
+    grid-template-rows:2rem 37rem ;
+    grid-template-areas:
+    "header sort"
+    "list list"
+    ;
+    gap:.4rem;
+}
+.deck_container > *{
+    background:var(--dark-bg-color);
+    border-radius: .5rem;
+    box-shadow: 0 0 .3rem var(--light-bg-color);
 }
 .deck_container-preview{
     grid-area:preview;
 }
 .deck_container-token{
     grid-area:token;
+
+
+}
+.tokens_container{
+        display: flex;
+    width: 100%;
 }
 .deck_container-stats{
     grid-area:stats;
+}
+.deck_header{
+    grid-area:header;
+}
+.sort_controls{
+    grid-area:sort;
+}
+
+.list{
+    grid-area:list;
+    display: grid;
+    grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
+    grid-template-rows:auto;
+    gap:.3rem;
+    justify-content: center;
+}
+.sort_order{
+    border:1px solid var(--light-bg-color);
+    border-radius: 1rem;
+    justify-items: center;
+    
 }

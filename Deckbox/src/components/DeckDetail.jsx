@@ -2,6 +2,7 @@ import React, {useState,useMemo,useEffect, use} from 'react'
 import '../styles/CardDetail.css';
 import { data } from 'react-router-dom';
 import { set } from 'mongoose';
+import Gradient from "../modules/Gradient"
 
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
     
@@ -197,30 +198,11 @@ useEffect(()=>{
  }, [cards,name, cardPreview]);
 
 
-const tokens = useMemo(()=>{
-    const tokenMap = new Map();
-    cards.forEach(entry => {
-        if(entry.cardId?.all_parts) {
-            entry.cardId.all_parts.forEach(part => {
-                if(part.component === "token"|| part.component === "combo") {
-                    if(!tokenMap.has(part.id)) {
-                    tokenMap.set(part.id, {
-                        name:part.name,
-                        image: `https://api.scryfall.com/cards/${part.id}?format=image&version=normal`
-                    }
-                    );
-                    }
-                }
-            });
-        }
-    });
-    return Array.from(tokenMap.values());
-}, [cards]);
 
     return (
         <div className="full_deck">
-        
-    <div className='deck_container'>
+     
+    <Gradient className='deck_container'>
         <div className='deck_header'>{name}</div>
             <div className="sort_controls">
                 <button className='buttons' onClick={()=>{setSortBy('type');}}>Type</button>
@@ -228,34 +210,41 @@ const tokens = useMemo(()=>{
                 <button className='buttons' onClick={()=>setSortBy('none')}>Reset</button>
             </div>
 
-            <ul className='list deck_list'>
-{Object.entries(sortedCards).map(([category, entries])=>(
-    <li className='deck_list-categoryList' key={category}>
-        <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +(i.quantity  ||1),0)})</h3>
-        <ul className='list deck_list'>
-            {entries.map(entry =>(
-                <li 
-                key={entry._id}
-                className='card_entry'
-                onClick={()=> onCardClick(entry.cardId)}
-                onMouseEnter={()=> setCardPreview(entry.cardId)}
-                // onMouseLeave={()=> setCardPreview(null)}
-                >
-                    {entry.quantity}x {entry.cardId.name} 
-                    {isOwner && (
-                        <button 
-                        className='buttons buttons_delete'
-                        onClick={(e)=>{e.stopPropagation(); OnDeleteCard(entry._id)}
-                        }                        >X</button>
-                    )}
-                </li>
-            ))}
+            <ul className='list'>
+                {Object.entries(sortedCards).map(([category, entries])=>(
+                    <Gradient className={`sort_order ${category.replaceAll(" ","")}`}>
+                    <li 
+                    className={`deck_list-categoryList `} 
+                    key={category}
+                        
+                    >
+                    <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +( i.quantity  ||1),0)})</h3>
+                    <ul className='deck_list'>
+                        {console.log(entries)}
+                    {entries.map(entry =>(
+                        <li 
+                        key={entry._id}
+                        className='card_entry'
+                        onClick={()=> onCardClick(entry.cardId)}
+                        onMouseEnter={()=> setCardPreview(entry.cardId)}
+                        >
+                            {entry.cardId.name} x{entry.quantity} 
+                            {isOwner && (
+                                <button 
+                                className='buttons buttons_delete'
+                                onClick={(e)=>{e.stopPropagation(); OnDeleteCard(entry._id)}
+                            }                        >X</button>
+                        )}
+                    </li>
+                ))}
             </ul>
         </li>
+                </Gradient>
     ))}
      </ul>
-    </div>
-    <div className="deck_container-token">
+    </Gradient>
+
+    <Gradient className="deck_container-token">
         <h3>Tokens</h3>
         <div className='tokens_container'>
             {decksTokens?.length > 0 ? decksTokens.map((token, index) => ( 
@@ -273,8 +262,9 @@ const tokens = useMemo(()=>{
                 </div>
             )}
         </div>
-    </div>
-    <div className='deck_container-preview'>
+    </Gradient>
+
+    <Gradient className='deck_container-preview'>
         {Object.keys(Mana_Colors).map((mana)=>{
             const isActive = activeColors.has(mana);
             return (<span 
@@ -288,15 +278,16 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
         {cardPreview ? (
             <div className='card_preview'>
                 <h3>{cardPreview.name}</h3>
-                <img className='card' src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
+                <img className='card' src={cardPreview.image_uris?.small || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
                 <p>{cardPreview.oracle_text}</p>
             </div>
         ) : (
             <p>Hover over a card to see details</p>
         )}
-    </div>
-    <div className='deck_container-stats'>
+    </Gradient>
+
+    <Gradient className='deck_container-stats'>
             <h3>Deck Statistics</h3>
             <p>Total Cards: {stats.total}</p>
             <p>Creatures: {stats.creature}</p>
@@ -307,7 +298,8 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
             <p>Artifacts: {stats.artifact}</p>
             <p>Lands: {stats.land}</p>
             <p>Other: {stats.other}</p>
-    </div>
+    </Gradient>
+
 </div>
  
     )
