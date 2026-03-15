@@ -183,7 +183,10 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
         onCardClick={handleCardClick}
         onDeleteDeck={()=> deleteDeck(deck._id)}
         OnDeleteCard={handleDeleteClick}
-        />
+        >
+
+            
+        </DeckDetail>
         {selectedCard && (
             <CardDetail
             card={selectedCard}
