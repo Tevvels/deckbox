@@ -9,6 +9,29 @@ const cardSchema = new mongoose.Schema({
     cmc:Number,
     mana_cost: String,
     oracle_text: String,
+    legalities:{
+          standard: String,
+         future: String,
+         historic: String,
+          gladiator: String,
+    pioneer: String,
+    explorer: String,
+    modern: String,
+    legacy: String,
+    pauper: String,
+    vintage: String,
+    penny: String,
+    commander: String,
+    oathbreaker: String,
+    brawl: String,
+    historicbrawl: String,
+    alchemy: String,
+    paupercommander: String,
+    duel: String,
+    oldschool: String,
+    premodern: String,
+    predh: String
+    },
     color_identity: {
     type: [String], // This defines an array of strings
     default: []     // Colorless cards will be an empty array
@@ -25,6 +48,11 @@ const cardSchema = new mongoose.Schema({
     },
     image_uris:{
         type:mongoose.Schema.Types.Mixed,
+        default:{}
     },
+    card_faces:{
+        type: [mongoose.Schema.Types.Mixed],
+        default:[]
+    }
 });
 export default mongoose.model('Card', cardSchema);

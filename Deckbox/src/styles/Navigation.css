@@ -9,7 +9,6 @@
 .navigation_button{
 grid-area:login;
 background:var(--primary-color);
-    padding: .5rem;
 border-radius: .25rem;
 
 }

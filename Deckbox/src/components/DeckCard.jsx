@@ -61,7 +61,7 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
 
         <Link className='deck_card-link' to={`/deck/${deck._id}`}>
             <div className="deck_card-content">
-        <div className='my_Deck-color' style={colorIdentityStyle} />
+                <div className='my_Deck-color' style={colorIdentityStyle} />
                 <img className='deck_card-art' alt="deckArt" src={imageUrl} />
                 <h3 className="deck_card-name">{deck.name}</h3>
                 <p>{deck.format}</p>

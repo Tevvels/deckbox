@@ -4,7 +4,7 @@ import { data } from 'react-router-dom';
 import { set } from 'mongoose';
 import Gradient from "../modules/Gradient"
 
-function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
+function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) {
     
     const [sortBy, setSortBy] = useState('none');
     const [cardPreview, setCardPreview] = useState(null);
@@ -71,6 +71,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
     
     const stats = useMemo(()=>{
         const counts = {
+            format:[],
             total: 0,
             creature: 0,
             planeswalker: 0,
@@ -79,14 +80,15 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard}) {
             enchantment: 0,
             artifact: 0,
             land: 0,
-            other: 0
         };
         cards.forEach(entry => {
             if(entry?.cardId) {
+                console.log(entry)
                 const type = entry.cardId.type_line.toLowerCase();
                 const qty = entry.quantity || 1;
                 counts.total += qty;
-                if(type.includes("creature")) counts.creature += qty;
+                if(type.includes("format")) counts.format = type;
+                else if(type.includes("creature")) counts.creature += qty;
                 else if(type.includes("planeswalker")) counts.planeswalker += qty;
                 else if(type.includes("instant")) counts.instant += qty;
                 else if(type.includes("sorcery")) counts.sorcery += qty;
@@ -220,7 +222,6 @@ useEffect(()=>{
                     >
                     <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +( i.quantity  ||1),0)})</h3>
                     <ul className='deck_list'>
-                        {console.log(entries)}
                     {entries.map(entry =>(
                         <li 
                         key={entry._id}
@@ -248,15 +249,14 @@ useEffect(()=>{
         <h3>Tokens</h3>
         <div className='tokens_container'>
             {decksTokens?.length > 0 ? decksTokens.map((token, index) => ( 
-                <div key={index} className='token'>
+                <div key={index} className='token '>
                     <p>{token.name}</p>
-                    <img src={token.image_uris?.small || token.image_uris?.normal} 
+                    <img className='card' src={token.image_uris?.small || token.image_uris?.normal} 
                     alt={token.name} />
                 </div>
             )) : <p>No tokens in this deck</p>}
             {tokenImg && (
                 <div className='card_preview'>
-                    <h3>Example Token</h3>
                     <img className='card' src
                     ={tokenImg.image_uris} alt="Token Preview" />
                 </div>
@@ -265,22 +265,14 @@ useEffect(()=>{
     </Gradient>
 
     <Gradient className='deck_container-preview'>
-        {Object.keys(Mana_Colors).map((mana)=>{
-            const isActive = activeColors.has(mana);
-            return (<span 
-key={mana} 
-className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
->
-<i className={`ms ms-${mana.toLowerCase()} ms-cost ms-3x`}/>
-</span>
-            )
-        })}
+
         {cardPreview ? (
             <div className='card_preview'>
                 <h3>{cardPreview.name}</h3>
                 <img className='card' src={cardPreview.image_uris?.small || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
                 <p>{cardPreview.oracle_text}</p>
+
             </div>
         ) : (
             <p>Hover over a card to see details</p>
@@ -288,7 +280,19 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
     </Gradient>
 
     <Gradient className='deck_container-stats'>
+
+                {Object.keys(Mana_Colors).map((mana)=>{
+            const isActive = activeColors.has(mana);
+            return (<span 
+            key={mana} 
+            className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
+            >
+            <i className={`ms ms-${mana.toLowerCase()} ms-cost ms-2x`}/>
+            </span>
+            )
+        })}
             <h3>Deck Statistics</h3>
+            <p>Deck Format: {format}</p>
             <p>Total Cards: {stats.total}</p>
             <p>Creatures: {stats.creature}</p>
             <p>Planeswalkers: {stats.planeswalker}</p>
@@ -297,7 +301,6 @@ className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
             <p>Enchantments: {stats.enchantment}</p>
             <p>Artifacts: {stats.artifact}</p>
             <p>Lands: {stats.land}</p>
-            <p>Other: {stats.other}</p>
     </Gradient>
 
 </div>

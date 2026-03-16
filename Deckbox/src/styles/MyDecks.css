@@ -1,0 +1,60 @@
+.card_detail{
+    position: absolute;
+    top:5%;
+    left:15%;
+    display: grid;
+    grid-template-columns: 10rem 40rem 5rem;
+    grid-template-rows: 5rem 2.5rem 10rem 10rem 1.5rem;
+    grid-template-areas:
+    "display header ."
+    "display typeLine ."
+    "display oracle ."
+    "display legalities ."
+    "button legalities ."
+    ;
+    border:.25rem solid var(--primary-color)
+
+}
+.card_detail-container-imageList{
+    color:white;
+    grid-area: display;
+
+}
+.card_detail-name{
+    grid-area:header;
+}
+.card_detail-oracle{
+    grid-area:oracle;
+}
+.card_detail-legalities{
+    grid-area:legalities;
+    display: flex;
+    flex-wrap:wrap;
+    font-size: .8rem;
+    
+    
+}
+
+.card_detail-updateArt{
+    grid-area: button;
+}
+.card_detail-typeline{
+    grid-area: typeLine;
+}
+
+.mana_symbol > i{
+    overflow: hidden;
+}
+.inactive{
+    opacity: 20%;
+}
+.card_entry{
+    cursor: pointer;
+}
+.card_entry:hover{
+    cursor: pointer;
+    color:var(--primary-color)
+}
+.card{
+    border-radius: .5rem;
+}

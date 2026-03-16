@@ -1,5 +1,7 @@
 
 import React, { useEffect,useState } from 'react'
+import Gradient from './Gradient';
+import { set } from 'mongoose';
 // have it so when I click on the card it goes to this page with more details
 // import Card from '../data/Card.json'
 
@@ -19,7 +21,7 @@ function CardDetail({card,onClose,onUpdateSuccess}) {
   const [AllPrints, setAllPrints] = useState([]);
   const [currentImage, setCurrentImage] = useState(card);
   
-  
+  console.log(onClose)
   const handleUpdateArt = async()=>{
     try{
       const response = await fetch(`${API_BASE}/cardStorage/update-art/${card._id}`,{
@@ -62,6 +64,10 @@ useEffect(() => {
     }).then(data => {
       if(data.data){  
         setAllPrints(data.data);
+        const matchingPrint = data.data.find(p => p.id === card.scryfallId) || data.data[0];
+        if(matchingPrint){
+          setCurrentImage(matchingPrint)
+        }
       }
     }).catch(error => {
       console.error('Error fetching card prints:', error);setAllPrints([]);
@@ -72,16 +78,23 @@ useEffect(() => {
 if(!card || !currentImage) return null;
   return (
 
-      
-<div className="card_detail card_detail-container">
+    <Gradient className="card_detail card_detail-container">
   <button className='buttons card_detail-button card_detail-updateArt' onClick={handleUpdateArt}>Update Card Art</button>
 
       <button  className="buttons button-close" onClick={onClose}>X</button>
         
         {/* card detail includes name, oracle text, selection for images */}
-
         <h1 className='card_detail-name'>{currentImage?.name}</h1>
+        <p className='card_detail-typeline'>{currentImage?.type_line}</p>
         <p className='card_detail-oracle'>{currentImage?.oracle_text}</p>
+        <p className='card_detail-legalities'>
+          {currentImage?.legalities && Object.entries(currentImage.legalities).map(([format, status]) =>(
+            <p className='card_detail-legality-sub' key={format}>
+              <strong>{` ${format.replace(/_/g,' ')} `}:</strong> {` ${status.replace(/_/g, " ")} `}
+              
+            </p> 
+          ))}
+        </p>
         <div className='card_detail-container-sub card_detail-container-imageList'>
           {AllPrints.length > 0 ? (AllPrints.map((print) => (
             <img 
@@ -98,7 +111,7 @@ if(!card || !currentImage) return null;
           )
               }
         </div>
-    </div>
+    </Gradient>
   );
 }
 
