@@ -4,7 +4,6 @@ import React, { useEffect,useState } from 'react'
 
 function TextPhaser({phrases = []}) {
 
-    console.log(phrases)
     const [index,setIndex] = useState(0);
     const [fade, setFade] = useState("visible");
     

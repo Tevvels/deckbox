@@ -75,6 +75,8 @@ router.post('/', async (req,res) =>{
                     oracle_text: scryFallCardData.oracle_text,
                     scryfallId: scryFallCardData.id,
                     image_uris: scryFallCardData.image_uris,
+                    legalities:scryFallCardData.legalities,
+                    card_faces: scryFallCardData.card_faces || [],
                     user:req.user.id
                 },
                 {new:true, upsert:true}
@@ -117,9 +119,7 @@ router.get('/:id', async (req, res) => {
         if (!deck) {
             return res.status(404).json({ error: `Deck not found or does not belong to user` });
         }
-        if(!deck) {
-            return res.status(404).json({error: 'Deck not found'});
-        }
+
         const deckObj = deck.toObject();
         if(deckObj.format === 'Commander' && deckObj.commander) {
             const commanderDetails = await Card.findOne({ name: deckObj.commander, user: req.user.id });
@@ -252,13 +252,14 @@ router.post('/sync-card',async(req,res)=>{
            {
                 name: scryFallCardData.name,
                 color_identity: scryFallCardData.color_identity,
-                scryfallId: scryFallCardData.id,
-                image_uris: scryFallCardData.image_uris,
-                user:userId,
                 cmc: scryFallCardData.cmc,
                 type_line: scryFallCardData.type_line,
                 mana_cost: scryFallCardData.mana_cost,
-                oracle_text: scryFallCardData.oracle_text
+                oracle_text: scryFallCardData.oracle_text,
+                image_uris: scryFallCardData.image_uris,
+                legalities: scryFallCardData.legalities,
+                card_faces: scryFallCardData.card_faces || [],
+                user: userId
 
             },
             {new:true, upsert:true}
@@ -298,7 +299,9 @@ router.get('/admin/repair-cards',async (req,res) => {
         const allCards = await Card.find({
             $or:[
             {cmc:{$exists:false}},
-            {all_parts: {$exists:false}}
+            {all_parts: {$exists:false}},
+            {legalities: {$exists: false}},
+            {card_faces: {$exists: false}}
             ]
         });
         let updatedCount = 0;
@@ -307,10 +310,13 @@ router.get('/admin/repair-cards',async (req,res) => {
             if(scryFallData && scryFallData.cmc !== undefined){
                 card.cmc = scryFallData.cmc;
                 card.type_line = scryFallData.type_line;
-                card.mana_cost = scryFallData.mana_cost;        
+                card.mana_cost = scryFallData.mana_cost || (scryFallData.card_faces? scryFallData.card_faces[0].mana_cost : "");        
             
-                card.oracle_text = scryFallData.oracle_text;
+                card.oracle_text = scryFallData.oracle_text  || (scryFallData.card_faces? scryFallData.card_faces[0].oracle_text : "");
                 card.all_parts = scryFallData.all_parts || [];
+                card.legalities = scryFallData.legalities;
+                card.card_faces = scryFallData.card_faces || [];
+                card.image_uris = scryFallData.image_uris || (scryFallData.card_faces ? scryFallData.card_faces[0].image_uris :  {});
                 await card.save();
                 updatedCount++;
             }

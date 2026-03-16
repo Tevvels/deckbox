@@ -1,0 +1,51 @@
+.card_detail{
+    position: absolute;
+    top:5%;
+    left:15%;
+    display: grid;
+    grid-template-columns: 10rem 30rem;
+    grid-template-rows: 10rem 5rem 10rem 10rem 3rem;
+    grid-template-areas:
+    "display header"
+    "display typeLine"
+    "display oracle"
+    "display oracle"
+    "button oracle"
+    ;
+    border:.25rem solid var(--primary-color)
+
+}
+.card_detail-container-imageList{
+    color:white;
+    grid-area: display;
+
+}
+.card_detail-name{
+    grid-area:header;
+}
+.card_detail-oracle{
+    grid-area:oracle;
+}
+.card_detail-updateArt{
+    grid-area: button;
+}
+.card_detail-typeline{
+    grid-area: typeLine;
+}
+
+.mana_symbol > i{
+    overflow: hidden;
+}
+.inactive{
+    opacity: 20%;
+}
+.card_entry{
+    cursor: pointer;
+}
+.card_entry:hover{
+    cursor: pointer;
+    color:var(--primary-color)
+}
+.card{
+    border-radius: .5rem;
+}
