@@ -177,9 +177,11 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
             />
         )}
         <DeckDetail
+    
         cards={deck.cards}
         name={deck.name}
         isOwner={isOwner}
+        format={deck.format}
         onCardClick={handleCardClick}
         onDeleteDeck={()=> deleteDeck(deck._id)}
         OnDeleteCard={handleDeleteClick}
