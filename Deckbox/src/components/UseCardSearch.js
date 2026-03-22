@@ -30,8 +30,7 @@ export const UseCardSearch = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const [sameNameCard, setSameNameCard] = useState([]);
     const [deckCountMap, setDeckCountMap] = useState({});
-    const cameFromDeck = location.state?.cameFromDeck;
-
+    const cameFromDeck = location.state?.fromDeck;
 
     const [cardQuery, setCardQuery] = useState('');
     const [colorIdentity,setColorIdentity] = useState(location.state?.colorIdentity || '');

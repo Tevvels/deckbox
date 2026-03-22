@@ -89,10 +89,10 @@ if(!card || !currentImage) return null;
         <p className='card_detail-oracle'>{currentImage?.oracle_text}</p>
         <p className='card_detail-legalities'>
           {currentImage?.legalities && Object.entries(currentImage.legalities).map(([format, status]) =>(
-            <p className='card_detail-legality-sub' key={format}>
+            <div className='card_detail-legality-sub' key={format}>
               <strong>{` ${format.replace(/_/g,' ')} `}:</strong> {` ${status.replace(/_/g, " ")} `}
               
-            </p> 
+            </div> 
           ))}
         </p>
         <div className='card_detail-container-sub card_detail-container-imageList'>

@@ -1,5 +1,5 @@
 .card_detail{
-    position: absolute;
+    position: fixed;
     top:5%;
     left:15%;
     display: grid;

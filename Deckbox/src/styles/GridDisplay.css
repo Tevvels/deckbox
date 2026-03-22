@@ -2,11 +2,11 @@
     display: grid;
     height: 100%;
     justify-content: center;
-    grid-template-columns:200px 200px 200px 200px;
-    grid-template-rows:200px 200px;
+    grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
+    grid-template-rows:repeat(auto-fit,minmax(5rem,10rem));
     grid-template-areas:
     "upperBlock header header newDeck"
-    "public public lowerBlock newDeck";
+    "lowerBlock public public game ";
     margin: 1%;
     gap:10px;
     
@@ -23,10 +23,10 @@
 
 @media screen and (max-width:48rem){
     .dashboard{
-    grid-template-columns:200px 200px 200px ;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr)) ;
     grid-template-rows:200px 200px 200px;
     grid-template-areas:
-    "blob header upperBlock"
+    "game header upperBlock"
     "public header newDeck"
     " public lowerBlock newDeck";
 
@@ -42,6 +42,9 @@
         var(--primary-color)
     );
     transition: background 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.dashboard_container-game{
+    grid-area:game;
 }
 .dashboard_container-public{
     grid-area:public;
@@ -59,14 +62,14 @@
     grid-area:newDeck;
 
 }
-.dashboard_container-lowerBlock{
+.dashboard_container-sub-lowerBlock{
     box-shadow: 0 0 5px black;
     border-radius: 15px;
     border: 1px solid black;
     display: flex;
     grid-area:lowerBlock;
 }
-.dashboard_container-sub-3{
+.dashboard_container-sub-upperBlock{
     box-shadow: 0 0 5px black;
     border-radius: 15px;
     border: 1px solid black;
@@ -76,42 +79,11 @@
 
 .public_container{
     display: grid;
-    grid-template-columns: 200px 200px;
-    grid-template-rows:200px 200px 200px 200px;
-    grid-template-areas:
-    ". header ."
-    "deck1 deck2 deck2"
-    "deck1 deck3 deck4"
-    "deck1 deck3 deck5"
-    "deck6 deck7 deck7";
+    grid-template-columns: repeat(auto-fit,minmax( 15rem,2fr));
+    /* grid-template-rows:; */
+
     justify-content: center;
     gap:5px;
-}
-.public_header{
-    grid-area:header;
-}
-
-.deck1{
-    grid-area:deck1;
-
-}
-.deck2{
-    grid-area:deck2
-}
-.deck3{
-    grid-area:deck3
-}
-.deck4{
-    grid-area:deck4
-}
-.deck5{
-    grid-area:deck5
-}
-.deck6{
-    grid-area:deck6
-}
-.deck7{
-    grid-area:deck7
 }
 
 .deck_card-container{
@@ -191,4 +163,7 @@
     border-radius: 1rem;
     justify-items: center;
     
+}
+.AllCards{
+display: flex;
 }
