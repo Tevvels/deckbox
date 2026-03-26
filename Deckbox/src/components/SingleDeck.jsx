@@ -97,14 +97,16 @@ function SingleDeck({deck,setDeck}) {
             } finally {
                 setIsLoading(false);
             }
-
+            console.log(data)
         };
         loadDeckData();
     },[deckId, setDeck]);
 
 const handleDeleteClick = async(entryId) =>{
         if(!isOwner || !entryId) return;
-
+    console.log(`entry ID${entryId}`);
+    console.log(deckId)
+    console.log("Path:", `${API_BASE}/cardStorage/${deckId}/remove-card-instance`);
 
     try{
         const token = localStorage.getItem('userToken');
@@ -170,6 +172,7 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 
 
     <div className="deck">
+        {console.log(deck)}
         {isOwner && (
             <AddCardButton
             deckId={deckId}
