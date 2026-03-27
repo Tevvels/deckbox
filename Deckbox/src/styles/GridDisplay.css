@@ -97,12 +97,12 @@
 
 .full_deck{
     display: grid;
-    grid-template-columns: 30rem 25rem 20rem ;
+    grid-template-columns: 2.5rem 30rem 25rem 20rem ;
     grid-template-rows: 10rem 30rem 15rem ;
     grid-template-areas:
-    "container container stats"
-    "container container preview"
-    "token token preview"
+    ". container container stats"
+    ". container container preview"
+    ". token token preview"
     ;
     gap: .5rem;
     
