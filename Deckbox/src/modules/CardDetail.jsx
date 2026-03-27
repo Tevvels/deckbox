@@ -114,5 +114,5 @@ if(!card || !currentImage) return null;
     </Gradient>
   );
 }
-
+// adding a commit to get my push back
 export default CardDetail
