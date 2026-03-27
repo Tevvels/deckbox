@@ -19,7 +19,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
     };
     const sortedCards = useMemo(()=>{
         let list = cards ? cards.filter(entry => entry && entry.cardId): [];
-    
+    // add a commit for a push 
             list.sort((a,b)=> a.cardId.name.localeCompare(b.cardId.name));
     
         const groups = {};

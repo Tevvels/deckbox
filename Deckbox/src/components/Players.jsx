@@ -18,7 +18,7 @@ function Players() {
         const value = parseInt(event.target.value,10);
         setPlayerCount(isNaN(value) || value < 0 || value >=7 ? 0: value );
     }
-    
+    //ADD A COMMIT FOR A PUSH
     const createPlayers = (count, gameType) => {
       return Array.from({length: count}, (_, index) => ({
         id: index + 1,
