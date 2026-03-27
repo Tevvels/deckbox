@@ -175,7 +175,10 @@ const handleAddCard = async (card) => {
                     {countInDeck > 0 && <span className='deck_count'>{countInDeck}</span>}
                 </div>
                 <button onClick={()=> handleAddCard(card)}>Add</button>
+    <Link to={-1}>Back to Deck</Link>
+                
                 </div>
+                
         )
     })}
 
@@ -184,7 +187,6 @@ const handleAddCard = async (card) => {
         {results.length === 0 && !loading && <p>no cards founds</p> }
 
     </div>
-
   )
 }
 

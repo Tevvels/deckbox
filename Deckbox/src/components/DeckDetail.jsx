@@ -83,7 +83,6 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
         };
         cards.forEach(entry => {
             if(entry?.cardId) {
-                console.log(entry)
                 const type = entry.cardId.type_line.toLowerCase();
                 const qty = entry.quantity || 1;
                 counts.total += qty;
@@ -229,11 +228,12 @@ useEffect(()=>{
                         onClick={()=> onCardClick(entry.cardId)}
                         onMouseEnter={()=> setCardPreview(entry.cardId)}
                         >
-                            {entry.cardId.name} x{entry.quantity} 
+                            {entry.cardId.name} x {entry.quantity}
+                            {console.log(entry.isCommander)} 
                             {isOwner && (
                                 <button 
                                 className='buttons buttons_delete'
-                                onClick={(e)=>{e.stopPropagation(); OnDeleteCard(entry._id)}
+                                onClick={(e)=>{e.stopPropagation(); OnDeleteCard(entry.cardId._id)}
                             }                        >X</button>
                         )}
                     </li>

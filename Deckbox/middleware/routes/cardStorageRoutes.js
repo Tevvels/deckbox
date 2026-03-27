@@ -206,7 +206,7 @@ router.delete('/:id/remove-card-instance',async (req,res) =>{
         const {cardId} = req.body;
 
         console.log(`backend delete request: deckID:${id} and card id ${cardId}`)
-
+    
 
         if(!cardId){
             return res.status(400).json({error: 'cardId is required in request body'})

@@ -12,7 +12,7 @@ function Players() {
      {value:10, label:'Draft'} 
     ];
     const [gametype,setGametype] = useState(gameTypes[0]);
-    const [playerCount,setPlayerCount] = useState(0);
+    const [playerCount,setPlayerCount] = useState(1);
 
     const handleInputChange = (event) =>{
         const value = parseInt(event.target.value,10);
@@ -38,7 +38,7 @@ function Players() {
             type={'number'} 
             value={playerCount} 
             onChange={handleInputChange} 
-            min="0" 
+            min="1" 
             max="6"
           />
 

@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import Gradient from '../modules/Gradient';
 import TextPhaser from '../modules/TextPhaser';
+import Dice from './Dice';
+import Players from './Players';
 
 // Dashboard component
 function Dashboard() {
@@ -43,7 +45,9 @@ function Dashboard() {
           <TextPhaser phrases={wubrgPhrases} />
         </Gradient>
  
-
+        <Gradient className="dashboard_container-game">
+          <Players />
+        </Gradient>
        <Gradient className='dashboard_container-public'>
       <PublicDeckDisplay  />
       </Gradient>

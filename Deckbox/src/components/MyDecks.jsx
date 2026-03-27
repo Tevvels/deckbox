@@ -13,11 +13,14 @@ function MyDecks() {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  
+
 
   // Delete deck function
   const deleteDeck = async (deckId) => {
+    
+
       const token = localStorage.getItem('userToken');
+  
       try {
         await axios.delete(`${API_BASE}/cardStorage/${deckId}`, {
           headers: { 
@@ -81,7 +84,6 @@ fetchDecks();
         <button className="buttons my_Deck-button my_Deck-add">+</button></Link>
       <h2 className='header my_Deck-header'>My Decks</h2>
       <div className="list my_Deck-list">
-        
         {decks.map((deck) => (
           <DeckCard
           key={deck._id}
