@@ -3,6 +3,8 @@ import '../styles/CardDetail.css';
 import { data } from 'react-router-dom';
 import { set } from 'mongoose';
 import Gradient from "../modules/Gradient"
+import Drag from '../modules/Drag';
+import { DragDropProvider } from '@dnd-kit/react';
 
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) {
     
@@ -202,7 +204,10 @@ useEffect(()=>{
 
     return (
         <div className="full_deck">
-     
+            <DragDropProvider>
+
+            <Drag/>
+            </DragDropProvider>
     <Gradient className='deck_container'>
         <div className='deck_header'>{name}</div>
             <div className="sort_controls">
