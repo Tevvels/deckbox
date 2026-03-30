@@ -196,3 +196,41 @@
 .AllCards{
 display: flex;
 }
+
+.create_Deck{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 2fr 4fr 4fr 4fr 2fr;
+    grid-template-areas:
+    ". header ."
+    ". name ."
+    ". format ."
+    ". commander ."
+    ". submit .";
+
+    gap:.5rem;
+    background:var(--med-bg-color);
+
+}
+.create_Deck > * {
+    border:1px solid white;
+    display: flex;
+}
+.create_DeckHeader{
+    grid-area:header;
+}
+
+.create_DeckName{
+    grid-area:name;
+}
+
+.create_DeckFormat{
+    grid-area:format;
+}
+.create_DeckCommander{
+    grid-area:commander;
+}
+.create_DeckButton{
+    grid-area:submit;
+}
+

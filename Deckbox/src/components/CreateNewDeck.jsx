@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState,useRef,useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
+
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
 
@@ -131,25 +132,28 @@ const createDeck = async()=>{
 }
 return (
     <div className="create_Deck container create_Deck-container">
+       <div className='create_DeckHeader'>
         <h2 className='header create_Deck-header'>Create New Deck</h2>
-        <div className='divs create_Deck-div'>Deck Name:</div>
-        <input className='inputs create_Deck-input' type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
-
-        <div className='divs create_Deck-div'>Deck Format:</div>
-        <input className='inputs create_Deck-input' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} /> Make Deck Public
-    <Dropdown className="create_Deck-dropdown" options={[
-        {value:'Standard', div:'Standard'},
-        {value:'Modern', div:'Modern'},
-        {value:'Commander', div:'Commander'},
-        {value:'Legacy', div:'Legacy'},
-        {value:'Vintage', div:'Vintage'},
-        {value:'Pauper', div:'Pauper'},
-        {value:'Other', div:'Other'},
-    ]} onSelect={(option)=>setDeckFormat(option.value)} />
-    
+        </div>
+        <div className='create_DeckName'>
+            <div className='divs create_Deck-name'>Deck Name:</div>
+            <input className='inputs create_Deck-nameInput' type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
+        </div>
+        <div className='create_DeckFormat'>
+            <div className='divs create_Deck-format'>Deck Format:</div>
+            <Dropdown className="create_Deck-dropdown" options={[
+                {value:'Standard', div:'Standard'},
+                {value:'Modern', div:'Modern'},
+                {value:'Commander', div:'Commander'},
+                {value:'Legacy', div:'Legacy'},
+                {value:'Vintage', div:'Vintage'},
+                {value:'Pauper', div:'Pauper'},
+                {value:'Other', div:'Other'},
+            ]} onSelect={(option)=>setDeckFormat(option.value)} />
+        </div>
 
     {deckFormat === 'Commander' && (
-        <div className="create_Deck-Commander-container">
+        <div className="create_DeckCommander">
             <input className='inputs create_Deck-input' type="text" placeholder="Commander Name" value={commanderName} onChange={handleInputChange}
             onBlur={()=>setTimeout(()=>setShowSuggestions(false),300)}
             onFocus={()=>setShowSuggestions(true)} />
@@ -168,11 +172,13 @@ return (
     
 
 
-
+<div className='create_DeckButton'>
     <button className='buttons create_Deck-button' onClick={createDeck}>Create Deck</button>
-        <Link className='links create_Deck-link' to="/mydecks"> Back to My Decks </Link>
+    <Link className='links create_Deck-link' to="/mydecks"> Back to My Decks </Link>
+    <input className='inputs create_Deck-formatInput' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} /> Make Deck Public
     
     </div>
+</div>
   )
 }
 
