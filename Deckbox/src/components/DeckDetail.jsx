@@ -1,11 +1,13 @@
-import React, {useState,useMemo,useEffect, use} from 'react'
+import React, {useState,useMemo,useEffect} from 'react'
 import '../styles/CardDetail.css';
 import { data } from 'react-router-dom';
 import { set } from 'mongoose';
-import Gradient from "../modules/Gradient"
-
+import Gradient from "../modules/Gradient";
+import Drag from '../modules/Drag';
+import Drop from '../modules/Drop';
+import {DndContext, pointerWithin } from '@dnd-kit/core';
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) {
-    
+    const [droppedId, setDroppedId] = useState(null);
     const [sortBy, setSortBy] = useState('none');
     const [cardPreview, setCardPreview] = useState(null);
     const [decksTokens, setDecksTokens] = useState([]);
@@ -49,6 +51,13 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
     }
     return groups;
     },[cards,sortBy]);
+
+    function handleDragEnd(event) {
+        const {over } = event;
+        if (over) {
+            setDroppedId(over.id);
+        }
+    }
 
 
     const [tokenImg,setTokenImg] = useState(null);
@@ -202,7 +211,12 @@ useEffect(()=>{
 
     return (
         <div className="full_deck">
-     
+          {isOwner &&  (<DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd}>
+                <Drag />
+                <Drop id="drop-zone-1">
+                    {droppedId === 'drop-zone-1' && <p>Successfully Dropped!</p>}
+                </Drop>
+            </DndContext>) }
     <Gradient className='deck_container'>
         <div className='deck_header'>{name}</div>
             <div className="sort_controls">
