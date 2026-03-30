@@ -1,7 +1,5 @@
 import React, {useState,useMemo,useEffect, use} from 'react'
 import '../styles/CardDetail.css';
-import { data } from 'react-router-dom';
-import { set } from 'mongoose';
 import Gradient from "../modules/Gradient"
 
 function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) {
@@ -9,6 +7,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
     const [sortBy, setSortBy] = useState('none');
     const [cardPreview, setCardPreview] = useState(null);
     const [decksTokens, setDecksTokens] = useState([]);
+    const [totals,setTotals] = useState({cmc: 0, W:0, U:0,B:0,R:0,G:0,C:0})
     const Mana_Colors = {
         "W": "White",       
         "U": "Blue",
@@ -108,6 +107,37 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
 
 
 useEffect(()=>{
+    if (cards.length > 0) {
+        const cmcTotals = { cmc: 0, W:0, U:0,B:0,R:0,G:0,C:0};
+
+        cards.forEach(entry =>{
+            const card = entry.cardId;
+            if(!card) return;
+            const count = entry.count || 1;
+
+            cmcTotals.cmc += (card.cmc || 0) * count;
+           
+            const costString = card.mana_cost || (card.card_faces ? card.card_faces.map(f => f.mana_cost).join(""): "");
+
+            const symbols = costString.match(/\{([^}]+)\}/g);
+            if(symbols){
+                symbols.forEach(symbol =>{
+                    const core = symbol.slice(1,-1);
+                    ['W','U','B','R','G','C'].forEach(color =>{
+                        if(core.includes(color)){
+                            cmcTotals[color]+= count;
+                        }
+                    });
+                });
+            } else if (!costString && !card.type_line.includes("Land")){
+                cmcTotals.C += count;
+            }
+        });
+        setTotals(cmcTotals);
+    }
+},[cards]);
+
+useEffect(()=>{
     const fetchRelatedTokens = async () => {
         
         if(!sortedCards || Object.keys(sortedCards).length === 0) return;
@@ -202,7 +232,9 @@ useEffect(()=>{
 
     return (
         <div className="full_deck">
-     
+            {console.log(totals)}
+    
+    
     <Gradient className='deck_container'>
         <div className='deck_header'>{name}</div>
             <div className="sort_controls">
@@ -211,7 +243,7 @@ useEffect(()=>{
                 <button className='buttons' onClick={()=>setSortBy('none')}>Reset</button>
             </div>
 
-            <ul className='list'>
+            <ul className={`list ${sortBy}`}>
                 {Object.entries(sortedCards).map(([category, entries])=>(
                     <Gradient className={`sort_order ${category.replaceAll(" ","")}`}>
                     <li 
@@ -229,7 +261,6 @@ useEffect(()=>{
                         onMouseEnter={()=> setCardPreview(entry.cardId)}
                         >
                             {entry.cardId.name} x {entry.quantity}
-                            {console.log(entry.isCommander)} 
                             {isOwner && (
                                 <button 
                                 className='buttons buttons_delete'
@@ -288,6 +319,7 @@ useEffect(()=>{
             className={`mana_symbol ${isActive ? 'active' : 'inactive'}`}
             >
             <i className={`ms ms-${mana.toLowerCase()} ms-cost ms-2x`}/>
+            {totals[mana]}
             </span>
             )
         })}

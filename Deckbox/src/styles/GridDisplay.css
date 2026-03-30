@@ -97,12 +97,12 @@
 
 .full_deck{
     display: grid;
-    grid-template-columns: 2.5rem 30rem 25rem 20rem ;
+    grid-template-columns: .25fr 1.50fr .50fr .50fr .25fr ;
     grid-template-rows: 10rem 30rem 15rem ;
     grid-template-areas:
-    ". container container stats"
-    ". container container preview"
-    ". token token preview"
+    ". container container stats ."
+    ". container container preview . "
+    ". token token preview . "
     ;
     gap: .5rem;
     
@@ -116,8 +116,8 @@
 .deck_container{
     grid-area:container;
     display:grid;
-    grid-template-columns:40rem 12rem;
-    grid-template-rows:2rem 37rem ;
+    grid-template-columns:1fr .25fr;
+    grid-template-rows: .20fr 3.80fr ;
     grid-template-areas:
     "header sort"
     "list list"
@@ -158,6 +158,34 @@
     grid-template-rows:auto;
     gap:.3rem;
     justify-content: center;
+    grid-template-areas:
+    "creature instant"
+    "creature sorcery"
+    "artifact enchantment"
+    "planeswalker . "
+    " land land"
+    ;
+}
+.creature{
+    grid-area:creature;
+}
+.artifact{
+    grid-area:artifact;
+}
+.enchantment{
+    grid-area:enchantment;
+}
+.planeswalker{
+    grid-area:planeswalker;
+}
+.instant{
+    grid-area:instant;
+}
+.sorcery{
+    grid-area:sorcery;
+}
+.land{
+    grid-area:land;
 }
 .sort_order{
     border:1px solid var(--light-bg-color);
