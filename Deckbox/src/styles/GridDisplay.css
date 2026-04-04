@@ -1,8 +1,7 @@
-.dashboard{
+/* .dashboard{
     display: grid;
-    height: 100%;
     justify-content: center;
-    grid-template-columns:2.5rem 10rem 20rem 20rem 10rem 2.5rem;
+    grid-template-columns:.25fr .5fr 2fr 2fr .5fr .25fr;
     grid-template-rows:5rem 10rem 20rem;
     grid-template-areas:
     ". . . . . ."
@@ -81,7 +80,6 @@
 .public_container{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax( 15rem,2fr));
-    /* grid-template-rows:; */
 
     justify-content: center;
     gap:5px;
@@ -233,4 +231,9 @@ display: flex;
 .create_DeckButton{
     grid-area:submit;
 }
-
+.player{
+    display:grid;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows:1fr 1fr
+}
+ */

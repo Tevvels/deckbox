@@ -1,29 +1,31 @@
-.dashboard_container > *{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center; 
-    justify-content: center;
-}
-.dashboard_container-sub-link{
-    font-size: 3.5rem;
-}
-.dashboard_container-newDeck{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-.dashboard_container-newDeck:hover{
-color:var(--primary-color)
+.dashboard{
+    display: grid;
+    grid-template-columns:3rem 2fr 2fr 2fr 3rem;
+    grid-template-rows:10rem .20fr .20fr .20fr;
+    grid-template-areas:
+    ". game upperBlock newDeck ."
+    ". header header header ."
+    ". lowerBlock lowerBlock lowerBlock ."
+    ". public public public .";
+    gap: .25rem;
 }
 
-.modal{
-    position:fixed;
-    display: flex;
-    height: 80%;
-    width: 80%;
-    top:5%;
-    left:5%;
-    background: var(--light-bg-color);
+
+.dashboard_container-header{
+    grid-area:header;
+}
+.dashboard_container-game{
+    grid-area:game;
+}
+.dashboard_container-newDeck{
+    grid-area:newDeck;
+}
+.dashboard_container-public{
+    grid-area:public;
+}
+.dashboard_container-upperBlock{
+    grid-area:upperBlock;
+}
+.dashboard_container-lowerBlock{
+    grid-area:lowerBlock;
 }
