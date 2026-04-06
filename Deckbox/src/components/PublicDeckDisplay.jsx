@@ -47,7 +47,7 @@ function PublicDeckDisplay() {
         key={deck._id}
         deck={deck}
         showOwner={true}
-        className={`deck${index + 1}`}
+        className={`deck ${index + 1}`}
         />
       ))}
 

@@ -1,0 +1,15 @@
+.navigation_container{
+    display: flex;
+    text-transform: uppercase;
+    background: var(--mid-bg-color);
+    color: var(--text-color);
+    height: 2.5rem;
+}
+
+.navigation_link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    
+}
