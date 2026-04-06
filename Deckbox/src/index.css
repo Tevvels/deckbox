@@ -17,14 +17,11 @@ color: var(--text-color);
 
 font-family: "Spline Sans", sans-serif;
 }
-#root{
-  background: var(--dark-bg-color);
-
-}
-
+/* 
 html{
   scrollbar-gutter:stable;
 }
+*/
 .gradient{
       background:radial-gradient(
         circle at var(--gradient-x,50%) var(--gradient-y,50%),

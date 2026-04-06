@@ -1,26 +1,15 @@
-.navigation{
-    background: var(--dark-bg-color);
-    display:grid;
-    grid-template-columns:1rem 10rem 4rem 1rem 4rem 1rem 1rem;
-    grid-template-rows:2rem;
-    z-index: 10;
-    padding: 5px 0;
-}
-.navigation_button{
-grid-area:login;
-background:var(--primary-color);
-border-radius: .25rem;
-
-}
-
 .navigation_container{
-    width: 100vw;
-        display:grid;
-    grid-template-areas:
-    ". menu menu . . login .";
-}
-.navigation_link{
-    color: var(--light-bg-color);
+    display: flex;
     text-transform: uppercase;
-    overflow: hidden;
+    background: var(--mid-bg-color);
+    color: var(--text-color);
+    height: 2.5rem;
+}
+
+.navigation_link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    
 }

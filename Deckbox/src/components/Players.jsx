@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import Dice from './Dice';
 
-function Players() {
+function Players({onClose}) {
   const gameTypes = [
     {value:20, label:'Standard'},
      {value: 40, label:'Commander'}, 

@@ -1,60 +1,67 @@
-.card_detail{
-    position: fixed;
-    top:5%;
-    left:15%;
-    display: grid;
-    grid-template-columns: 10rem 40rem 5rem;
-    grid-template-rows: 5rem 2.5rem 10rem 10rem 1.5rem;
-    grid-template-areas:
-    "display header ."
-    "display typeLine ."
-    "display oracle ."
-    "display legalities ."
-    "button legalities ."
-    ;
-    border:.25rem solid var(--primary-color)
-
-}
-.card_detail-container-imageList{
-    color:white;
-    grid-area: display;
-
-}
-.card_detail-name{
-    grid-area:header;
-}
-.card_detail-oracle{
-    grid-area:oracle;
-}
-.card_detail-legalities{
-    grid-area:legalities;
+.deck_card-content{
     display: flex;
-    flex-wrap:wrap;
-    font-size: .8rem;
+    flex-direction: column;
+    
+    
+}
+.public{
+    display: grid;
+    grid-template-columns:6rem 1fr 6rem ;
+    grid-template-rows:.15fr 1fr;
+    grid-template-areas:
+    ". header . "
+    ". container . "
+    ;
+    gap: 2rem;
+    border: 4px solid transparent;
     
     
 }
 
-.card_detail-updateArt{
-    grid-area: button;
+.public_header{
+    grid-area:header;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size:3rem;
 }
-.card_detail-typeline{
-    grid-area: typeLine;
+.public_container{
+
+    grid-area: container;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3rem;
+
+}
+.deck_card-container{
+
+    box-shadow: 0 0 .5rem var(--dark-bg-color);
+    border-radius: 1rem;
+    width: 20rem;
+    
 }
 
-.mana_symbol > i{
-    overflow: hidden;
+@media screen and (max-width:61.9rem) {
+    .public{
+        grid-template-columns:1fr ;
+    }
+    .public_container{
+        grid-template-columns: 1fr ;
+    }
+    .deck_card-container{
+        width: 90%;
+        
+    }
 }
-.inactive{
-    opacity: 20%;
-}
-.card_entry{
-    cursor: pointer;
-}
-.card_entry:hover{
-    cursor: pointer;
-    color:var(--primary-color)
-}
-.card{
-    border-radius: .5rem;
-}
+/* @media screen and (max-width:47.9rem) {
+    .public{
+        grid-template-columns:1fr ;
+        background: yellow;
+    }
+    .public_container{
+        grid-template-columns: 1fr;
+        grid-template-rows:1fr;
+    }
+    } */

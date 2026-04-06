@@ -21,7 +21,6 @@ function CardDetail({card,onClose,onUpdateSuccess}) {
   const [AllPrints, setAllPrints] = useState([]);
   const [currentImage, setCurrentImage] = useState(card);
   
-  console.log(onClose)
   const handleUpdateArt = async()=>{
     try{
       const response = await fetch(`${API_BASE}/cardStorage/update-art/${card._id}`,{
