@@ -53,8 +53,7 @@ export const UseCardSearch = () => {
 
     const handleArtworkClick = (card) =>{
         setSelectedCard(card);
-        const sameName = suggestions.filter(c => c === card.name);
-        setSameNameCard(sameName);  
+  
             
     };
 
@@ -134,7 +133,7 @@ const fetchSuggestions = useCallback(async (query) => {
     try{
         let identityFilter = "";
         if(filterByIdentity && colorIdentity){
-            identityFilter = " id<=" + colorIdentity;  
+            identityFilter =`id<=${colorIdentity}`;  
         }
         const fullQuery = cleanQuery + identityFilter;
         const finalUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}`;

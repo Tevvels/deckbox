@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import "../styles/Search.css";
 import { UseCardSearch } from '../components/UseCardSearch';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+import '../styles/search.css'
 
 
 // A debounce function - this is to reduce the number of api requests during typing. 
@@ -49,7 +50,7 @@ const handleSearchSubmission = async(e) =>{
     setError(null);
 
         try{
-            const identityFilter = (filterByIdentity && colorIdentity) ? ` +identity:${colorIdentity}` : '';
+            const identityFilter = (filterByIdentity && colorIdentity) ? ` id<=:${colorIdentity}` : '';
             const fullQuery = cardQuery + identityFilter;
             
             const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=prints`);
@@ -80,8 +81,9 @@ const handleSuggestionClick = (name)=>{
             <input 
             type="text"
             value={cardQuery}
+            className='search_searchBar'
             onChange={handleInputChange}
-            placeholder='Search for a card..'
+            placeholder= {'\u2315\ Search for a card.. '}
             autoComplete="off"
             />
 
@@ -105,7 +107,7 @@ const handleSuggestionClick = (name)=>{
                 </div>
             )}
 
-            <button className='buttons' type='submit' disabled={loading}>
+            <button className='buttons search_submit' type='submit' disabled={loading}>
                 {loading ? 'Searching...':'search'}
                 </button>
         </form>

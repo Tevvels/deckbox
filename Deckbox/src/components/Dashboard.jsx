@@ -34,26 +34,24 @@ function Dashboard() {
   return (
   
     <Gradient className='dashboard'>
+      <div className='dashboard_Logo'>            
+          </div>
       <Gradient className='dashboard_container-header'>
        <h1 className='header dashboard_header'> Welcome to Deckbox Dashboard </h1>
       </Gradient>
-      <Gradient className='dashboard_container-newDeck'>            
-              <p>Start a new Deck?</p>
-              <Link className='dashboard_container-link' to={'/Deck/new'}>+</Link>
-          </Gradient>
         <Gradient className='dashboard_container-lowerBlock'>
          <Storage />
 
         </Gradient>
-        <Gradient className='dashboard_container-upperBlock'>
+        <div className='dashboard_container-upperBlock'>
           <TextPhaser phrases={wubrgPhrases} />
-        </Gradient>
+        </div>
  
-        <Gradient className="dashboard_container-game">
+        <div className="dashboard_container-game">
           <button className='play-button' onClick={()=>setGame(true)}>
             Play
           </button>
-        </Gradient>
+        </div>
        
           {game && (
        <Gradient className='modal'>
@@ -61,9 +59,9 @@ function Dashboard() {
               <Players onClose={()=> setGame(false)}/>
             </Gradient>
         )}
-       <Gradient className='dashboard_container-public'>
+       <div className='dashboard_container-public'>
       <PublicDeckDisplay  />
-      </Gradient>
+      </div>
     </Gradient>
   )
 }
