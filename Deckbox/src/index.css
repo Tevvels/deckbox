@@ -72,3 +72,6 @@ html{
 .sort_controls{
   display: flex;
 }
+.card{
+  border-radius: .9rem;
+}

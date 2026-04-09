@@ -1,9 +1,14 @@
 .navigation_container{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(9,1fr);
+    grid-template-areas:
+    ". logo . player mydecks publicdecks . newdeck . profile";
+    height: 100%;;
     text-transform: uppercase;
     background: var(--mid-bg-color);
     color: var(--text-color);
     height: 2.5rem;
+    background: var(--dark-bg-color);
 }
 
 .navigation_link{
@@ -12,4 +17,91 @@
     align-items: center;
     border: 1px solid black;
     
+}
+
+.navigation_NewDeck{
+    grid-area: newdeck;
+    border-radius: .5rem;
+    background:var(--light-bg-color);
+
+
+}
+.navigation_players{
+    grid-area: player;
+}
+
+.navigation_myDecks{
+    grid-area: mydecks;
+}
+
+.navigation_publicDecks{
+    grid-area: publicdecks;
+}
+.navigation_button{
+    grid-area: logout;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 0 .5rem ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    background:var(--light-bg-color);
+    border:none;
+}
+.navigation_button:hover{
+    background:var(--mid-bg-color);
+    cursor: pointer;
+}
+
+
+.navigation_profile{
+    grid-area:profile;
+    height: 2.5rem;
+    background-color: transparent ;
+    font-size: 1.5rem;
+    border: none;
+}
+.navigation_profile-dropdown{
+    position: absolute;
+    top: 2.5rem;
+    right: 0;
+    height: 40%;
+    width: 15%;
+    background-color: var(--dark-bg-color);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4,.25fr);
+    grid-template-areas:
+    "myprofile"
+    "settings"
+    "."
+    "logout";   
+    flex-direction: column;
+    border-radius: 0 0 0 .5rem;
+    overflow: hidden;
+}
+.navigation_hamburger{
+    background:transparent;
+    display: flex ;
+    flex-wrap: wrap ;
+    border: none ;
+    justify-content: center ;
+    align-items: center ;
+    width: 2rem ;
+;
+}
+.navigation_hamburger:hover{
+    cursor: pointer ;
+}   
+.bar{
+    width: 1.5rem ;
+    height: .2rem ;
+    background-color: var(--text-color) ;
+    margin: .2rem 0 ;
+    border-radius: .1rem ;
+}
+
+.navigation_Logo{
+    grid-area: logo;
 }

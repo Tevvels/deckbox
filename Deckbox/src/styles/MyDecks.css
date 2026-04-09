@@ -37,7 +37,7 @@
 }
 .deck_card-container{
 
-    box-shadow: 0 0 .5rem var(--dark-bg-color);
+    box-shadow: 0 0 .5rem var(--med-bg-color)inset,0 0 .5rem var(--dark-bg-color);
     border-radius: 1rem;
     width: 20rem;
     
