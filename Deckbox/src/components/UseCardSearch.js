@@ -31,6 +31,7 @@ export const UseCardSearch = () => {
     const [deckCountMap, setDeckCountMap] = useState({});
     const cameFromDeck = location.state?.fromDeck;
 
+
     const [cardQuery, setCardQuery] = useState('');
     const [colorIdentity,setColorIdentity] = useState(location.state?.colorIdentity || '');
     const [filterByIdentity, setFilterByIdentity] = useState(true);

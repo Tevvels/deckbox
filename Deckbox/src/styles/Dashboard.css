@@ -5,7 +5,7 @@
     grid-template-areas:
     ". game upperBlock newDeck ."
     ". header header header ."
-    ". lowerBlock lowerBlock lowerBlock ."
+    ". search search search ."
     ". public public public .";
     gap: .25rem;
 }
@@ -34,7 +34,9 @@
 .dashboard_container-upperBlock{
     grid-area:upperBlock;
 }
-.dashboard_container-lowerBlock{
-    grid-area:lowerBlock;
+.dashboard_container-search{
+    grid-area:search;
+    height: fit-content;
+    z-index: 1;
 }
 

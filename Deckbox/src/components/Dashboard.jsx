@@ -39,7 +39,7 @@ function Dashboard() {
       <Gradient className='dashboard_container-header'>
        <h1 className='header dashboard_header'> Welcome to Deckbox Dashboard </h1>
       </Gradient>
-        <Gradient className='dashboard_container-lowerBlock'>
+        <Gradient className='dashboard_container-search'>
          <Storage />
 
         </Gradient>

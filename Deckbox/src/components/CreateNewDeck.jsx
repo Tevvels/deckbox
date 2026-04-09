@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState,useRef,useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
+import '../styles/CreateNewDeck.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -133,11 +134,14 @@ const createDeck = async()=>{
 return (
     <div className="create_Deck container create_Deck-container">
        <div className='create_DeckHeader'>
-        <h2 className='header create_Deck-header'>Create New Deck</h2>
+            <h2 className='header create_Deck-header'>Create New Deck</h2>
         </div>
         <div className='create_DeckName'>
             <div className='divs create_Deck-name'>Deck Name:</div>
             <input className='inputs create_Deck-nameInput' type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
+        </div>
+        <div className='create_DeckPublic'>
+<input className='inputs create_DeckIsPublic' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} placeholder='Make the Deck Public' />Make the Deck Public
         </div>
         <div className='create_DeckFormat'>
             <div className='divs create_Deck-format'>Deck Format:</div>
@@ -173,9 +177,8 @@ return (
 
 
 <div className='create_DeckButton'>
-    <button className='buttons create_Deck-button' onClick={createDeck}>Create Deck</button>
-    <Link className='links create_Deck-link' to="/mydecks"> Back to My Decks </Link>
-    <input className='inputs create_Deck-formatInput' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} /> Make Deck Public
+    <button className='buttons create_DeckCreate' onClick={createDeck}>Create Deck</button>
+    <Link className='links create_DeckBack' to="/mydecks"> Back to My Decks </Link>
     
     </div>
 </div>
