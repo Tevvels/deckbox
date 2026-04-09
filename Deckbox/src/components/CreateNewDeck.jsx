@@ -3,6 +3,7 @@ import React, { useState,useRef,useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import '../styles/CreateNewDeck.css';
+import Gradient from '../modules/Gradient';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -133,6 +134,7 @@ const createDeck = async()=>{
 }
 return (
     <div className="create_Deck container create_Deck-container">
+     <Gradient className="create_DeckSubContainer">
        <div className='create_DeckHeader'>
             <h2 className='header create_Deck-header'>Create New Deck</h2>
         </div>
@@ -181,6 +183,7 @@ return (
     <Link className='links create_DeckBack' to="/mydecks"> Back to My Decks </Link>
     
     </div>
+</Gradient>
 </div>
   )
 }

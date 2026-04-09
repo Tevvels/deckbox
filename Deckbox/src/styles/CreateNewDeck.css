@@ -1,14 +1,24 @@
 .create_Deck{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-bg-color);
+    height: 74.1dvh;
+}
+.create_DeckSubContainer{
     display:grid;
     background: var(--dark-bg-color);
     grid-template-columns: 1fr 20rem 10rem 1fr;
-    grid-template-rows: 5rem 10rem 1fr 5rem ;
+    grid-template-rows: .5rem 5rem 5rem 1fr 5rem ;
     grid-template-areas:
+    ". . . ."
     " . header header . "
     " . name Public . "
     " . format format . "
     " . button button . "
-
+    ;
+    border-radius: .5rem;
+    box-shadow: 0 0 .5rem var(--primary-color) inset, 0 0 .5rem var(--med-bg-color);
 }   
 
 
@@ -46,26 +56,30 @@
 }
 .create_DeckCreate{
     grid-area:create;
-
+    
 }
 
 .create_DeckCreate{
     background: var(--primary-color);
     color: var(--text-color);
     height: fit-content;
-    border: none; }
+    border: none; 
+    border-radius: .5rem;
+}
 .create_DeckPublic{
     grid-area:Public;
+    justify-content: center;
     display: flex;
 }
 .create_DeckName{
     grid-area:name;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 
 }
 .create_DeckName input{
-    background: transparent;
+    background: var(--dark-bg-color);
     border: 1px solid var(--primary-color);
     color: var(--text-color);
     padding: 1rem;
