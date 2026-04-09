@@ -1,0 +1,31 @@
+.login{
+    display: flex;
+    background: var(--dark-bg-color);
+    height: 100dvh;
+    justify-content: center;
+    align-items: center;
+}
+.login_container{
+    display:flex;
+    flex-direction: column;
+    height: 20rem;
+    width: 25rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: .5rem;
+    box-shadow: 0 0 10px var(--dark-bg-color) inset, 0 0 10px var(--primary-color);
+}
+.login_buttons{
+    display: flex;
+    border-radius: .5rem;
+    border:1px solid var(--primary-color);
+
+}
+.login_buttons button{
+    height: 2rem;
+    text-transform: uppercase;
+    background: var(--dark-bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+}

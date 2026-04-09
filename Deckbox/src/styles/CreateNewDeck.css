@@ -90,5 +90,27 @@
 .create_DeckFormat{
     grid-area:format;
     display: flex;
-    flex-direction: column;
+
+}
+.dropdown_container{
+
+    background-color: var(--med-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+.dropdown_list{
+    background-color: var(--dark-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--dark-bg-color);
+    border-radius: .5rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+.dropdown_listItem:hover{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
 }
