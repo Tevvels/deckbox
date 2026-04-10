@@ -142,7 +142,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                 <h3>{cardPreview.name}</h3>
                 <img className='card' src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
-                <p>{cardPreview.oracle_text}</p>
+                {/* <p>{cardPreview.oracle_text}</p> */}
 
             </div>
         ) : (
@@ -159,8 +159,8 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
             ))}
         </div>
         <div  className='stats_header'>
-        <h3>statistics</h3>
-        <span>{format}</span>
+            <h3>statistics</h3>
+            <span>{format}</span>
         </div>
         <div className='type_count'>
         {Object.entries(deckMetrics.counts).map(([type,count])=>(

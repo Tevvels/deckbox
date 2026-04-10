@@ -145,9 +145,7 @@
 }
 .mana_symbol{
     display: flex;
-    flex-direction: column;
-    height: fit-content;
-    width: fit-content;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;}
 .ms-span{
@@ -168,4 +166,7 @@
     grid-area: header;
     text-transform: uppercase;
     font-size:1.5rem;
+}
+.inactive{
+    opacity: .3;
 }
