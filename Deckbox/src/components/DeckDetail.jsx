@@ -1,5 +1,6 @@
 import React, {useState,useMemo,useEffect, use} from 'react'
 import '../styles/CardDetail.css';
+import '../styles/myDecks.css';
 import Gradient from "../modules/Gradient"
 import { useTokens } from '../modules/Tokens';
 
@@ -139,7 +140,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
         {cardPreview ? (
             <div className='card_preview'>
                 <h3>{cardPreview.name}</h3>
-                <img className='card' src={cardPreview.image_uris?.small || "https://via.placeholder.com/300"} alt={cardPreview.name} />
+                <img className='card' src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
                 <p>{cardPreview.oracle_text}</p>
 
@@ -150,17 +151,22 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
     </Gradient>
 
     <Gradient className='deck_container-stats'>
-        <div>
+        <div className='mana_symbols-stats'>
             {MANA_TYPES.map(m => (
                 <span key={m} className={`mana_symbol ${deckMetrics.colors.has(m)? 'active': 'inactive'}`}>
-                    <i className={`ms ms-${m.toLowerCase()} ms-cost`} /> {deckMetrics.mana[m]}
+                    <i className={`ms ms-${m.toLowerCase()} ms-cost ms-span`} /> {deckMetrics.mana[m]}
                 </span>
             ))}
         </div>
-        <h3>statistics ({format})</h3>
+        <div  className='stats_header'>
+        <h3>statistics</h3>
+        <span>{format}</span>
+        </div>
+        <div className='type_count'>
         {Object.entries(deckMetrics.counts).map(([type,count])=>(
             count > 0 && <p key={type}>{type.charAt(0).toUpperCase() + type.slice(1)}:{count}</p>
         ))}
+        </div>
     </Gradient>        
                     
                     

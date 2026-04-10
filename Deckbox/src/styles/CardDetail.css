@@ -1,8 +1,4 @@
-.deck_container-stats{
-    display: flex;
-    flex-wrap: wrap;
-    font-size: .8rem;
-}
+
 
 .create_Deck > *{
     margin: 0.5rem;
