@@ -25,9 +25,9 @@ function Navigation({onLogout}) {
     <div className='navigion'>
 
     <nav className={`navigation_container`}>
-        <div className='navigation_logo'>
+        <Link key={'toDashboard'} className='navigation_logo' to="/">
           <h1 className='navigation_header'>Deckbox</h1>
-        </div>
+        </Link>
     {navLinks.map((link)=>(
       location.pathname !== link.path && (
         <Link
