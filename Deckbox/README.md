@@ -1,16 +1,14 @@
-# React + Vite
+# DeckBox
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+ this project is a Magic the Gathering #\u2122\ deck building program.  this system will allow you to create, edit and delete specific lists for a player's deck "library". the function goes deep enough to allow changes on the cards in view  as well as how they add up in the format. 
 
-Currently, two official plugins are available:
+ ```bash
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ npm install
+ npm run dev
 
-## React Compiler
+ ```
+ this is needed to start the project, and run dev is to run it a local developement. 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+ this project uses the Scryfall API for its data. it then uses that data to allow users to create deck lists. 

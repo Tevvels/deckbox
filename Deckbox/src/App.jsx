@@ -18,7 +18,7 @@ import Navigation from './modules/Navigation.jsx'
 import SearchResults from './components/SearchResults.jsx'
 import 'mana-font/css/mana.min.css';
 import './styles/Layout.css'
-
+import Gradient from './modules/Gradient.jsx';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -106,7 +106,7 @@ function App() {
   }
 
   return (
-    <div className={"App"}>
+    <Gradient className={"App"}>
       <main>
     <Navigation onLogout={handleLogout}/>
     <Routes>
@@ -122,11 +122,11 @@ function App() {
       <Route path="/deck/:deckId" element={<SingleDeck deck={activeDeck} setDeck={setActiveDeck}/>} />
       <Route path="/deck/:deckId/search" element={<Storage addCardToDeck={addCardToActiveDeck} currentDeckList={activeDeck?.cards || []}/>} />   
       <Route path='/search' element={<SearchResults />} />
-      <Route path="*" element={<div>404 Not Found</div>} />
+      <Route path="*" element={<Gradient>404 Not Found</Gradient>} />
     </Routes>
     </main>
     <Footer />
-    </div>
+    </Gradient>
   )
 }
 

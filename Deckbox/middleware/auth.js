@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import User from '../models/User.js';
 config();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change-this-secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'hush its a secret';
 export const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
