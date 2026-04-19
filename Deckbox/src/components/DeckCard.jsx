@@ -71,7 +71,7 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
                 {onDelete && (
                     <button className={`buttons buttons_delete`}
                     onClick={(e)=>{e.preventDefault(); onDelete(deck._id)}}
-                    ></button>
+                    >Remove</button>
                 )}
                 {showOwner && <h4 className='deck_card-owner'>{deck.user?.username || 'unknown'}</h4>}
 

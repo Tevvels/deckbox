@@ -5,6 +5,7 @@ import CardDetail from '../modules/CardDetail';
 import DeckDetail from './DeckDetail';
 import DeckCard from './DeckCard';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+import '../styles/MyDecks.css';
 
 const AddCardButton = ({ deckId,isCommander,colorIdentity}) =>(
     <div className='add_card'>
@@ -172,7 +173,6 @@ if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 
 
     <div className="deck">
-        {console.log(deck)}
         {isOwner && (
             <AddCardButton
             deckId={deckId}
