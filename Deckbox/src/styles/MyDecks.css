@@ -26,14 +26,14 @@
     text-transform: uppercase;
     font-size:3rem;
 }
-.public_container{
+.public_container,.my_Deck-list{
 
     grid-area: container;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 3rem;
-
+    gap: 2rem;
+    border: 2rem solid transparent;
 }
 .deck_card-container{
 
@@ -169,4 +169,8 @@
 }
 .inactive{
     opacity: .3;
+}
+.buttons{
+    color: white;
+    background: var(--primary-color);
 }

@@ -79,10 +79,11 @@ fetchDecks();
 
 
  return (
+  <div>   
+  <h2 className='header my_Deck-header'>My Decks</h2>
     <div className="my_Deck container my_Deck-container">
-      <Link className="links my_Deck-link my_Deck-link-new" to="/deck/new">
-        <button className="buttons my_Deck-button my_Deck-add">+</button></Link>
-      <h2 className='header my_Deck-header'>My Decks</h2>
+      {/* <Link className="links my_Deck-link my_Deck-link-new" to="/deck/new"> */}
+        {/* <button className="buttons my_Deck-button my_Deck-add">+</button></Link> */}
       <div className="list my_Deck-list">
         {decks.map((deck) => (
           <DeckCard
@@ -95,6 +96,7 @@ fetchDecks();
       <Link className='links my_Deck-link my_Deck-link-dashboard ' to="/dashboard"> Back to Dashboard </Link>
 
     </div>
+  </div>
   )
 }   
 
