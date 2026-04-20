@@ -203,17 +203,17 @@ router.post('/:id/add-card',async (req,res) => {
 // remove a card instance from the deck
 router.delete('/:id/remove-card-instance',async (req,res) =>{
         const {id} = req.params;
-        const {cardId} = req.body;
+        const {entryId} = req.body;
 
-        console.log(`backend delete request: deckID:${id} and card id ${cardId}`)
+        console.log(`backend delete request: deckID:${id} and card id ${entryId}`)
     
 
-        if(!cardId){
+        if(!entryId){
             return res.status(400).json({error: 'cardId is required in request body'})
         }
         try{
             let deck;
-             deck = await Deck.findOneAndUpdate({_id:id,user: req.user.id, 'cards.cardId':cardId,"cards.quantity":{$gt: 1}},
+             deck = await Deck.findOneAndUpdate({_id:id,user: req.user.id, 'cards.cardId':entryId,"cards.quantity":{$gt: 1}},
                 {$inc:{"cards.$.quantity":-1}},
                 {new: true}
             );
@@ -221,8 +221,8 @@ router.delete('/:id/remove-card-instance',async (req,res) =>{
 
             if(!deck){
                 deck = await Deck.findOneAndUpdate(
-                    {_id:id,user:req.user.id,"cards.cardId":cardId},
-                    {$pull:{cards:{cardId:cardId}}},
+                    {_id:id,user:req.user.id,"cards.cardId":entryId},
+                    {$pull:{cards:{_id: entryId}}},
                     {new:true}
                 );
             }

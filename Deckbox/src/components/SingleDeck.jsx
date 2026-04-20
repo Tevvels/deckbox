@@ -105,12 +105,11 @@ function SingleDeck({deck,setDeck}) {
 
 const handleDeleteClick = async(entryId) =>{
         if(!isOwner || !entryId) return;
-    console.log(`entry ID${entryId}`);
-    console.log(deckId)
-    console.log("Path:", `${API_BASE}/cardStorage/${deckId}/remove-card-instance`);
+
 
     try{
         const token = localStorage.getItem('userToken');
+        
         const response = await axios.delete(`${API_BASE}/cardStorage/${deckId}/remove-card-instance`,
  
             {
@@ -118,12 +117,11 @@ const handleDeleteClick = async(entryId) =>{
                 Authorization:`Bearer ${token}`
             },
             data:{
-                cardId:entryId
+                entryId:entryId
             }
 
         });
         setDeck(response.data.deck);
-        console.log("Card deleted successfully")
 
     } catch (err) {
         console.error("Error deleting card", err.response ?err.response: err.message);
