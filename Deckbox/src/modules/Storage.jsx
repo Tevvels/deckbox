@@ -185,13 +185,13 @@ const handleSuggestionClick = (name)=>{
                 {selectedCard.card_faces ? (
                     selectedCard.card_faces.map((face, index) => (
                         <div key={index}>
-                            <img className="card search_card-img" src={face.image_uris.large} alt={face.name} style={{ maxWidth: '300px', marginTop: '10px' }} /> 
+                            <img className="card search_card-img" src={face.image_uris?.large || face.image_uris?.small || "placeholder"} alt={face.name} style={{ maxWidth: '300px', marginTop: '10px' }} /> 
                             <p className='search_card-oracle'>{face.oracle_text}</p>
                         </div>
                     ))
                 ) : (
                     <div>
-                        <img className="card search_card-img" src={selectedCard.image_uris.large} alt={selectedCard.name} style={{ maxWidth: '300px', marginTop: '10px' }} />     
+                        <img className="card search_card-img" src={selectedCard.image_uris?.large || selectedCard.image_uris?.small || 'placeholder'} alt={selectedCard.name} style={{ maxWidth: '300px', marginTop: '10px' }} />     
                         <p className='search_card-oracle'>{selectedCard.oracle_text}</p>
                     </div>
                 )}
