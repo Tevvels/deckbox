@@ -10,6 +10,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
 
     const [sortBy, setSortBy] = useState('none');
     const [cardPreview, setCardPreview] = useState(null);
+    const [withImage, setWithImage] = useState(false);
 
 
     // Sorts the cards. 
@@ -90,6 +91,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
               </div>
 
             <ul className={`list ${sortBy}`}>
+                {/* // iterating over the sorted cards and displaying them by category. */}
                 {Object.entries(sortedCards).map(([category, entries])=>(
                     <Gradient className={`sort_order ${category.replaceAll(" ","")}`}>
                     <li 
@@ -97,6 +99,9 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                     key={category}
                         
                     >
+                        <button className='buttons buttons_imageToggle' onClick={()=> setWithImage(w => !w)}>
+                            {withImage ? "Hide Images": "Show Images"}
+                        </button>
                     <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +( i.quantity  ||1),0)})</h3>
                     <ul className='deck_list'>
                     {entries.map(entry =>(
@@ -106,6 +111,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                         onClick={()=> onCardClick(entry.cardId)}
                         onMouseEnter={()=> setCardPreview(entry.cardId)}
                         >
+                            {withImage && (<img className='card_entry-image' src={entry.cardId.image_uris?.small || entry.cardId.card_faces?.[0]?.image_uris?.small} alt={entry.cardId.name} />)}
                             {entry.cardId.name} x {entry.quantity}
                             {isOwner && (
                                 <button 
