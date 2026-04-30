@@ -6,7 +6,7 @@ import DeckDetail from './DeckDetail';
 import DeckCard from './DeckCard';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 import '../styles/MyDecks.css';
-
+import Skeleton from './Skeleton';
 const AddCardButton = ({ deckId,isCommander,colorIdentity}) =>(
     <div className='add_card'>
         <h3 className='add_card-header'>Add a card</h3>
@@ -162,7 +162,7 @@ const handleUpdateCardArt = (cardId,newCardData) => {
 
     
 
-if(isLoading) return <p className='loading'> loading deck details... </p>
+if(isLoading) return <Skeleton className={"singleDeck"} />;
 if(error) return <p className='loading loading_error'> Error loading deck: {error} </p>
 if(!deck) return <p className='loading loadinga_notFound'>Deck not found</p>
 

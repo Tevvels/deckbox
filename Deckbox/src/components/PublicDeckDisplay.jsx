@@ -2,6 +2,7 @@ import React ,{useEffect, useState} from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/PublicDeckDisplay.css';
 import DeckCard from './DeckCard';
+import Skeleton from './Skeleton';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -35,7 +36,7 @@ function PublicDeckDisplay() {
     fetchPublicDecks();
   }, []);
 
-  if (loading) return <div className='loading'>Loading public decks...</div>;
+  if (loading) return <Skeleton  className={"publicDisplay"}/>;
   if (error) return <div className='loading_error'>Error loading public decks: {error.message}</div>;
 
   return (<div className='public'>

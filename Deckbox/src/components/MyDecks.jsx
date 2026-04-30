@@ -3,6 +3,7 @@ import React, { useState,useEffect } from 'react'
 import '../styles/MyDecks.css';
 import { Link,useNavigate } from 'react-router-dom'
 import DeckCard from './DeckCard';
+import Skeleton from './Skeleton';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -39,7 +40,7 @@ const fetchDecks = async () => {
     const token = localStorage.getItem('userToken');
     if(!token) {
       setError(new Error('No authentication token found'));
-      setLoading(false);
+      setLoading(true);
       navigate('/login');
       return;
     }  
@@ -51,7 +52,7 @@ const fetchDecks = async () => {
       }
     });
     setDecks(response.data);
-    setLoading(false);
+    setLoading(true);
   }
   catch (err) {
     if(err.response && err.response.status === 401||err.response.status === 403) {
@@ -61,7 +62,7 @@ const fetchDecks = async () => {
     } else {
       setError(err);
   }
-  setLoading(false);
+  setLoading(true);
 }
 };
 fetchDecks();
@@ -69,7 +70,7 @@ fetchDecks();
 // Function to determine deck color style
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Skeleton className={'myDeck'}/>;
   } 
   if (error) {
     return <div>Error: {error.message}</div>;
