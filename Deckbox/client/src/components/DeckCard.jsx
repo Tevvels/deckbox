@@ -54,6 +54,15 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
     
     const imageUrl = firstCard?.image_uris?.art_crop || firstCard?.card_faces?.[0]?.image_uris?.art_crop || "placeholder_url";
 
+    const artistName = firstCard?.artist || 
+                   firstCard?.card_faces?.[0]?.artist || 
+                   'Unknown Artist';
+
+    const copyrightText = `™ & © Wizards of the Coast`;
+
+
+    console.log(firstCard);
+
   return (
 
     
@@ -68,6 +77,14 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
                 <p>{deck.format}</p>
                 {/* <p>Commander: {deck.commander || 'N/A'}</p> */}
                 <p>Cards: {deck.cards.length}</p>
+                <div className='deck_card-artist'>
+                    <span>{artistName}</span>
+                    <br />
+                    <span className='deck_card-copyright'>{copyrightText}</span>
+                </div>
+
+
+                
                 {onDelete && (
                     <button className={`buttons buttons_delete`}
                     onClick={(e)=>{e.preventDefault(); onDelete(deck._id)}}

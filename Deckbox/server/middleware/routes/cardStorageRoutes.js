@@ -256,6 +256,8 @@ router.post('/sync-card',async(req,res)=>{
                 type_line: scryFallCardData.type_line,
                 mana_cost: scryFallCardData.mana_cost,
                 oracle_text: scryFallCardData.oracle_text,
+                artist: scryFallCardData.artist || (scryFallCardData.card_faces ? scryFallCardData.card_faces[0].artist : "Unknown Artist"),
+                scryfallId: scryFallCardData.id,
                 image_uris: scryFallCardData.image_uris,
                 legalities: scryFallCardData.legalities,
                 card_faces: scryFallCardData.card_faces || [],
@@ -311,7 +313,7 @@ router.get('/admin/repair-cards',async (req,res) => {
                 card.cmc = scryFallData.cmc;
                 card.type_line = scryFallData.type_line;
                 card.mana_cost = scryFallData.mana_cost || (scryFallData.card_faces? scryFallData.card_faces[0].mana_cost : "");        
-            
+                card.artist = scryFallData.artist || (scryFallData.card_faces ? scryFallData.card_faces[0].artist : "Unknown Artist");
                 card.oracle_text = scryFallData.oracle_text  || (scryFallData.card_faces? scryFallData.card_faces[0].oracle_text : "");
                 card.all_parts = scryFallData.all_parts || [];
                 card.legalities = scryFallData.legalities;
