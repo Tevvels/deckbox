@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import "../styles/myDecks.css"
+import "../styles/MyDecks.css"
 
 const getColorIdentity = (char) =>{
     const colorMap = {
