@@ -18,8 +18,28 @@ const JWT_SECRET = process.env.JWT_SECRET || 'change-this-secret';
 jwt.sign({}, JWT_SECRET); // To avoid unused variable warning
 
 // Middleware
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app/',
+];
+//looks beeter
 
-app.use(cors());
+app.use(cors({
+    origin: function (origin, callback) {
+        if(!origin) return callback(null, true); // Allow non-browser requests like Postman
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+            return callback(new Error(msg), false);
+        }
+                return callback(null, true);
+        
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+
+}));
 app.use(express.json());
 
 // Routes
