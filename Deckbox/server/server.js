@@ -21,6 +21,7 @@ jwt.sign({}, JWT_SECRET); // To avoid unused variable warning
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5173',
+     'https://deckbox-r8ok.vercel.app',
     'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app',
 ];
 //looks beeter right??
@@ -47,6 +48,8 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/cardStorage', cardStorageRoutes);
+
+app.options('*', cors()); 
 
 app.get('/', (req, res) => {
     res.send('Welcome to Deckbox API');
