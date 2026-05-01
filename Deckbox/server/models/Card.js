@@ -32,6 +32,7 @@ const cardSchema = new mongoose.Schema({
     premodern: String,
     predh: String
     },
+    artist: String,
     color_identity: {
     type: [String], // This defines an array of strings
     default: []     // Colorless cards will be an empty array
