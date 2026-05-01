@@ -4,7 +4,7 @@ import "../styles/Search.css";
 import { UseCardSearch } from '../components/UseCardSearch';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 import '../styles/search.css'
-
+import Skeleton from '../components/Skeleton';
 
 // A debounce function - this is to reduce the number of api requests during typing. 
 
@@ -111,7 +111,7 @@ const handleSuggestionClick = (name)=>{
                 {loading ? 'Searching...':'search'}
                 </button>
         </form>
-        {loading && <div className='loading'>loading card data...</div>}
+        {loading && <Skeleton className={"searching"} />}
       
         {/* Artwork Navigation */}
         {error && <div className='loading_error'>Error: {typeof error === 'string'? error :error.message}</div>}

@@ -80,7 +80,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
         <div className="full_deck">
     
     
-    <Gradient className='deck_container'>
+    <div className='deck_container'>
         <div className='deck_header'>{name}</div>
             <div className="sort_controls">
               {['type','cmc','none'].map(s=>(
@@ -90,8 +90,8 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
               ))}
               </div>
 
-            <ul className={`list ${sortBy}`}>
-                {/* // iterating over the sorted cards and displaying them by category. */}
+            <ul className={`list ${sortBy}`}>\
+                // iterating over the sorted cards and displaying them by category.
                 {Object.entries(sortedCards).map(([category, entries])=>(
                     <Gradient className={`sort_order ${category.replaceAll(" ","")}`}>
                     <li 
@@ -126,7 +126,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                 </Gradient>
     ))}
      </ul>
-    </Gradient>
+    </div>
 
     <Gradient className="deck_container-token">
         <h3>Tokens</h3>
