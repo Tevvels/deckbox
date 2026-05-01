@@ -21,7 +21,8 @@ jwt.sign({}, JWT_SECRET); // To avoid unused variable warning
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5173',
-     'https://deckbox-r8ok.vercel.app',
+    'https://vercel.app',
+    'https://deckbox-r8ok.vercel.app',
     'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app',
 ];
 //looks beeter right??
