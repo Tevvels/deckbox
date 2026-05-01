@@ -11,7 +11,7 @@ const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
 function PublicDeckDisplay() {
   const [publicDecks, setPublicDecks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
   

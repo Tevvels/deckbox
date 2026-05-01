@@ -52,7 +52,7 @@ const fetchDecks = async () => {
       }
     });
     setDecks(response.data);
-    setLoading(true);
+    setLoading(false);
   }
   catch (err) {
     if(err.response && err.response.status === 401||err.response.status === 403) {
@@ -62,7 +62,7 @@ const fetchDecks = async () => {
     } else {
       setError(err);
   }
-  setLoading(true);
+  setLoading(false);
 }
 };
 fetchDecks();

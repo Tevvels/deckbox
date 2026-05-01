@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import "../styles/Search.css";
 import { UseCardSearch } from '../components/UseCardSearch';
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
-import '../styles/search.css'
+import '../styles/Search.css';
 import Skeleton from '../components/Skeleton';
 
 // A debounce function - this is to reduce the number of api requests during typing. 
