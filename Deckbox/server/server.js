@@ -8,6 +8,14 @@ import jwt from 'jsonwebtoken';
 
 
 dotenv.config();
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://vercel.app',
+    'https://deckbox-r8ok.vercel.app',
+    'https://deckbox-sepia.vercel.app',
+    'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app',
+];
 
 const app = express();
 
@@ -36,14 +44,6 @@ const JWT_SECRET = process.env.JWT_SECRET || 'change-this-secret';
 jwt.sign({}, JWT_SECRET); // To avoid unused variable warning
 
 // Middleware
-const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'https://vercel.app',
-    'https://deckbox-r8ok.vercel.app',
-    'https://deckbox-sepia.vercel.app',
-    'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app',
-];
 //looks beeter right??
 //this is to prevent CORS errors when making requests from the frontend to the backend.
 app.use(express.json());
