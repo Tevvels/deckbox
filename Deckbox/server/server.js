@@ -23,6 +23,7 @@ const allowedOrigins = [
     'http://localhost:5173',
     'https://vercel.app',
     'https://deckbox-r8ok.vercel.app',
+    'https://deckbox-sepia.vercel.app',
     'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app',
 ];
 //looks beeter right??
