@@ -10,6 +10,24 @@ import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if(!origin || origin.endsWith('.vercel.app') || origin.includes('localhost')) return callback(null, true); // Allow non-browser requests like Postman
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+            return callback(new Error(msg), false);
+        }
+                return callback(null, true);
+        
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+
+}));
+app.options('*', cors()); 
+
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/deckbox';
 
@@ -28,22 +46,6 @@ const allowedOrigins = [
 ];
 //looks beeter right??
 //this is to prevent CORS errors when making requests from the frontend to the backend.
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if(!origin || origin.endsWith('.vercel.app') || origin.includes('localhost')) return callback(null, true); // Allow non-browser requests like Postman
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-            return callback(new Error(msg), false);
-        }
-                return callback(null, true);
-        
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-
-}));
 app.use(express.json());
 
 // Routes
@@ -51,7 +53,6 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/cardStorage', cardStorageRoutes);
 
-app.options('*', cors()); 
 
 app.get('/', (req, res) => {
     res.send('Welcome to Deckbox API');
