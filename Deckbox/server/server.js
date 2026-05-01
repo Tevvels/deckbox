@@ -23,6 +23,7 @@ const allowedOrigins = [
     'http://localhost:5173',
     'https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app/',
 ];
+//looks beeter
 
 app.use(cors({
     origin: function (origin, callback) {
