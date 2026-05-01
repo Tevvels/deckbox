@@ -12,6 +12,8 @@ const getColorIdentity = (char) =>{
       'C': '#a9a9a9'
     };
     return colorMap[char] || '#a9a9a9';
+    // memo to git commit"
+    
 }
 // function to get the color identity of a commander and use it for stylign. 
 const getDeckColorIdentity = (colorIdentity) =>{
