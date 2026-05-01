@@ -1,6 +1,6 @@
 import React, {useState,useMemo,useEffect, use} from 'react'
 import '../styles/CardDetail.css';
-import '../styles/myDecks.css';
+import '../styles/MyDecks.css';
 import Gradient from "../modules/Gradient"
 import { useTokens } from '../modules/Tokens';
 
