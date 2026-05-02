@@ -34,7 +34,7 @@ app.use(cors({
     credentials: true,
 
 }));
-app.options('*', cors()); 
+app.options('/*', cors()); 
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/deckbox';
@@ -63,9 +63,11 @@ mongoose.connect(MONGO_URI, {
     useUnifiedTopology: true
 }).then(() => {
     console.log('Connected to MongoDB'); 
+    if(process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
     });
+    } 
 }).catch(err => {
     console.error('MongoDB connection error:', err);
 }); 
