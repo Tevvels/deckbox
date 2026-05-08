@@ -73,16 +73,14 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
             <div className="deck_card-content">
                 <div className='my_Deck-color' style={colorIdentityStyle} />
                 <img className='deck_card-art' alt="deckArt" src={imageUrl} />
-                <h3 className="deck_card-name">{deck.name}</h3>
-                <p>{deck.format}</p>
-                {/* <p>Commander: {deck.commander || 'N/A'}</p> */}
-                <p>Cards: {deck.cards.length}</p>
-                <div className='deck_card-artist'>
-                    <span>{artistName}</span>
-                    <br />
-                    <span className='deck_card-copyright'>{copyrightText}</span>
-                </div>
-
+                    <div className='deck_card-subcontainer'>
+                        <h3 className="deck_card-name">{deck.name}</h3>
+                        <p>{deck.format}</p>
+                        <p>Cards: {deck.cards.length}</p>
+                        <div className='deck_card-artist'>
+                        <span>{artistName}</span>
+                        <br />
+                        <span className='deck_card-copyright'>{copyrightText}</span>
 
                 
                 {onDelete && (
@@ -91,6 +89,8 @@ function DeckCard({deck,onDelete,showOwner = false,className}) {
                     >Remove</button>
                 )}
                 {showOwner && <h4 className='deck_card-owner'>{deck.user?.username || 'unknown'}</h4>}
+                </div>
+            </div>
 
             </div>
         

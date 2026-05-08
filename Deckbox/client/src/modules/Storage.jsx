@@ -197,7 +197,7 @@ const handleSuggestionClick = (name)=>{
                 )}
             </div>
         )}
-        {pathname === "/" ? (<Link className='links search_link' to={`/dashboard`}> Back to Dashboard </Link>): ""}
+        {/* {pathname === "/" ? (<Link className='links search_link' to={`/dashboard`}> Back to Dashboard </Link>): ""} */}
          {cameFromDeck ? (<Link className='links search_link' to={`/deck/${deckId}`}> Back to Deck </Link>): ""}
     </div>
     );

@@ -69,5 +69,8 @@ font-family: "Spline Sans", sans-serif;
   display: flex;
 }
 .card{
-  border-radius: .9rem;
+  width:100%;
+  max-width: 31.25rem;
+  aspect-ratio: 63/88; /*dimensions for a standard mtg card*/
+  border-radius: 4.75%;
 }
