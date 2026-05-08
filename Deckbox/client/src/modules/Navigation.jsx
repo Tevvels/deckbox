@@ -32,7 +32,7 @@ function Navigation({onLogout}) {
       location.pathname !== link.path && (
         <Link
         key={link.path}
-        className={` links navigation_link navigation_${link.name.replaceAll(" ","")}`}
+        className={` links navigation_link-desktop navigation_${link.name.replaceAll(" ","")}`}
         to={link.path}
         >{link.name}</Link>
       )
@@ -46,6 +46,15 @@ function Navigation({onLogout}) {
 
         {isOpen && (
           <div className='navigation_profile-dropdown'> 
+          { navLinks.map((link)=>(
+            location.pathname !== link.path && (
+              <Link
+              key={link.path}
+              className={` links navigation_link navigation_${link.name.replaceAll(" ","")}`}
+              to={link.path}
+              >{link.name}</Link>
+            )
+          ))}
             {profilelinks.map((link)=>(
               location.pathname !== link.path && (
                 <Link
@@ -55,7 +64,7 @@ function Navigation({onLogout}) {
                 >{link.name}</Link>
               )
             ))}
-      <button className='buttons navigation_button' onClick={()=>onLogout()}>Logout</button>
+      <button className='buttons navigation_button logout' onClick={()=>onLogout()}>Logout</button>
           </div>
         )}
       </div>
