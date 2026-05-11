@@ -3,7 +3,13 @@ import { config } from 'dotenv';
 import User from '../models/User.js';
 config();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'hush its a secret';
+const JWT_SECRET = process.env.JWT_SECRET 
+
+if (!JWT_SECRET) {
+    console.error('JWT_SECRET is not defined in environment variables');
+    process.exit(1); // Exit the application with an error code
+}
+
 export const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
