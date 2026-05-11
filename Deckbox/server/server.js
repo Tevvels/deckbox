@@ -20,21 +20,26 @@ const allowedOrigins = [
 const app = express();
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if(!origin || origin.endsWith('.vercel.app') || origin.includes('localhost')) return callback(null, true); // Allow non-browser requests like Postman
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-            return callback(new Error(msg), false);
-        }
-                return callback(null, true);
-        
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, or Postman)
+    if (!origin) return callback(null, true);
+    
+    const isVercel = origin.endsWith('.vercel.app');
+    const isLocal = origin.includes('localhost') || origin.includes('127.0.0.1');
+    const isAllowedList = allowedOrigins.indexOf(origin) !== -1;
 
+    if (isVercel || isLocal || isAllowedList) {
+      // CRITICAL: Return the exact origin string, not the boolean true
+      return callback(null, origin); 
+    }
+    
+    const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+    return callback(new Error(msg), false);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include OPTIONS for pre-flight requests
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  credentials: true,
 }));
-
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/deckbox';
