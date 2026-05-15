@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Gradient from '../modules/Gradient';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -25,15 +26,19 @@ export default function Register({ onRegistered, onCancel }) {
   }
 
   return (
-    <div className='register register_container'>
-      <h3 className='headers register_header'>Create account</h3>
-      <form className='form register_form' onSubmit={handleSubmit}>
-        <input className='inputs register_username' placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
-        <input className='inputs register_password' placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-        <button className='buttons submit' type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
-        <button className='buttons cancel' type="button" onClick={onCancel} style={{marginLeft:8}}>Cancel</button>
+    <div className="portal">
+    <Gradient className=' portal_container container'>
+      <h3 className='headers portal_header'>Create account</h3>
+      <form className='forms portal_form' onSubmit={handleSubmit}>
+        <input className='inputs portal_input-username' placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
+        <input className='inputs portal_password' placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
+        <div className='portal_buttons'>
+        <button className='buttons portal_button submit' type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
+        <button className='buttons portal_button cancel' type="button" onClick={onCancel} style={{marginLeft:8}}>Cancel</button>
+        </div>
       </form>
       {error && <span className='spans' style={{color:'red'}}>{error}</span>}
+    </Gradient>
     </div>
   )
 }

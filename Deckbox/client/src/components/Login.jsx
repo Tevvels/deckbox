@@ -44,19 +44,19 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className="login">
-      <Gradient className='login_container container'>
-      <h3 className="headers login_header">Login</h3>
-      <form className="forms login_form" onSubmit={handleLogin}>
-        <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='inputs login_input login_input-username' />
-        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='inputs login_input login_input-password' />
-        <button type="submit" className='buttons submit login_button login_button-submit'>Login</button>
+    <div className="portal">
+      <Gradient className='portal_container container'>
+      <h3 className="headers portal_header">Login</h3>
+      <form className="forms portal_form" onSubmit={handleLogin}>
+        <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='inputs portal_input portal_input-username' />
+        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='inputs portal_input portal_input-password' />
       </form>
-      <div style={{marginTop:8}} className='login_buttons'>
-        <button onClick={()=>{ setError(null); onShowRegister && onShowRegister(); }} className='login_button login_button-create'>Create account</button>
-        <button onClick={()=>{ setError(null); onShowForgot && onShowForgot(); }} style={{marginLeft:8}} className='login_button login_button-forgot'>Forgot password</button>
+      <div className='portal_buttons'>
+        <button type="submit" className='buttons submit portal_button portal_button-submit'>Login</button>
+        <button onClick={()=>{ setError(null); onShowRegister && onShowRegister(); }} className=' buttons portal_button portal_button-create'>Create account</button>
+        <button onClick={()=>{ setError(null); onShowForgot && onShowForgot(); }} className=' buttons portal_button portal_button-forgot'>Forgot password</button>
       </div>
-      {error && <span className="span login_span" style={{color:'red', marginTop:8}}>{error}</span>}
+      {error && <span className="span portal_span" style={{color:'red', marginTop:8}}>{error}</span>}
     </Gradient>
       </div>
   )
