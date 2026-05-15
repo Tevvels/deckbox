@@ -50,12 +50,12 @@ useEffect(() => {
       <form className="forms portal_form" onSubmit={handleLogin}>
         <input placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} className='inputs portal_input portal_input-username' />
         <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} className='inputs portal_input portal_input-password' />
-      </form>
       <div className='portal_buttons'>
         <button type="submit" className='buttons submit portal_button portal_button-submit'>Login</button>
         <button onClick={()=>{ setError(null); onShowRegister && onShowRegister(); }} className=' buttons portal_button portal_button-create'>Create account</button>
         <button onClick={()=>{ setError(null); onShowForgot && onShowForgot(); }} className=' buttons portal_button portal_button-forgot'>Forgot password</button>
       </div>
+      </form>
       {error && <span className="span portal_span" style={{color:'red', marginTop:8}}>{error}</span>}
     </Gradient>
       </div>
