@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Gradient from '../modules/Gradient';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -34,25 +35,31 @@ export default function ForgotPassword({ onDone, onCancel, onLogin }) {
   }
 
   return (
-    <div className='login login_forgot container'>
-      <h3 className='header login_header login_header-forgot'>Forgot password</h3>
-      <form className='forms login_form login_form-forgot' onSubmit={requestReset}>
-        <input className="inputs login_input login_input-forgot" placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
-        <button className='buttons login_button login_button-submit login_button-forgot' type="submit">Request reset</button>
+    <div className="portal">
+    <Gradient className='portal_container'>
+      <h3 className='header portal_header portal_header-forgot'>Forgot password</h3>
+      <form className='forms portal_form portal_form-forgot' onSubmit={requestReset}>
+        <input className="inputs portal_input portal_input-forgot" placeholder="username" value={username} onChange={e=>setUsername(e.target.value)} />
+        <div className="portal_buttons">
+        <button className='buttons portal_button portal_button-submit portal_button-forgot' type="submit">Request reset</button>
+        </div>
       </form>
-      {message && <span className=" spans login_span login_span-forgot" style={{color:'green'}}>{message}</span>}
+      {message && <span className=" spans portal_span portal_span-forgot" style={{color:'green'}}>{message}</span>}
       {token && (
-        <div className="login_container-sub" style={{marginTop:8}}>
-          <span className="login_span login_span-forgot">Dev reset token: <code>{token}</code></span>
-          <form className=" forms login_form login_form-forgot" onSubmit={doReset} style={{marginTop:8}}>
-            <input className='inputs login_input login_input-forgot' placeholder="reset token" value={token} onChange={e=>setToken(e.target.value)} />
-            <input className='inputs login_input login_input-forgot' placeholder="new login" type="login" value={newlogin} onChange={e=>setNewPassword(e.target.value)} />
-            <button className='buttons submit login_button login_button-submit login_button-forgot' type="submit">Reset login</button>
+        <div className="portal_container">
+          <span className="portal_span portal_span-forgot">Dev reset token: <code>{token}</code></span>
+          <form className=" forms portal_form portal_form-forgot" onSubmit={doReset} style={{marginTop:8}}>
+            <input className='inputs portal_input portal_input-forgot' placeholder="reset token" value={token} onChange={e=>setToken(e.target.value)} />
+            <input className='inputs portal_input portal_input-forgot' placeholder="new login" type="login" value={newlogin} onChange={e=>setNewPassword(e.target.value)} />
+            <div className="portal_buttons">
+             <button className='buttons submit portal_button portal_button-submit portal_button-forgot' type="submit">Reset login</button>
+            </div>
           </form>
         </div>
       )}
-      {error && <span className="spans login_span login_span-forgot" style={{color:'red'}}>{error}</span>}
-      <div style={{marginTop:8}}><button className='buttons cancel login_button login_button-cancel login_button-forgot' onClick={onCancel}>Cancel</button></div>
+      {error && <span className="spans portal_span portal_span-forgot" style={{color:'red'}}>{error}</span>}
+      <div className='portal_buttons'><button className='buttons cancel portal_button portal_button-cancel portal_button-forgot' onClick={onCancel}>Cancel</button></div>
+    </Gradient>
     </div>
   )
 }
