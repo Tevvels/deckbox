@@ -33,6 +33,7 @@ function Players({onClose}) {
       <Dice />
       <Dropdown options={gameTypes} onSelect={(option) => setGametype(option)} />
         <label className='player_label'>number of players
+        <form>
           <input
             className='inputs player_input'
             type={'number'} 
@@ -41,7 +42,7 @@ function Players({onClose}) {
             min="1" 
             max="6"
           />
-
+  </form>
         </label>
 
     <ul className='player_list'>

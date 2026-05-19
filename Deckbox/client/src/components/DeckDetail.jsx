@@ -18,10 +18,11 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
         let list = cards.filter(entry => entry?.cardId).sort((a,b)=> a.cardId.name.localeCompare(b.cardId.name));
         if(sortBy === 'none') return {'All Cards': list};
         return list.reduce((groups,entry)=>{
+            const isLand = entry.cardId.type_line.toLowerCase().includes("land");
             const card = entry.cardId;
             const category = sortBy === "type"
              ? (['creature','planeswalker','instant','sorcery','instant','enchantment','artifact','battle','land'].find(t => card.type_line.toLowerCase().includes(t)) ||"other")
-             : `Mana Value ${card.cmc || 0}`;
+             : (island ? "Land ":`Mana Value ${card.cmc || 0}`);
              (groups[category] = groups[category]|| []).push(entry);
              return groups;
         },{});
@@ -77,7 +78,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
 
 
     return (
-        <div className="full_deck">
+        <div className="deck">
     
     
     <div className='deck_container'>
@@ -88,41 +89,60 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                     {s ==="none"? "Reset": s.toUpperCase()}
                 </button>
               ))}
-              </div>
-
-            <ul className={`list ${sortBy}`}>\
-                // iterating over the sorted cards and displaying them by category.
-                {Object.entries(sortedCards).map(([category, entries])=>(
-                    <Gradient className={`sort_order ${category.replaceAll(" ","")}`}>
-                    <li 
-                    className={`deck_list-categoryList `} 
-                    key={category}
-                        
-                    >
-                        <button className='buttons buttons_imageToggle' onClick={()=> setWithImage(w => !w)}>
+                 <button className='buttons buttons_imageToggle' onClick={()=> setWithImage(w => !w)}>
                             {withImage ? "Hide Images": "Show Images"}
                         </button>
-                    <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +( i.quantity  ||1),0)})</h3>
-                    <ul className='deck_list'>
-                    {entries.map(entry =>(
+              </div>
+
+            <ul className={`deck_list  ${sortBy}`}>
+                {/* // iterating over the sorted cards and displaying them by category. */}
+                {Object.entries(sortedCards).map(([category, entries])=>(
+                    
+                    <Gradient className={`sort_order ${category.replaceAll(" ","")}`}>
+                        <li 
+                        className={`deck_list-item`} 
+                        key={category}      
+                        >
+                     
+                        <h3 className='deck_header-sub'>{category}({entries.reduce((sum,i) => sum +( i.quantity  ||1),0)})</h3>
+                        <ul className='card_list'>
+                    {entries.map(entry =>{
+                        const isLandCard = entry.cardId.type_line?.toLowerCase().includes("land");
+                        return (
                         <li 
                         key={entry._id}
-                        className='card_entry'
+                        className='card_list-item'
                         onClick={()=> onCardClick(entry.cardId)}
                         onMouseEnter={()=> setCardPreview(entry.cardId)}
                         >
                             {withImage && (<img className='card_entry-image' src={entry.cardId.image_uris?.small || entry.cardId.card_faces?.[0]?.image_uris?.small} alt={entry.cardId.name} />)}
-                            {entry.cardId.name} x {entry.quantity}
+
+
+                            <h3>{entry.cardId.name}</h3>
+                             {!isLandCard && (
+                                <div>
+                                   {entry.cardId.mana_cost ? entry.cardId.mana_cost.split("}{").map((s,i) => {
+                                        const symbol = s.replaceAll("{","").replaceAll("}","");
+                                        return <span key={i} className={`mana_symbol ${MANA_TYPES.includes(symbol)? 'active': 'inactive'}`}>
+                                            <i className={`ms ms-${symbol.toLowerCase()} ms-cost ms-span`} />
+                                        </span>
+                                    }) : <span className='mana_symbol inactive'><i className={`ms ms-c ms-cost ms-span`} /></span>}
+                                    </div>
+                             )}
+                             x {entry.quantity}
+                            
+                            
                             {isOwner && (
                                 <button 
                                 className='buttons buttons_delete'
                                 onClick={(e)=>{e.stopPropagation(); OnDeleteCard(entry.cardId._id)}
-                            }                        >X</button>
+                            }>X</button>
                         )}
                     </li>
-                ))}
+                )}
+                )}
             </ul>
-        </li>
+                        </li>
                 </Gradient>
     ))}
      </ul>

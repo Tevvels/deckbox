@@ -19,6 +19,8 @@ import SearchResults from './components/SearchResults.jsx'
 import 'mana-font/css/mana.min.css';
 import './styles/Layout.css'
 import Gradient from './modules/Gradient.jsx';
+import './styles/Deck.css'
+import './styles/Dice.css'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 

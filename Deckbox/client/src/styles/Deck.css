@@ -1,0 +1,44 @@
+@media screen and (max-width: 61.9rem){
+    .deck{
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+    }
+    .deck_list{
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+    }
+    .deck_list-item{
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+    }
+    .deck_container-header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .deck_header{
+        font-size: 1.5rem;
+    }
+    .deck_container-search{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+        height: 95%;
+
+        
+    }
+    .card_list{
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+    }
+    .card_list-item{
+        display: flex;
+        gap: .25rem;
+    }
+
+   }
