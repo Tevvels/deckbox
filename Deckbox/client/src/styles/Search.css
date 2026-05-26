@@ -1,12 +1,21 @@
-.search_form{
-    display:grid;
-    grid-template-columns:1fr .75fr .10fr 1fr;
-    grid-template-rows:4.5rem .5fr 2fr;
-    grid-template-areas:
-    ". . . ."
-    ". wrapper submit ."
-    "suggestions suggestions suggestions suggestions";
-}
+    .search_container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: .5rem;
+        width   : 100%;
+        min-height: 7rem; 
+    }
+    .search_form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+        height: 95%;
+    }
+
+
 .search_input-wrapper{
     grid-area:wrapper;
     width: 100%;
@@ -29,11 +38,7 @@
     background-color: var(--med-bg-color);
     color: var(--dark-bg-color);
 }
-.search_submit:active{
-    background-color: var(--primary-color);
-    color: var(--text-color);
 
-}
 .search_searchBar{
     background:var(--dark-bg-color);
     height: 100%;
@@ -42,4 +47,21 @@
     border-radius: .5rem 0 0 .5rem ;
     box-shadow: 0 0 2px inset var(--primary-color),  0 0 2px var(--primary-color);
     border:2px solid black;
+}
+
+.suggestions_list{
+    display: flex;
+    position:absolute;
+    flex-direction: column;
+    gap: .25rem;
+    width: 95%;
+    background:var(--light-bg-color);
+}
+.suggestions_list li{
+    color:var(--med-bg-color);
+    border: 2px solid var(--primary-color);
+    display: flex;
+    gap: .25rem;
+    padding: .25rem;
+    align-items: center;
 }

@@ -14,7 +14,7 @@ export default function Login({ onLogin, onShowRegister, onShowForgot }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
     if (token) {
       navigate('/');
     }
@@ -25,7 +25,7 @@ export default function Login({ onLogin, onShowRegister, onShowForgot }) {
     try {
       const res = await axios.post(`${API_BASE}/auth/login`, { username, password });
       const { token } = res.data;
-      if (token) onLogin(token); localStorage.setItem('userToken', token);
+      if (token) onLogin(token); localStorage.setItem('token', token);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Login failed');
@@ -33,7 +33,7 @@ export default function Login({ onLogin, onShowRegister, onShowForgot }) {
   }
 
   const handleLogout = () => {
-    sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem('token');
   }
 
 useEffect(() => {

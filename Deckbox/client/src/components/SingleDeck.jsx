@@ -35,7 +35,7 @@ function SingleDeck({deck,setDeck}) {
   
     const deleteDeck = async (idtowait) => {
         if(!window.confirm("are you sure you want to delete this deck?")) return;
-  const token = localStorage.getItem('userToken');
+  const token = localStorage.getItem('token');
   try {
     await axios.delete(`${API_BASE}/cardStorage/${idtowait}`, {
       headers: { 
@@ -56,7 +56,7 @@ function SingleDeck({deck,setDeck}) {
             setIsLoading(true);
             setIsOwner(false);
             setError(null)
-            const token = localStorage.getItem('userToken');
+            const token = localStorage.getItem('token');
             const currentUser = JSON.parse(localStorage.getItem('user'));
                 let data = null;
         
@@ -108,7 +108,7 @@ const handleDeleteClick = async(entryId) =>{
 
 
     try{
-        const token = localStorage.getItem('userToken');
+        const token = localStorage.getItem('token');
         
         const response = await axios.delete(`${API_BASE}/cardStorage/${deckId}/remove-card-instance`,
  

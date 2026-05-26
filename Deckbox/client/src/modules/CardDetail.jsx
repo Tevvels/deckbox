@@ -23,21 +23,22 @@ function CardDetail({card,onClose,onUpdateSuccess}) {
   
   const handleUpdateArt = async()=>{
     try{
+      const imageToUpdate = currentImage.image_uris || currentImage.card_faces?.[0]?.image_uris;
       const response = await fetch(`${API_BASE}/cardStorage/update-art/${card._id}`,{
-        method:'PATCH',
+        method:'PUT',
         headers:{
           'Content-Type':'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           scryfallId: currentImage.id,
-          image_uris: currentImage.image_uris || currentImage.card_faces[0].image_uris,
+          image_uris: imageToUpdate,
         }),
     })
     if(response.ok){
       onUpdateSuccess(card._id,{
         scryfallId: currentImage.id,
-        image_uris: currentImage.image_uris,
+        image_uris: imageToUpdate,
 
     });
       onClose();
@@ -86,14 +87,6 @@ if(!card || !currentImage) return null;
         <h1 className='card_detail-name'>{currentImage?.name}</h1>
         <p className='card_detail-typeline'>{currentImage?.type_line}</p>
         <p className='card_detail-oracle'>{currentImage?.oracle_text}</p>
-        <p className='card_detail-legalities'>
-          {currentImage?.legalities && Object.entries(currentImage.legalities).map(([format, status]) =>(
-            <div className='card_detail-legality-sub' key={format}>
-              <strong>{` ${format.replace(/_/g,' ')} `}:</strong> {` ${status.replace(/_/g, " ")} `}
-              
-            </div> 
-          ))}
-        </p>
         <div className='card_detail-container-sub card_detail-container-imageList'>
           {AllPrints.length > 0 ? (AllPrints.map((print) => (
             <img 
@@ -109,6 +102,14 @@ if(!card || !currentImage) return null;
             <p className='card_detail-none'>No other prints available.</p>
           )
               }
+        <div className='card_detail-legalities'>
+          {currentImage?.legalities && Object.entries(currentImage.legalities).map(([format, status]) =>(
+            <div className='card_detail-legality-sub' key={format}>
+              <strong>{` ${format.replace(/_/g,' ')} `}:</strong> {` ${status.replace(/_/g, " ")} `}
+              
+            </div> 
+          ))}
+          </div>
         </div>
     </Gradient>
   );

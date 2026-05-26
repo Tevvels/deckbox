@@ -19,6 +19,8 @@ import SearchResults from './components/SearchResults.jsx'
 import 'mana-font/css/mana.min.css';
 import './styles/Layout.css'
 import Gradient from './modules/Gradient.jsx';
+import './styles/Deck.css'
+import './styles/Dice.css'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
@@ -78,10 +80,12 @@ function App() {
 
 
   useEffect(()=>{
+    if(!token) return;
     axios.get(`${API_BASE}/cardStorage`)
     .then(response => setCardStorage(response.data))
     .catch(error => console.error(error));
-  },[]);
+    
+  },[token]);
   const addItem = (newItem)=> {
     setCardStorage(prev => [...prev, newItem]);
   }

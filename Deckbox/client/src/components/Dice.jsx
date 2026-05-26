@@ -9,6 +9,9 @@ function Dice() {
     const [dieResults,setDieResults] = useState([]);
     const [total, setTotal] = useState(0);
 
+
+
+    const diceFaceValues = [4, 6, 8, 10, 12, 20, 100];
     const addDie = (sides) =>{
  setGroupOfDice(prevDice => [...prevDice,sides]) 
 };
@@ -20,8 +23,6 @@ function Dice() {
    const newTotal = newRollResults.reduce((sum,value)=> sum + value, 0)
    setDieResults(newRollResults)
    setTotal(newTotal);
-   console.log(total)
-   console.log(dieResults)
 };
 const resetDice = () => {
     setGroupOfDice([]);
@@ -31,17 +32,15 @@ const resetDice = () => {
 
 
   return (
-    <div className='dice dice_container'>
+      <div className='dice dice_container'>
 
-    <button className='dice_button dice_button-four' onClick={()=> addDie(4)}> (4 SIDED) </button>
-    <button className='dice_button dice_button-six' onClick={()=> addDie(6)}> (6 SIDED) </button>
-    <button className='dice_button dice_button-eight' onClick={()=> addDie(8)}> (8 SIDED) </button>
-    <button className='dice_button dice_button-ten' onClick={()=> addDie(10)}> (10 SIDED) </button>
-    <button className='dice_button dice_button-twelve' onClick={()=> addDie(12)}> (12 SIDED) </button>
-    <button className='dice_button dice_button-twenty' onClick={()=> addDie(20)}> (20 SIDED) </button>
-    <button className='dice_button dice_button-hundred' onClick={()=> addDie(100)}> (100 SIDED) </button>
-    <button className='dice_button dice_button-roll' onClick={rollDice}> roll the dice </button>
-    <button className='dice_button dice_button-reset' onClick={resetDice}>Reset Dice</button>
+    <div className='dice_buttons'>
+    {diceFaceValues.map((sides,index) => (
+        <button key={index} className='dice_button buttons' onClick={() => addDie(sides)}>Add D{sides}</button>
+    ))}
+
+    <button className=' buttons dice_button dice_button-roll' onClick={rollDice}> roll the dice </button>
+    <button className='buttons dice_button dice_button-reset' onClick={resetDice}>Reset Dice</button>
     <span className='dice_span dice_span-number' >number of dice {groupOfDice.length}</span>
     <span className="dice_span dice_span-total">{total}</span>
     {dieResults.map((result,index) => (
@@ -50,6 +49,7 @@ const resetDice = () => {
 
     <Link className='links dice_link' to ="/dashboard"> Back to Dashboard </Link>
 
+    </div>
     </div>
   )
 }

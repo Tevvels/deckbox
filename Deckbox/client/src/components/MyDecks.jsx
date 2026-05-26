@@ -20,7 +20,7 @@ function MyDecks() {
   const deleteDeck = async (deckId) => {
     
 
-      const token = localStorage.getItem('userToken');
+      const token = localStorage.getItem('token');
   
       try {
         await axios.delete(`${API_BASE}/cardStorage/${deckId}`, {
@@ -37,7 +37,7 @@ function MyDecks() {
     // Fetch user's decks on component mount
   useEffect(() => {
 const fetchDecks = async () => {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
     if(!token) {
       setError(new Error('No authentication token found'));
       setLoading(true);
@@ -56,7 +56,7 @@ const fetchDecks = async () => {
   }
   catch (err) {
     if(err.response && err.response.status === 401||err.response.status === 403) {
-      localStorage.removeItem('userToken');
+      localStorage.removeItem('token');
       setError(new Error('Authentication error. Please log in again.'));
       navigate('/login');
     } else {
