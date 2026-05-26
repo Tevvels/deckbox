@@ -80,10 +80,12 @@ function App() {
 
 
   useEffect(()=>{
+    if(!token) return;
     axios.get(`${API_BASE}/cardStorage`)
     .then(response => setCardStorage(response.data))
     .catch(error => console.error(error));
-  },[]);
+    
+  },[token]);
   const addItem = (newItem)=> {
     setCardStorage(prev => [...prev, newItem]);
   }

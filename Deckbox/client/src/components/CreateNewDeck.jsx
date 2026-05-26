@@ -120,7 +120,7 @@ const createDeck = async()=>{
         const response = await axios.post(`${API_BASE}/cardStorage`, payload, {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('userToken')}`
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         });
         console.log("deck created", response.data);

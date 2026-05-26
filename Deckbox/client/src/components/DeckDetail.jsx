@@ -22,7 +22,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
             const card = entry.cardId;
             const category = sortBy === "type"
              ? (['creature','planeswalker','instant','sorcery','instant','enchantment','artifact','battle','land'].find(t => card.type_line.toLowerCase().includes(t)) ||"other")
-             : (island ? "Land ":`Mana Value ${card.cmc || 0}`);
+             : (isLand ? "Land ":`Mana Value ${card.cmc || 0}`);
              (groups[category] = groups[category]|| []).push(entry);
              return groups;
         },{});
@@ -115,11 +115,11 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                         onClick={()=> onCardClick(entry.cardId)}
                         onMouseEnter={()=> setCardPreview(entry.cardId)}
                         >
-                            {withImage && (<img className='card_entry-image' src={entry.cardId.image_uris?.small || entry.cardId.card_faces?.[0]?.image_uris?.small} alt={entry.cardId.name} />)}
+                            {withImage && (<img className='card card_entry-image' src={entry.cardId.image_uris?.normal || entry.cardId.card_faces?.[0]?.image_uris?.normal} alt={entry.cardId.name} />)}
 
 
-                            <h3>{entry.cardId.name}</h3>
-                             {!isLandCard && (
+                           {!withImage && (<h3>{entry.cardId.name}</h3>)}
+                             {!withImage && !isLandCard && (
                                 <div>
                                    {entry.cardId.mana_cost ? entry.cardId.mana_cost.split("}{").map((s,i) => {
                                         const symbol = s.replaceAll("{","").replaceAll("}","");
@@ -128,7 +128,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                                         </span>
                                     }) : <span className='mana_symbol inactive'><i className={`ms ms-c ms-cost ms-span`} /></span>}
                                     </div>
-                             )}
+                            )}
                              x {entry.quantity}
                             
                             
@@ -168,7 +168,7 @@ function DeckDetail({cards =[], isOwner,name, onCardClick,OnDeleteCard,format}) 
                 <h3>{cardPreview.name}</h3>
                 <img className='card' src={cardPreview.image_uris?.normal || "https://via.placeholder.com/300"} alt={cardPreview.name} />
                 <p>{cardPreview.type_line}</p>
-                {/* <p>{cardPreview.oracle_text}</p> */}
+                <p>{cardPreview.oracle_text}</p>
 
             </div>
         ) : (

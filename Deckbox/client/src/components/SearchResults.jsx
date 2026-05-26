@@ -21,7 +21,7 @@ function SearchResults({addCardToDeck, currentDeckList =[]}) {
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(card),
             });
@@ -36,7 +36,7 @@ function SearchResults({addCardToDeck, currentDeckList =[]}) {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
-                    'Authorization':`Bearer ${localStorage.getItem('userToken')}`
+                    'Authorization':`Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({cardId:mongoId}),
             });
@@ -129,7 +129,7 @@ const handleAddCard = async (card) => {
             method: 'POST',
             headers:{
                 'Content-Type': "application/json",
-                'Authorization':`Bearer ${localStorage.getItem('userToken')}`
+                'Authorization':`Bearer ${localStorage.getItem('token')}`
             },
             body:JSON.stringify(card)
         });
@@ -139,7 +139,7 @@ const handleAddCard = async (card) => {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
-               'Authorization': `Bearer ${localStorage.getItem('userToken')}` 
+               'Authorization': `Bearer ${localStorage.getItem('token')}` 
             },
             body: JSON.stringify({cardId: mongoId}),
         });

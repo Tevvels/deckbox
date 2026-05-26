@@ -274,16 +274,23 @@ router.post('/sync-card',async(req,res)=>{
     }
 })
 // Update Card Art by Card MongoDB ID
-router.patch('/update-art/:id', async (req,res) => {
+router.put('/update-art/:id', async (req,res) => {
     try{
         const mongoId = req.params.id;
 
         const {scryfallId, image_uris} = req.body;
+
+
         const updatedCard = await Card.findByIdAndUpdate(
-            mongoId,    
-            {scryfallId, image_uris},
-            {new:true}
-        );
+        {
+
+            $or:[   {_id: id.match(/^[0-9a-fA-F]{24}$/) ? id:null},{
+
+            scryfallId: id}]
+        }, 
+        {scryfallId, image_uris},
+        {new:true}
+    );
         console.log("Updated Card:", updatedCard);
         console.log("Scryfall ID:", req.params.id);
         if(!updatedCard){

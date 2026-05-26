@@ -40,7 +40,7 @@ export const UseCardSearch = () => {
     const [error,setError] = useState(null);
 
     const getSafeToken = useCallback(() =>{
-        const rawToken = localStorage.getItem('userToken');
+        const rawToken = localStorage.getItem('token');
         if(!rawToken) return null;
         try{
             const parsed = JSON.parse(rawToken);

@@ -6,7 +6,7 @@ import { config } from 'dotenv';
 config();
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || `'change-this-secret'`;    
+const JWT_SECRET = process.env.JWT_SECRET || 'change-this-secret';    
 // Login route
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;

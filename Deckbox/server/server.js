@@ -36,7 +36,7 @@ app.use(cors({
     const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
     return callback(new Error(msg), false);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Include OPTIONS for pre-flight requests
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'], // Include OPTIONS for pre-flight requests
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   credentials: true,
 }));
