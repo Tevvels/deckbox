@@ -1,12 +1,11 @@
-import axios from 'axios';
-import React, { useState,useEffect } from 'react'
-import '../styles/MyDecks.css';
-import { Link,useNavigate } from 'react-router-dom'
-import DeckCard from './DeckCard';
-import Skeleton from './Skeleton';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import "../styles/MyDecks.css";
+import { Link, useNavigate } from "react-router-dom";
+import DeckCard from "./DeckCard";
+import Skeleton from "./Skeleton";
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
-
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 function MyDecks() {
   const [decks, setDecks] = useState([]);
@@ -15,91 +14,85 @@ function MyDecks() {
 
   const navigate = useNavigate();
 
-
   // Delete deck function
   const deleteDeck = async (deckId) => {
-    
+    const token = localStorage.getItem("token");
 
-      const token = localStorage.getItem('token');
-  
-      try {
-        await axios.delete(`${API_BASE}/cardStorage/${deckId}`, {
-          headers: { 
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setDecks(prevDecks => prevDecks.filter(deck => deck._id !== deckId));
+    try {
+      await axios.delete(`${API_BASE}/cardStorage/${deckId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDecks((prevDecks) => prevDecks.filter((deck) => deck._id !== deckId));
+    } catch (err) {
+      console.error("Error deleting deck:", err);
+    }
+  };
+  // Fetch user's decks on component mount
+  useEffect(() => {
+    const fetchDecks = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError(new Error("No authentication token found"));
+        setLoading(true);
+        navigate("/login");
+        return;
       }
-      catch (err) {
-        console.error('Error deleting deck:', err);
+      try {
+        const response = await axios.get(`${API_BASE}/cardStorage`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setDecks(response.data);
+        setLoading(false);
+      } catch (err) {
+        if (
+          (err.response && err.response.status === 401) ||
+          err.response.status === 403
+        ) {
+          localStorage.removeItem("token");
+          setError(new Error("Authentication error. Please log in again."));
+          navigate("/login");
+        } else {
+          setError(err);
+        }
+        setLoading(false);
       }
     };
-    // Fetch user's decks on component mount
-  useEffect(() => {
-const fetchDecks = async () => {
-    const token = localStorage.getItem('token');
-    if(!token) {
-      setError(new Error('No authentication token found'));
-      setLoading(true);
-      navigate('/login');
-      return;
-    }  
-    try {
-
-    const response = await axios.get(`${API_BASE}/cardStorage`, {
-      headers: {
-        Authorization: `Bearer ${token}`  
-      }
-    });
-    setDecks(response.data);
-    setLoading(false);
-  }
-  catch (err) {
-    if(err.response && err.response.status === 401||err.response.status === 403) {
-      localStorage.removeItem('token');
-      setError(new Error('Authentication error. Please log in again.'));
-      navigate('/login');
-    } else {
-      setError(err);
-  }
-  setLoading(false);
-}
-};
-fetchDecks();
+    fetchDecks();
   }, [navigate]);
-// Function to determine deck color style
+  // Function to determine deck color style
 
   if (loading) {
-    return <Skeleton className={'myDeck'}/>;
-  } 
+    return <Skeleton className={"myDeck"} />;
+  }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-
-
-
- return (
-  <div>   
-  <h2 className='header my_Deck-header'>My Decks</h2>
-    <div className="my_Deck container my_Deck-container">
-      {/* <Link className="links my_Deck-link my_Deck-link-new" to="/deck/new"> */}
+  return (
+    <div>
+      <h2 className="header my_Deck-header">My Decks</h2>
+      <div className="my_Deck container my_Deck-container">
+        {/* <Link className="links my_Deck-link my_Deck-link-new" to="/deck/new"> */}
         {/* <button className="buttons my_Deck-button my_Deck-add">+</button></Link> */}
-      <div className="list my_Deck-list">
-        {decks.map((deck) => (
-          <DeckCard
-          key={deck._id}
-          deck={deck}
-          onDelete={deleteDeck}
-          />
-))}
+        <div className="list my_Deck-list">
+          {decks.map((deck) => (
+            <DeckCard key={deck._id} deck={deck} onDelete={deleteDeck} />
+          ))}
+        </div>
+        <Link
+          className="links my_Deck-link my_Deck-link-dashboard "
+          to="/dashboard"
+        >
+          {" "}
+          Back to Dashboard{" "}
+        </Link>
       </div>
-      <Link className='links my_Deck-link my_Deck-link-dashboard ' to="/dashboard"> Back to Dashboard </Link>
-
     </div>
-  </div>
-  )
-}   
+  );
+}
 
-
-export default MyDecks
+export default MyDecks;

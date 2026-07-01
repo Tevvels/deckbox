@@ -1,20 +1,17 @@
-import React ,{useEffect, useState} from 'react'
-import { Link, useLocation } from 'react-router-dom';
-import '../styles/PublicDeckDisplay.css';
-import DeckCard from './DeckCard';
-import Skeleton from './Skeleton';
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import "../styles/PublicDeckDisplay.css";
+import DeckCard from "./DeckCard";
+import Skeleton from "./Skeleton";
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
-
-
-
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 function PublicDeckDisplay() {
   const [publicDecks, setPublicDecks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
-  
+
   useEffect(() => {
     const fetchPublicDecks = async () => {
       try {
@@ -22,7 +19,7 @@ function PublicDeckDisplay() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         console.log("Fetched public decks:", data);
         setPublicDecks(data);
@@ -36,26 +33,29 @@ function PublicDeckDisplay() {
     fetchPublicDecks();
   }, []);
 
-  if (loading) return <Skeleton  className={"publicDisplay"}/>;
-  if (error) return <div className='loading_error'>Error loading public decks: {error.message}</div>;
+  if (loading) return <Skeleton className={"publicDisplay"} />;
+  if (error)
+    return (
+      <div className="loading_error">
+        Error loading public decks: {error.message}
+      </div>
+    );
 
-  return (<div className='public'>
-      <h1 className='headers public_header'>What the community is doing</h1>
-    <div className=" public_container">
-      {publicDecks.map((deck,index) => (
-        <DeckCard
-
-        key={deck._id}
-        deck={deck}
-        showOwner={true}
-        className={`deck ${index + 1}`}
-        />
-      ))}
-
+  return (
+    <div className="public">
+      <h1 className="headers public_header">What the community is doing</h1>
+      <div className=" public_container">
+        {publicDecks.map((deck, index) => (
+          <DeckCard
+            key={deck._id}
+            deck={deck}
+            showOwner={true}
+            className={`deck ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
-    
-</div>
   );
 }
 
-export default PublicDeckDisplay
+export default PublicDeckDisplay;
