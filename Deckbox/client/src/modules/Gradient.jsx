@@ -1,19 +1,21 @@
-import React, { useMemo } from 'react'
+import React, { useMemo } from "react";
 
-function Gradient({children,className=""}) {
-    const pos = useMemo(()=>({
-        x: Math.floor(Math.random()*100),
-        y: Math.floor(Math.random()*100),
-    }),[])
+function Gradient({ children, className = "" }) {
+  const pos = useMemo(
+    () => ({
+      x: Math.floor(Math.random() * 100),
+      y: Math.floor(Math.random() * 100),
+    }),
+    [],
+  );
   return (
-
     <div
-    className={`gradient ${className}`}
-    style={{'--gradient-x':`${pos.x}%`,'--gradient-y':`${pos.y}%`}}
+      className={`gradient ${className}`}
+      style={{ "--gradient-x": `${pos.x}%`, "--gradient-y": `${pos.y}%` }}
     >
-        {children}
+      {children}
     </div>
-  )
+  );
 }
 
-export default Gradient
+export default Gradient;

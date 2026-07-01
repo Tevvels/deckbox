@@ -1,75 +1,75 @@
-*{
-box-sizing: border-box;
-margin: 0 !important;
-padding: 0! important;
-outline-color: transparent;
-overflow-x: hidden;
-text-decoration: none;
-border:none;
-color: var(--text-color);
+* {
+  box-sizing: border-box;
+  margin: 0 !important;
+  padding: 0 !important;
+  outline-color: transparent;
+  overflow-x: hidden;
+  text-decoration: none;
+  border: none;
+  color: var(--text-color);
 
---dark-bg-color : #01030F;
---med-bg-color: #264b4f;
---light-bg-color: #3e78b2;
---primary-color: #004ba8;
---text-color:#ccdbe1;
---is-active:1;
+  --dark-bg-color: #01030f;
+  --med-dark-bg-color: #1a1f5b;
+  --med-bg-color: #264b3f;
+  --light-bg-color: #3e78b2;
+  --primary-color: #004ba8;
+  --text-color: #ccdbe1;
+  --is-active: 1;
 
-font-family: "Spline Sans", sans-serif;
+  font-family: "Spline Sans", sans-serif;
 }
 
-.gradient{
-      background:radial-gradient(
-        circle at var(--gradient-x,50%) var(--gradient-y,50%),
-        var(--dark-bg-color),
-        var(--med-bg-color)
-    );
-    transition: background 0.6s cubic-bezier(0.4,0,0.2,1);
+.gradient {
+  background: radial-gradient(
+    circle at var(--gradient-x, 50%) var(--gradient-y, 50%),
+    var(--dark-bg-color),
+    var(--med-dark-bg-color)
+  );
+  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.phasing-text{
+.phasing-text {
   min-height: 1.5rem;
   display: flex;
   transition: opacity 0.5s ease;
   font-size: 1.5rem;
   font-weight: bold;
-  color:var(--text-color);
+  color: var(--text-color);
   text-align: center;
   align-items: center;
   justify-content: center;
-  height:100%;
-  cursor:default;
+  height: 100%;
+  cursor: default;
   caret-color: transparent;
   overflow: hidden;
 }
 .phasing-text.visible {
-  opacity:1;
-
+  opacity: 1;
 }
-.phasing-text.hidden{
+.phasing-text.hidden {
   opacity: 0;
 }
-.symbols{
-    height:3.75rem !important;
-    width: 3.75rem !important;
-    opacity: 50%;
-  cursor:default;
+.symbols {
+  height: 3.75rem !important;
+  width: 3.75rem !important;
+  opacity: 50%;
+  cursor: default;
   caret-color: transparent;
 }
-.buttons{
-  background:transparent;
-  color:var(--text-color);
-  border:1px solid white;
+.buttons {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid white;
   display: flex;
   width: 3rem;
-  height:1.5rem;
-  cursor:pointer;
+  height: 1.5rem;
+  cursor: pointer;
 }
-.sort_controls{
+.sort_controls {
   display: flex;
 }
-.card{
-  width:100%;
+.card {
+  width: 100%;
   max-width: 31.25rem;
   aspect-ratio: 63/88; /*dimensions for a standard mtg card*/
   border-radius: 4.75%;

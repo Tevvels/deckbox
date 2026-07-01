@@ -1,191 +1,226 @@
-import axios from 'axios';
-import React, { useState,useRef,useCallback, useEffect } from 'react'
-import { Link } from 'react-router-dom';
-import Dropdown from './Dropdown';
-import '../styles/CreateNewDeck.css';
-import Gradient from '../modules/Gradient';
+import axios from "axios";
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Dropdown from "./Dropdown";
+import "../styles/CreateNewDeck.css";
+import Gradient from "../modules/Gradient";
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
-
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 // Debounce hook to limit the rate of function calls
-const useDebounce = (callback,delay) =>{
-    const timeoutRef = useRef(null);
-    return useCallback((...args)=>{
-        if(timeoutRef.current){
-            clearTimeout(timeoutRef.current);
-        }
-        timeoutRef.current = setTimeout(()=>{
-            callback(...args);
-        },delay);
-    },[callback,delay])
-}
+const useDebounce = (callback, delay) => {
+  const timeoutRef = useRef(null);
+  return useCallback(
+    (...args) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    },
+    [callback, delay],
+  );
+};
 
 // CreateNewDeck component
-function CreateNewDeck({onAdd}) {
-const [deckName, setDeckName] = useState('');
-const [deckFormat, setDeckFormat] = useState('Other');
-const [isPublic, setIsPublic] = useState(false);
+function CreateNewDeck({ onAdd }) {
+  const [deckName, setDeckName] = useState("");
+  const [deckFormat, setDeckFormat] = useState("Other");
+  const [isPublic, setIsPublic] = useState(false);
 
+  const [commanderName, setCommanderName] = useState("");
+  const [selectedCommanderData, setSelectedCommanderData] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  // Check Scryfall API availability on component mount
+  // warm up the Scryfall API
 
-const [commanderName, setCommanderName] = useState('');
-const [selectedCommanderData, setSelectedCommanderData] = useState(null);
-const [suggestions, setSuggestions] = useState([]);
-const [showSuggestions, setShowSuggestions] = useState(false);
-// Check Scryfall API availability on component mount
-// warm up the Scryfall API
-
-useEffect(() => {
-    fetch('https://api.scryfall.com', {
-        method:'GET',
-        headers: {
-            'Accept': 'application/json',
-            'User-Agent': "DeckboxApp/1.0" 
-        }
+  useEffect(() => {
+    fetch("https://api.scryfall.com", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "DeckboxApp/1.0",
+      },
     })
-    .then(res => {
-        if(!res.ok) console.warn("Scryfall warm-up status:", res.status);
-    })
-    .catch(()=>{
-        console.error("Scryfall API is not reachable")
-    });
-},[]);
-const fetchAutocompleteSuggestions = async(searchQuery)=>{
-    if(!searchQuery || searchQuery.length < 2) {
-        setSuggestions([]);
-        return;
+      .then((res) => {
+        if (!res.ok) console.warn("Scryfall warm-up status:", res.status);
+      })
+      .catch(() => {
+        console.error("Scryfall API is not reachable");
+      });
+  }, []);
+  const fetchAutocompleteSuggestions = async (searchQuery) => {
+    if (!searchQuery || searchQuery.length < 2) {
+      setSuggestions([]);
+      return;
     }
-    try{
-        const query = `${searchQuery}  f:commander is:commander`;
-        const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}`,{
-        headers:{
-            'Accept':'application/json',
-            'User-Agent':'DeckboxApp/1.0'
-            }
-        });
-        if(!response.ok){
-            if(response.status === 404){
-                setSuggestions([]);
-                return;
-            }
-            throw new Error(`Http error! status :${response.status}`)
+    try {
+      const query = `${searchQuery}  f:commander is:commander`;
+      const response = await fetch(
+        `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "User-Agent": "DeckboxApp/1.0",
+          },
+        },
+      );
+      if (!response.ok) {
+        if (response.status === 404) {
+          setSuggestions([]);
+          return;
         }
-        const json = await response.json();
-        setSuggestions(json.data || []);
-    } catch(error) {
-        console.error("Autocomplete fetch error:",error);
-        setSuggestions([]);
-    }   
-};
-// Debounced version of the fetch function
-const debouncedAutocompleteFetch = useDebounce(fetchAutocompleteSuggestions, 300);
+        throw new Error(`Http error! status :${response.status}`);
+      }
+      const json = await response.json();
+      setSuggestions(json.data || []);
+    } catch (error) {
+      console.error("Autocomplete fetch error:", error);
+      setSuggestions([]);
+    }
+  };
+  // Debounced version of the fetch function
+  const debouncedAutocompleteFetch = useDebounce(
+    fetchAutocompleteSuggestions,
+    300,
+  );
 
-const handleInputChange = (e) =>{
+  const handleInputChange = (e) => {
     const value = e.target.value;
     setCommanderName(value);
     setShowSuggestions(true);
     setSelectedCommanderData(null);
     debouncedAutocompleteFetch(value);
-}
-const handleSelectSuggestion = (suggestion) =>{
+  };
+  const handleSelectSuggestion = (suggestion) => {
     setCommanderName(suggestion.name);
     setSelectedCommanderData(suggestion);
     setSuggestions([]);
     setShowSuggestions(false);
-}
+  };
 
-
-// Function to create a new deck
-const createDeck = async()=>{
-
+  // Function to create a new deck
+  const createDeck = async () => {
     if (!deckName.trim()) {
-        
-        alert("Deck name cannot be empty");
-        return;
+      alert("Deck name cannot be empty");
+      return;
     }
-    if(deckFormat === 'Commander' && !commanderName.trim()){
-        alert("Commander name cannot be empty for Commander format");
-        return;
-    }   
+    if (deckFormat === "Commander" && !commanderName.trim()) {
+      alert("Commander name cannot be empty for Commander format");
+      return;
+    }
 
     try {
-        const payload = { 
-            name: deckName, 
-            isPublic: isPublic,
-            format: deckFormat,
-            color_identity: selectedCommanderData ? selectedCommanderData.color_identity : [], 
-            commander: deckFormat === 'Commander' ? commanderName.trim() : undefined,
-            scryFallCardData: selectedCommanderData
-        };
-        const response = await axios.post(`${API_BASE}/cardStorage`, payload, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-        console.log("deck created", response.data);
-        onAdd(response.data);
-        setDeckName('');
-        setCommanderName('');
-        setSuggestions([]);
-    } catch(error){
-        console.error("error creating deck", error)
+      const payload = {
+        name: deckName,
+        isPublic: isPublic,
+        format: deckFormat,
+        color_identity: selectedCommanderData
+          ? selectedCommanderData.color_identity
+          : [],
+        commander:
+          deckFormat === "Commander" ? commanderName.trim() : undefined,
+        scryFallCardData: selectedCommanderData,
+      };
+      const response = await axios.post(`${API_BASE}/cardStorage`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("deck created", response.data);
+      onAdd(response.data);
+      setDeckName("");
+      setCommanderName("");
+      setSuggestions([]);
+    } catch (error) {
+      console.error("error creating deck", error);
     }
-}
-return (
+  };
+  return (
     <div className="create_Deck container create_Deck-container">
-     <Gradient className="create_DeckSubContainer">
-       <div className='create_DeckHeader'>
-            <h2 className='header create_Deck-header'>Create New Deck</h2>
+      <Gradient className="create_DeckSubContainer">
+        <div className="create_DeckHeader">
+          <h2 className="header create_Deck-header">Create New Deck</h2>
         </div>
-        <div className='create_DeckName'>
-            <div className='divs create_Deck-name'>Deck Name:</div>
-            <input className='inputs create_Deck-nameInput' type="text" value={deckName} onChange={(e)=>setDeckName(e.target.value)} />
+        <div className="create_DeckName">
+          <div className="divs create_Deck-name">Deck Name:</div>
+          <input
+            className="inputs create_Deck-nameInput"
+            type="text"
+            value={deckName}
+            onChange={(e) => setDeckName(e.target.value)}
+          />
         </div>
-        <div className='create_DeckPublic'>
-<input className='inputs create_DeckIsPublic' type="checkbox" checked={isPublic} onChange={(e)=>setIsPublic(e.target.checked)} placeholder='Make the Deck Public' />Make the Deck Public
+        <div className="create_DeckPublic">
+          <input
+            className="inputs create_DeckIsPublic"
+            type="checkbox"
+            checked={isPublic}
+            onChange={(e) => setIsPublic(e.target.checked)}
+            placeholder="Make the Deck Public"
+          />
+          Make the Deck Public
         </div>
-        <div className='create_DeckFormat'>
-            <div className='divs create_Deck-format'>Deck Format:</div>
-            <Dropdown className="create_Deck-dropdown" options={[
-                {value:'Standard', div:'Standard'},
-                {value:'Modern', div:'Modern'},
-                {value:'Commander', div:'Commander'},
-                {value:'Legacy', div:'Legacy'},
-                {value:'Vintage', div:'Vintage'},
-                {value:'Pauper', div:'Pauper'},
-                {value:'Other', div:'Other'},
-            ]} onSelect={(option)=>setDeckFormat(option.value)} />
+        <div className="create_DeckFormat">
+          <div className="divs create_Deck-format">Deck Format:</div>
+          <Dropdown
+            className="create_Deck-dropdown"
+            options={[
+              { value: "Standard", div: "Standard" },
+              { value: "Modern", div: "Modern" },
+              { value: "Commander", div: "Commander" },
+              { value: "Legacy", div: "Legacy" },
+              { value: "Vintage", div: "Vintage" },
+              { value: "Pauper", div: "Pauper" },
+              { value: "Other", div: "Other" },
+            ]}
+            onSelect={(option) => setDeckFormat(option.value)}
+          />
         </div>
 
-    {deckFormat === 'Commander' && (
-        <div className="create_DeckCommander">
-            <input className='inputs create_Deck-input' type="text" placeholder="Commander Name" value={commanderName} onChange={handleInputChange}
-            onBlur={()=>setTimeout(()=>setShowSuggestions(false),300)}
-            onFocus={()=>setShowSuggestions(true)} />
+        {deckFormat === "Commander" && (
+          <div className="create_DeckCommander">
+            <input
+              className="inputs create_Deck-input"
+              type="text"
+              placeholder="Commander Name"
+              value={commanderName}
+              onChange={handleInputChange}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
+              onFocus={() => setShowSuggestions(true)}
+            />
 
-        {showSuggestions && suggestions.length >0 && (
-            <ul className=" list create_Deck-list create_Deck-list-Suggestions-list">
-                {suggestions.map((suggestion) =>(
-                    <li className="listItem create_Deck-list create_Deck-list-Suggestions-listItem" key={suggestion.id} onClick={() => handleSelectSuggestion(suggestion)}>
-                        {suggestion.name}
-                    </li>
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className=" list create_Deck-list create_Deck-list-Suggestions-list">
+                {suggestions.map((suggestion) => (
+                  <li
+                    className="listItem create_Deck-list create_Deck-list-Suggestions-listItem"
+                    key={suggestion.id}
+                    onClick={() => handleSelectSuggestion(suggestion)}
+                  >
+                    {suggestion.name}
+                  </li>
                 ))}
-            </ul>
-     )}
-</div>
-    )}
-    
+              </ul>
+            )}
+          </div>
+        )}
 
-
-<div className='create_DeckButton'>
-    <button className='buttons create_DeckCreate' onClick={createDeck}>Create Deck</button>
-    <Link className='links create_DeckBack' to="/mydecks"> Back to My Decks </Link>
-    
+        <div className="create_DeckButton">
+          <button className="buttons create_DeckCreate" onClick={createDeck}>
+            Create Deck
+          </button>
+          <Link className="links create_DeckBack" to="/mydecks">
+            {" "}
+            Back to My Decks{" "}
+          </Link>
+        </div>
+      </Gradient>
     </div>
-</Gradient>
-</div>
-  )
+  );
 }
 
-export default CreateNewDeck
+export default CreateNewDeck;
