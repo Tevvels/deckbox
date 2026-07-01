@@ -69,8 +69,9 @@
   display: flex;
 }
 .card {
-  width: 100%;
-  max-width: 31.25rem;
-  aspect-ratio: 63/88; /*dimensions for a standard mtg card*/
-  border-radius: 4.75%;
+  width: 2.5in;
+  height: 3.5in;
+  /* max-width: 90vw; */
+  /* aspect-ratio: 63/88; dimensions for a standard mtg card */
+  border-radius: 4.75% / 3.5%;
 }
