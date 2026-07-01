@@ -14,6 +14,7 @@ const allowedOrigins = [
   "https://deckbox-r8ok.vercel.app",
   "https://deckbox-sepia.vercel.app",
   "https://deckbox-r8ok-jz75ibn0e-tevvels-projects.vercel.app",
+  
 ];
 
 const app = express();
@@ -49,6 +50,7 @@ app.use(
 );
 
 const PORT = process.env.PORT || 5000;
+
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/deckbox";
 
 const JWT_SECRET = process.env.JWT_SECRET || "change-this-secret";
@@ -76,11 +78,9 @@ mongoose
   })
   .then(() => {
     console.log("Connected to MongoDB");
-    if (process.env.NODE_ENV !== "production") {
       app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
       });
-    }
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err);
