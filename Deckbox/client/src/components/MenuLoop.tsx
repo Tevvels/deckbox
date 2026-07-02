@@ -9,26 +9,28 @@ interface NavLink {
 interface MenuLoopProps {
     navLinks: NavLink[]
     headerName: string;
+    context?: string;
+
 }
 
-const MenuLoop: React.FC<MenuLoopProps> = ({ headerName,navLinks }) => {
+const MenuLoop: React.FC<MenuLoopProps> = ({ context,headerName,navLinks }) => {
   return (
-    <>
-    <div className="navigation header">
+    <div className={`menu_${context} menu_container`}>
+    <div className={`menu_${context} menu_header`}>
      {headerName}
     </div>
-    <div className="navigation links">
+    <div className=" menu_links">
         {navLinks.map((link, index) => (
             <Link
                 key={link.path}
-                className={` links navigation_link navigation_${link.name.replaceAll(" ", "")}`}
+                className={` menu_link menu_${link.name.replaceAll(" ", "")}`}
                 to={link.path}
             >
                 {link.name}
             </Link>
         ))}
         </div>
-    </>
+    </div>
   );
 };   
 
