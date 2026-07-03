@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/MyDecks.css";
 
+// 1. Define the color map
 const getColorIdentity = (char) => {
   const colorMap = {
     W: "#fdf1a2",
@@ -11,28 +12,29 @@ const getColorIdentity = (char) => {
     G: "#00a650",
     C: "#a9a9a9",
   };
-  return colorMap[char] || "#a9a9a9";
+  return colorMap[char?.toUpperCase()] || "#a9a9a9";
 };
-// function to get the color identity of a commander and use it for stylign.
+
+// 2. Define the individual pip style helper
+const getPipStyle = (color) => {
+  return { backgroundColor: getColorIdentity(color) };
+};
+
+// 3. Define the main gradient logic helper
 const getDeckColorIdentity = (colorIdentity) => {
-  // checks if it has a color.
   if (!colorIdentity || colorIdentity.length === 0)
     return { backgroundColor: "#a9a9a9" };
-  // an array that represents the color pattern of MTG
+
   const wubrgOrder = ["W", "U", "B", "R", "G", "C"];
-  // a function to insure our color identity follow that pattern.
   const sortedIdentity = [...colorIdentity].sort((a, b) => {
     return wubrgOrder.indexOf(a) - wubrgOrder.indexOf(b);
   });
-  // if there is a color identity return this sorted color.
+
   if (sortedIdentity.length === 1) {
     return { backgroundColor: getColorIdentity(sortedIdentity[0]) };
   }
 
-  const colorTotals = sortedIdentity.length;
-  // making a simple math equation that takes those numebrs and divides them evenly with 100.
-  const sectionWidth = 100 / colorTotals;
-  // to make thicker lines in my gradient
+  const sectionWidth = 100 / sortedIdentity.length;
   const gradientStops = sortedIdentity
     .map((char, index) => {
       const color = getColorIdentity(char);
@@ -41,16 +43,13 @@ const getDeckColorIdentity = (colorIdentity) => {
       return `${color} ${start}%, ${color} ${end}%`;
     })
     .join(", ");
-  // created a gradient for the color
-  const gradientColors = sortedIdentity
-    .map((char) => getColorIdentity(char))
-    .join(", ");
-  // getting a variable that as a defined number = to the length or amount of colors.
 
-  return { background: `linear-gradient(110deg,${gradientStops})` };
+  return { background: `linear-gradient(110deg, ${gradientStops})` };
 };
 
+// 4. The Component
 function DeckCard({ deck, onDelete, showOwner = false, className }) {
+  // Now these functions are defined and accessible
   const colorIdentityStyle = getDeckColorIdentity(deck.color_identity);
   const validCards = deck.cards?.filter((c) => c && c.cardId) || [];
   const firstCard = validCards.length > 0 ? validCards[0].cardId : null;
@@ -65,39 +64,50 @@ function DeckCard({ deck, onDelete, showOwner = false, className }) {
 
   const copyrightText = `™ & © Wizards of the Coast`;
 
-  console.log(firstCard);
-
   return (
     <div className={`deck_card-container ${className}`}>
       <Link className="deck_card-link" to={`/deck/${deck._id}`}>
         <div className="deck_card-content">
-          <div className="my_Deck-color" style={colorIdentityStyle} />
-          <img className="deck_card-art" alt="deckArt" src={imageUrl} />
-          <div className="deck_card-subcontainer">
-            <h3 className="deck_card-name">{deck.name}</h3>
-            <p>{deck.format}</p>
-            <p>Cards: {deck.cards.length}</p>
-            <div className="deck_card-artist">
-              <span>{artistName}</span>
-              <br />
-              <span className="deck_card-copyright">{copyrightText}</span>
+          <div className="deck_card-art-wrapper">
+            <img className="deck_card-art" alt="deckArt" src={imageUrl} />
+            
+            {/* The WUBRG gradient bar */}
+            
 
-              {onDelete && (
-                <button
-                  className={`buttons buttons_delete`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onDelete(deck._id);
-                  }}
-                >
-                  Remove
-                </button>
-              )}
-              {showOwner && (
-                <h4 className="deck_card-owner">
-                  {deck.user?.username || "unknown"}
-                </h4>
-              )}
+            <div className="deck_card-subcontainer">
+              <div className="deck-card-info">
+                <div className="deck_card-header">
+                  <h3 className="deck_card-name">{deck.name}</h3>
+                  <div className="deck_mana-symbols">
+                    {deck.color_identity?.map((color) => (
+                      <div 
+                        key={color} 
+                        className={`ms ms-${color.toLowerCase()} ms-cost mana-icon`} 
+                        title={color}                        
+                      >
+                        {color}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="deck_card-stats">{deck.format} • {deck.cards.length} Cards</p>
+              </div>
+
+              <div className="deck_card-footer">
+                <div className="deck_card-artist">
+                  <span>Art by: {artistName}</span>
+                  <br />
+                  <span className="deck_card-copyright">{copyrightText}</span>
+                </div>
+                {onDelete && (
+                  <button 
+                    className="buttons buttons_delete" 
+                    onClick={(e) => { e.preventDefault(); onDelete(deck._id); }}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -106,4 +116,5 @@ function DeckCard({ deck, onDelete, showOwner = false, className }) {
   );
 }
 
+// 5. The Default Export
 export default DeckCard;
