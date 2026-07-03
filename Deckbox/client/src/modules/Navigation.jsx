@@ -5,7 +5,7 @@ import MenuLoop from "../components/MenuLoop.tsx";
 
 function Navigation({ onLogout, isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const closeMenu = () => setIsOpen(false);
   const location = useLocation();
 
   const navLinks = [
@@ -26,14 +26,14 @@ function Navigation({ onLogout, isLoggedIn }) {
     <div className="navigation_wrapper">
       <nav className={`navigation_container`}>
         <button
-          className=" navigation_hamburger"
+          className={`navigation_hamburger ${isOpen ? "open" : ""}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </button>
-        <Link key={"toDashboard"} className="navigation_logo" to="/">
+        <Link key={"toDashboard"} className="navigation_logo" to="/" onClick={closeMenu}>
           <h1 className="navigation_header">Deckbox</h1>
         </Link>
 
@@ -46,25 +46,34 @@ function Navigation({ onLogout, isLoggedIn }) {
 
           {isOpen && (
             <div className="navigation_menu-mobile">
-     <div className="navigation_overlay" onClick={() => setIsOpen(false)}></div>
+     <div className="navigation_overlay" onClick={closeMenu}></div>
+     <div className="navigation_menu-content">
             <MenuLoop context="navigation" navLinks={navLinks} headerName={"Navigation"} />
-           <MenuLoop context="navigation_user" navLinks={profilelinks} headerName={"Profile"} />
-          </div>
-          )}
-            {isLoggedIn ?(  <button
-                className="buttons navigation_button logout"
-                onClick={() => onLogout()}
+           {isLoggedIn ? (
+            <div className="navigation_user-section">
+             <MenuLoop context="navigation_user" navLinks={profilelinks} headerName={"Profile"} />
+             <button
+                className="buttons navigation_button logout"  
+                onClick={() => {
+                  onLogout();
+                  closeMenu();
+                }}
               >
                 Logout
               </button>
-              ):(
-                <Link to="/login">
+              </div>
+              ) : (
+                <Link to="/login" onClick={closeMenu}>
                 <button className="buttons navigation_button login">
                   Login
                 </button>
               </Link>
               )}
-        
+
+              </div>
+          </div>
+          )}
+
       </nav>
     </div>
   );

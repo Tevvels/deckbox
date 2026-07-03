@@ -1,13 +1,21 @@
 .navigation_hamburger {
+  width: 30px;
+  height: 30px;
+
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+
   gap: 5px;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 1.2rem;
   margin-right: 1rem;
   background-color: transparent;
-  z-index: 10000;
+  z-index: 10001;
+  position: relative;
+  overflow:hidden;
+
 }
 .navigation_hamburger .bar {
   display: block;
@@ -20,6 +28,19 @@
 .navigation_hamburger:hover .bar {
   background-color: var(--accent-color);
 }
+
+.navigation_hamburger:active .bar:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+.navigation_hamburger:active  .bar:nth-child(2) {
+  opacity: 0;
+}
+.navigation_hamburger:active  .bar:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+
+
 .navigation_container{
   display: flex;
   justify-content: space-between;
@@ -34,21 +55,54 @@
   width: 100%;
   height: 100%;
 }
+
 .navigation_menu-desktop{
   display: none;
 }
-.navigation_menu-mobile{
-  position: absolute;
+.navigation_overlay {
+  position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  transition: opacity 0.3s ease;
+}
+
+.navigation_menu-content {
+  position: fixed;
+  height: 90%;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+.navigation_user-section{
+    display: flex;
+    flex-direction: column;
+    height: 60%
+}
+.navigation_menu-mobile{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   width: 90%;
   height: 90%;
-  margin:  5% !important;
+  margin:  0 !important;
   padding: 1rem;
   background-color: var(--primary-color);
   z-index: 9999;
+  border-radius: 10px;
 
 }
+
 @media screen and (min-width: 768px) {
   .navigation_wrapper{
     justify-content: flex-start;

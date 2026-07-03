@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import axios from "axios";
 import Login from "./components/Login";
 import Register from "./components/Register";
