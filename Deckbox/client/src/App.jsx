@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import axios from "axios";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -21,7 +20,7 @@ import "./styles/Layout.css";
 import Gradient from "./modules/Gradient.jsx";
 import "./styles/Deck.css";
 import "./styles/Dice.css";
-
+import "./styles/Menu.css";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 function App() {
@@ -105,43 +104,24 @@ function App() {
       console.error(err);
     }
   };
-  if (!token) {
-    if (authView === "register")
-      return (
-        <Register
-          onRegistered={(t) => {
-            handleLogin(t);
-          }}
-          onCancel={showLogin}
-        />
-      );
-    if (authView === "forgot")
-      return (
-        <ForgotPassword
-          onDone={showLogin}
-          onCancel={showLogin}
-          onLogin={(t) => handleLogin(t)}
-        />
-      );
-    return (
-      <div>
-        <Login
-          onLogin={handleLogin}
-          onShowRegister={showRegister}
-          onShowForgot={showForgot}
-        />
-      </div>
-    );
-  }
+
 
   return (
     <Gradient className={"App"}>
       <main>
-        <Navigation onLogout={handleLogout} />
+        <Navigation isLoggedIn={!!token} onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/publicdecks" element={<PublicDeckDisplay />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          if(!token) {
+          <>
+            <Route path="/register" element={<Register onShowLogin={showLogin} />} />
+            <Route path="/forgot" element={<ForgotPassword onShowLogin={showLogin} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} onShowRegister={showRegister} onShowForgot={showForgot} />} />
+          </>
+          }
+          <Route path="/profile" element={<div>Profile Page</div>} />
+          <Route path="/settings" element={<div>Settings Page</div>} />
           <Route path="/deck/" element={<MyDecks />} />
           <Route path="/deck/new" element={<CreateNewDeck onAdd={addItem} />} />
           <Route path="/players" element={<Players />} />

@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navigation.css";
 import MenuLoop from "../components/MenuLoop.tsx";
 
-function Navigation({ onLogout }) {
+function Navigation({ onLogout, isLoggedIn }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const closeMenu = () => setIsOpen(false);
   const location = useLocation();
 
   const navLinks = [
-    { name: "Dashboard", path: "/" },
+    { name: "Home", path: "/" },
     { name: "Players", path: "/players" },
     { name: "Public Decks", path: "/publicdecks" },
   ];
@@ -19,73 +21,59 @@ function Navigation({ onLogout }) {
     { name: "Settings", path: "/settings" },
   ];
 
-  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div className="navigion">
+    <div className="navigation_wrapper">
       <nav className={`navigation_container`}>
-        <Link key={"toDashboard"} className="navigation_logo" to="/">
+        <button
+          className={`navigation_hamburger ${isOpen ? "open" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </button>
+        <Link key={"toDashboard"} className="navigation_logo" to="/" onClick={closeMenu}>
           <h1 className="navigation_header">Deckbox</h1>
         </Link>
-        {/* {navLinks.map(
-          (link) =>
-            location.pathname !== link.path && (
-              <Link
-                key={link.path}
-                className={` links navigation_link-desktop navigation_${link.name.replaceAll(" ", "")}`}
-                to={link.path}
-              >
-                {link.name}
-              </Link>
-            ),
-        )} */}
-        <MenuLoop navLinks={navLinks} headerName={"Navigation"} />
-        <div className="navigation_profile">
-          <button
-            className="buttons navigation_button navigation_hamburger"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
-          </button>
+
+    <div className="navigation_menu-desktop">
+        <MenuLoop context="navigation_desktop" navLinks={navLinks} headerName={""} />
+        <MenuLoop context="navigation_user_desktop" navLinks={profilelinks} headerName={""} />
+    </div>
+
+
 
           {isOpen && (
-            // <div className="navigation_profile-dropdown">
-            //   {navLinks.map(
-            //     (link) =>
-            //       location.pathname !== link.path && (
-            //         <Link
-            //           key={link.path}
-            //           className={` links navigation_link navigation_${link.name.replaceAll(" ", "")}`}
-            //           to={link.path}
-            //         >
-            //           {link.name}
-            //         </Link>
-            //       ),
-            //   )}
-            //   {profilelinks.map(
-            //     (link) =>
-            //       location.pathname !== link.path && (
-            //         <Link
-            //           key={link.path}
-            //           className={` links navigation_link navigation_${link.name.replaceAll(" ", "")}`}
-            //           to={link.path}
-            //         >
-            //           {link.name}
-            //         </Link>
-            //       ),
-            //   )}
-            // </div>
-           <MenuLoop navLinks={profilelinks} headerName={"Profile"} />
-          )}
-              <button
-                className="buttons navigation_button logout"
-                onClick={() => onLogout()}
+            <div className="navigation_menu-mobile">
+     <div className="navigation_overlay" onClick={closeMenu}></div>
+     <div className="navigation_menu-content">
+            <MenuLoop context="navigation" navLinks={navLinks} headerName={"Navigation"} />
+           {isLoggedIn ? (
+            <div className="navigation_user-section">
+             <MenuLoop context="navigation_user" navLinks={profilelinks} headerName={"Profile"} />
+             <button
+                className="buttons navigation_button logout"  
+                onClick={() => {
+                  onLogout();
+                  closeMenu();
+                }}
               >
                 Logout
               </button>
-        </div>
+              </div>
+              ) : (
+                <Link to="/login" onClick={closeMenu}>
+                <button className="buttons navigation_button login">
+                  Login
+                </button>
+              </Link>
+              )}
+
+              </div>
+          </div>
+          )}
+
       </nav>
     </div>
   );
