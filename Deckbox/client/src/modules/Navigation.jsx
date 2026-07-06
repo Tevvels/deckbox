@@ -37,13 +37,22 @@ function Navigation({ onLogout, isLoggedIn }) {
           <h1 className="navigation_header">Deckbox</h1>
         </Link>
 
+
+{/* the new desktop menu */}
     <div className="navigation_menu-desktop">
         <MenuLoop context="navigation_desktop" navLinks={navLinks} headerName={""} />
-        <MenuLoop context="navigation_user_desktop" navLinks={profilelinks} headerName={""} />
+        <div className="navigation_user-dropdown">
+          <button className="navigation_user-dropdown-button" onClick={() => setIsOpen(!isOpen)}> Profile Options </button>
+          {isOpen && (
+            
+            <MenuLoop context="navigation_user_desktop" navLinks={profilelinks} headerName={""} />
+
+          )}
+        </div>
     </div>
 
 
-
+{/* the mobile menu */}
           {isOpen && (
             <div className="navigation_menu-mobile">
      <div className="navigation_overlay" onClick={closeMenu}></div>
