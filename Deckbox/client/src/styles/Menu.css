@@ -43,3 +43,23 @@
     flex-direction: column;
     height:50%;
 }
+
+.menu_navigation_user_desktop .menu_links{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 50%;
+}
+@media screen and (min-width: 768px) {
+.menu_header{
+    display:none;
+}
+.menu_links{
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-around;
+    align-items: center;
+    height: 50%;
+}
+}

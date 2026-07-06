@@ -101,9 +101,25 @@
   z-index: 9999;
   border-radius: 10px;
 
+  
+}
+  @media screen and (min-width: 768px) {
+.navigation_menu-desktop{
+  display: flex;
+
 }
 
-@media screen and (min-width: 768px) {
+.navigation_user-dropdown-button{
+  border: 1px solid var(--text-color);
+  background-color: var(--dark-bg-color);
+  color: var(--text-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}  
   .navigation_wrapper{
     justify-content: flex-start;
   }

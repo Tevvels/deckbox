@@ -78,6 +78,9 @@ function DeckCard({ deck, onDelete, showOwner = false, className }) {
               <div className="deck-card-info">
                 <div className="deck_card-header">
                   <h3 className="deck_card-name">{deck.name}</h3>
+                  <div className="deck_card-owner">
+                    {showOwner && deck.owner ? `by ${deck.owner}` : null}
+                  </div>
                   <div className="deck_mana-symbols">
                     {deck.color_identity?.map((color) => (
                       <div 
@@ -90,7 +93,7 @@ function DeckCard({ deck, onDelete, showOwner = false, className }) {
                     ))}
                   </div>
                 </div>
-                <p className="deck_card-stats">{deck.format} • {deck.cards.length} Cards</p>
+                <p className="deck_card-stats">{deck.format} • {deck.cards.length >= 2 ? `${deck.cards.length} Cards` :deck.cards.length === 1 ? '1 Card' : 'No cards'}</p>
               </div>
 
               <div className="deck_card-footer">

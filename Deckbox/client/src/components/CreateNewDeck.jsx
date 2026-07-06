@@ -140,23 +140,21 @@ function CreateNewDeck({ onAdd }) {
     }
   };
   return (
-    <div className="create_Deck container create_Deck-container">
-      <Gradient className="create_DeckSubContainer">
-        <div className="create_DeckHeader">
+    <div className="create">
+      <div className="create_deck">
+        <div className="create_deck-header">
           <h2 className="header create_Deck-header">Create New Deck</h2>
         </div>
-        <div className="create_DeckName">
-          <div className="divs create_Deck-name">Deck Name:</div>
+          <div className="create_deck-name">Deck Name:</div>
           <input
-            className="inputs create_Deck-nameInput"
+            className="create_deck-input"
             type="text"
             value={deckName}
             onChange={(e) => setDeckName(e.target.value)}
           />
-        </div>
-        <div className="create_DeckPublic">
+        <div className="create_deck-public">
           <input
-            className="inputs create_DeckIsPublic"
+            className="create_deck-public-checkbox"
             type="checkbox"
             checked={isPublic}
             onChange={(e) => setIsPublic(e.target.checked)}
@@ -164,7 +162,7 @@ function CreateNewDeck({ onAdd }) {
           />
           Make the Deck Public
         </div>
-        <div className="create_DeckFormat">
+        <div className="create_deck-format">
           <div className="divs create_Deck-format">Deck Format:</div>
           <Dropdown
             className="create_Deck-dropdown"
@@ -182,9 +180,9 @@ function CreateNewDeck({ onAdd }) {
         </div>
 
         {deckFormat === "Commander" && (
-          <div className="create_DeckCommander">
+          <div className="create_deck-commander">
             <input
-              className="inputs create_Deck-input"
+              className="create_deck-commander-input"
               type="text"
               placeholder="Commander Name"
               value={commanderName}
@@ -194,10 +192,10 @@ function CreateNewDeck({ onAdd }) {
             />
 
             {showSuggestions && suggestions.length > 0 && (
-              <ul className=" list create_Deck-list create_Deck-list-Suggestions-list">
+              <ul className="create_deck-suggestions create-deck-suggestions-list">
                 {suggestions.map((suggestion) => (
                   <li
-                    className="listItem create_Deck-list create_Deck-list-Suggestions-listItem"
+                    className="create_deck-suggestion-list-item"
                     key={suggestion.id}
                     onClick={() => handleSelectSuggestion(suggestion)}
                   >
@@ -209,16 +207,15 @@ function CreateNewDeck({ onAdd }) {
           </div>
         )}
 
-        <div className="create_DeckButton">
-          <button className="buttons create_DeckCreate" onClick={createDeck}>
+        <div className="create_deck-buttons">
+          <button className="buttons create_deck-button-create" onClick={createDeck}>
             Create Deck
           </button>
-          <Link className="links create_DeckBack" to="/mydecks">
-            {" "}
+          <Link className="links create_deck-button-back" to="/mydecks">
             Back to My Decks{" "}
           </Link>
         </div>
-      </Gradient>
+      </div>
     </div>
   );
 }
