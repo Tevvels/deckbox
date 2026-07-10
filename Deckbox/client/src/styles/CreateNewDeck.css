@@ -1,11 +1,177 @@
-.create_Deck{
-  display:flex;
-  height: 100%;
+/* Container to center the entire card component on the page */
+.create {
+  display: flex;
+  min-height: 76.5vh;
   width: 100%;
-
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color, #fafafa);
+  padding: 2rem 1rem;
+  box-sizing: border-box;
 }
-.create_Deck_container{
-  display:flex;
-  height: 100%;
+
+/* The standalone card panel holding the form */
+.create_deck {
+  background-color: var(--bg-color, #ffffff);
+  border: 1px solid var(--text-color, #e0e0e0);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   width: 100%;
+  max-width: 500px; /* Locks it to a perfectly clean vertical column size */
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+
+/* Header design */
+.create_deck-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.create_deck-header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-color, #222);
+  margin: 0;
+  text-transform: capitalize; /* Clean replacement for harsh underlines/uppercase */
+}
+
+/* Clean vertical stacking for form layout elements */
+.create_deck-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Consistent white space between rows */
+  width: 100%;
+}
+
+/* Base form row logic */
+.form-group,
+.create_deck-format,
+.create_deck-commander {
+  position: relative; /* Anchor for absolute search dropdown lists */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Space between label and input */
+  width: 100%;
+}
+
+/* Label styling */
+.form-group label,
+.create_deck-format label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color, #555);
+}
+
+/* Form input normalization */
+.create_deck-nameinput,
+.create_deck-commander input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--bg-color, #fff);
+  color: var(--text-color, #333);
+  border: 1px solid var(--text-color, #ccc);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.create_deck-nameinput:focus,
+.create_deck-commander input[type="text"]:focus {
+  outline: none;
+  border-color: var(--text-color, #000);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Checkbox grouping alignment */
+.create_deck-public {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.create_deck-public label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+.create_deck-public input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Action button area layout container */
+.create_deck-buttons {
+  display: flex;
+  flex-direction: column; /* Stacked layout makes primary actions clearer */
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.create_deck-button-create {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--text-color, #111);
+  color: var(--bg-color, #fff);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.create_deck-button-create:hover {
+  opacity: 0.9;
+}
+
+.create_deck-button-back {
+  width: 100%;
+  padding: 12px;
+  text-align: center;
+  color: var(--text-color, #666);
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.create_deck-button-back:hover {
+  background-color: var(--dark-bg-color, #f5f5f5);
+}
+
+/* Autocomplete suggestion drop panels */
+.create-deck-suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  background-color: var(--bg-color, #fff);
+  border: 1px solid var(--text-color, #ccc);
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  z-index: 10005;
+}
+
+.create-deck-suggestions-list li {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--text-color, #333);
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.create-deck-suggestions-list li:hover {
+  background-color: var(--dark-bg-color, #f5f5f5);
 }

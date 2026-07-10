@@ -1,205 +1,174 @@
-import axios from "axios";
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown";
-import "../styles/CreateNewDeck.css";
-import Gradient from "../modules/Gradient";
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Dropdown from './Dropdown';
+import Gradient from '../modules/Gradient';
+import '../styles/CreateNewDeck.css';
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+const SCRYFALL_API = 'https://api.scryfall.com';
 
-// Debounce hook to limit the rate of function calls
+// --- Custom Hooks ---
+
 const useDebounce = (callback, delay) => {
   const timeoutRef = useRef(null);
-  return useCallback(
-    (...args) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    },
-    [callback, delay],
-  );
+  return useCallback((...args) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => callback(...args), delay);
+  }, [callback, delay]);
 };
 
-// CreateNewDeck component
-function CreateNewDeck({ onAdd }) {
-  const [deckName, setDeckName] = useState("");
-  const [deckFormat, setDeckFormat] = useState("Other");
-  const [isPublic, setIsPublic] = useState(false);
-
-  const [commanderName, setCommanderName] = useState("");
-  const [selectedCommanderData, setSelectedCommanderData] = useState(null);
+const useCommanderSearch = () => {
   const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  // Check Scryfall API availability on component mount
-  // warm up the Scryfall API
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetch("https://api.scryfall.com", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "DeckboxApp/1.0",
-      },
-    })
-      .then((res) => {
-        if (!res.ok) console.warn("Scryfall warm-up status:", res.status);
-      })
-      .catch(() => {
-        console.error("Scryfall API is not reachable");
-      });
-  }, []);
-  const fetchAutocompleteSuggestions = async (searchQuery) => {
-    if (!searchQuery || searchQuery.length < 2) {
+  const fetchSuggestions = async (query) => {
+    if (!query || query.length < 2) {
       setSuggestions([]);
       return;
     }
+
+    setLoading(true);
     try {
-      const query = `${searchQuery}  f:commander is:commander`;
-      const response = await fetch(
-        `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}`,
-        {
-          headers: {
-            Accept: "application/json",
-            "User-Agent": "DeckboxApp/1.0",
-          },
-        },
-      );
-      if (!response.ok) {
-        if (response.status === 404) {
-          setSuggestions([]);
-          return;
-        }
-        throw new Error(`Http error! status :${response.status}`);
-      }
-      const json = await response.json();
-      setSuggestions(json.data || []);
-    } catch (error) {
-      console.error("Autocomplete fetch error:", error);
+      const q = encodeURIComponent(`${query} f:commander is:commander`);
+      const { data } = await axios.get(`${SCRYFALL_API}/cards/search?q=${q}`, {
+        headers: { 'User-Agent': 'DeckboxApp/1.0' }
+      });
+      setSuggestions(data.data || []);
+    } catch (err) {
       setSuggestions([]);
+    } finally {
+      setLoading(false);
     }
   };
-  // Debounced version of the fetch function
-  const debouncedAutocompleteFetch = useDebounce(
-    fetchAutocompleteSuggestions,
-    300,
-  );
+
+  return { suggestions, loading, fetchSuggestions, setSuggestions };
+};
+
+// --- Main Component ---
+
+function CreateNewDeck({ onAdd }) {
+  const [deckName, setDeckName] = useState('');
+  const [deckFormat, setDeckFormat] = useState('Other');
+  const [isPublic, setIsPublic] = useState(false);
+  const [commanderName, setCommanderName] = useState('');
+  const [selectedCommanderData, setSelectedCommanderData] = useState(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const { suggestions, fetchSuggestions, setSuggestions } = useCommanderSearch();
+  const debouncedFetch = useDebounce(fetchSuggestions, 300);
+
+  // Warm up Scryfall
+  useEffect(() => {
+    axios.get(SCRYFALL_API).catch(() => console.warn('Scryfall unreachable'));
+  }, []);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setCommanderName(value);
-    setShowSuggestions(true);
     setSelectedCommanderData(null);
-    debouncedAutocompleteFetch(value);
+    setShowSuggestions(true);
+    debouncedFetch(value);
   };
-  const handleSelectSuggestion = (suggestion) => {
-    setCommanderName(suggestion.name);
-    setSelectedCommanderData(suggestion);
+
+  const handleSelectSuggestion = (card) => {
+    setCommanderName(card.name);
+    setSelectedCommanderData(card);
     setSuggestions([]);
     setShowSuggestions(false);
   };
 
-  // Function to create a new deck
-  const createDeck = async () => {
-    if (!deckName.trim()) {
-      alert("Deck name cannot be empty");
-      return;
-    }
-    if (deckFormat === "Commander" && !commanderName.trim()) {
-      alert("Commander name cannot be empty for Commander format");
-      return;
+  const createDeck = async (e) => {
+    e.preventDefault(); // Prevent form reload
+
+    if (!deckName.trim()) return alert('Deck name required');
+    if (deckFormat === 'Commander' && !commanderName.trim()) {
+      return alert('Commander required for this format');
     }
 
     try {
       const payload = {
         name: deckName,
-        isPublic: isPublic,
+        isPublic,
         format: deckFormat,
-        color_identity: selectedCommanderData
-          ? selectedCommanderData.color_identity
-          : [],
-        commander:
-          deckFormat === "Commander" ? commanderName.trim() : undefined,
+        color_identity: selectedCommanderData?.color_identity || [],
+        commander: deckFormat === 'Commander' ? commanderName.trim() : undefined,
         scryFallCardData: selectedCommanderData,
       };
-      const response = await axios.post(`${API_BASE}/cardStorage`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+
+      const { data } = await axios.post(`${API_BASE}/cardStorage`, payload, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
-      console.log("deck created", response.data);
-      onAdd(response.data);
-      setDeckName("");
-      setCommanderName("");
-      setSuggestions([]);
+
+      onAdd(data);
+      resetForm();
     } catch (error) {
-      console.error("error creating deck", error);
+      console.error('Creation failed:', error);
     }
   };
-  return (
-    <div className="create">
-      <div className="create_deck">
-        <div className="create_deck-header">
-          <h2 className="header create_Deck-header">Create New Deck</h2>
-        </div>
-          <div className="create_deck-name">Deck Name:</div>
+
+  const resetForm = () => {
+    setDeckName('');
+    setCommanderName('');
+    setSuggestions([]);
+    setSelectedCommanderData(null);
+  };
+
+ return (
+  <div className="create">
+    <div className="create_deck">
+      <div className="create_deck-header">
+        <h2>Create New Deck</h2>
+      </div>
+
+      <form className="create_deck-form" onSubmit={createDeck}>
+        {/* Row 1: Deck Name Input */}
+        <div className="form-group">
+          <label htmlFor="deckName">Deck Name</label>
           <input
-            className="create_deck-input"
+            id="deckName"
+            className="create_deck-nameinput"
             type="text"
             value={deckName}
             onChange={(e) => setDeckName(e.target.value)}
-          />
-        <div className="create_deck-public">
-          <input
-            className="create_deck-public-checkbox"
-            type="checkbox"
-            checked={isPublic}
-            onChange={(e) => setIsPublic(e.target.checked)}
-            placeholder="Make the Deck Public"
-          />
-          Make the Deck Public
-        </div>
-        <div className="create_deck-format">
-          <div className="divs create_Deck-format">Deck Format:</div>
-          <Dropdown
-            className="create_Deck-dropdown"
-            options={[
-              { value: "Standard", div: "Standard" },
-              { value: "Modern", div: "Modern" },
-              { value: "Commander", div: "Commander" },
-              { value: "Legacy", div: "Legacy" },
-              { value: "Vintage", div: "Vintage" },
-              { value: "Pauper", div: "Pauper" },
-              { value: "Other", div: "Other" },
-            ]}
-            onSelect={(option) => setDeckFormat(option.value)}
+            required
+            placeholder="Enter a name for your deck..."
           />
         </div>
 
-        {deckFormat === "Commander" && (
+        {/* Row 2: Format Selection Field Container */}
+        <div className="create_deck-format">
+          <label>Deck Format</label>
+          <Dropdown
+            options={[
+              { value: 'Standard', div: 'Standard' },
+              { value: 'Modern', div: 'Modern' },
+              { value: 'Commander', div: 'Commander' },
+              { value: 'Legacy', div: 'Legacy' },
+              { value: 'Pauper', div: 'Pauper' },
+              { value: 'Other', div: 'Other' },
+            ]}
+            onSelect={(opt) => setDeckFormat(opt.value)}
+          />
+        </div>
+
+        {/* Row 3: Conditional Commander Input Form Field */}
+        {deckFormat === 'Commander' && (
           <div className="create_deck-commander">
+            <label>Commander Name</label>
             <input
-              className="create_deck-commander-input"
               type="text"
-              placeholder="Commander Name"
+              placeholder="Search for a legendary creature..."
               value={commanderName}
               onChange={handleInputChange}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
               onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
             />
-
             {showSuggestions && suggestions.length > 0 && (
-              <ul className="create_deck-suggestions create-deck-suggestions-list">
-                {suggestions.map((suggestion) => (
-                  <li
-                    className="create_deck-suggestion-list-item"
-                    key={suggestion.id}
-                    onClick={() => handleSelectSuggestion(suggestion)}
-                  >
-                    {suggestion.name}
+              <ul className="create-deck-suggestions-list">
+                {suggestions.map((card) => (
+                  <li key={card.id} onMouseDown={() => handleSelectSuggestion(card)}>
+                    {card.name}
                   </li>
                 ))}
               </ul>
@@ -207,17 +176,31 @@ function CreateNewDeck({ onAdd }) {
           </div>
         )}
 
+        {/* Row 4: Privacy Settings Checkbox Button wrapper */}
+        <div className="create_deck-public">
+          <label>
+            <input
+              type="checkbox"
+              checked={isPublic}
+              onChange={(e) => setIsPublic(e.target.checked)}
+            />
+            Make the Deck Public
+          </label>
+        </div>
+
+        {/* Row 5: Action Button Cluster Submitter Row */}
         <div className="create_deck-buttons">
-          <button className="buttons create_deck-button-create" onClick={createDeck}>
+          <button type="submit" className="create_deck-button-create">
             Create Deck
           </button>
-          <Link className="links create_deck-button-back" to="/mydecks">
-            Back to My Decks{" "}
+          <Link className="create_deck-button-back" to="/mydecks">
+            Back to My Decks
           </Link>
         </div>
-      </div>
+      </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default CreateNewDeck;

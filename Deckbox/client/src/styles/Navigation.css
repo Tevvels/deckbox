@@ -104,10 +104,7 @@
   
 }
   @media screen and (min-width: 768px) {
-.navigation_menu-desktop{
-  display: flex;
 
-}
 
 .navigation_user-dropdown-button{
   border: 1px solid var(--text-color);
