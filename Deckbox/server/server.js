@@ -70,6 +70,9 @@ app.use("/api/cardStorage", cardStorageRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to Deckbox API");
 });
+app.listen(PORT, () => {
+  console.log(`Server running on Port:${PORT}`);
+});
 // Connect to MongoDB and start server
 mongoose
   .connect(MONGO_URI, {
@@ -83,6 +86,7 @@ mongoose
       });
   })
   .catch((err) => {
+    
     console.error("MongoDB connection error:", err);
   });
 // Basic route
