@@ -82,7 +82,7 @@ function DeckCard({ deck, onDelete, showOwner = false, className }) {
                     {showOwner && deck.owner ? `by ${deck.owner}` : null}
                   </div>
                   <div className="deck_mana-symbols">
-                    {deck.color_identity?.map((color) => (
+                    {deck.color_identity?.toReversed().map((color) => (
                       <div 
                         key={color} 
                         className={`ms ms-${color.toLowerCase()} ms-cost mana-icon`} 
