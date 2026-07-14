@@ -23,7 +23,7 @@ Deckbox is a Mern stack program that a both a way for me to have more control an
 
  ## Getting Started
 
- Follow these steps t oset up the project locally, 
+ Follow these steps to setup the project locally, 
 
  ### Prerequisites 
   Make sure you have the following installed:
