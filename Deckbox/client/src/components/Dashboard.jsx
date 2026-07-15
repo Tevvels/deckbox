@@ -8,6 +8,7 @@ import Gradient from "../modules/Gradient";
 import TextPhaser from "../modules/TextPhaser";
 import Dice from "./Dice";
 import Players from "./Players";
+import Logo from '../photos/logo.2.png'
 
 function Dashboard() {
   const [game, setGame] = useState(false);
@@ -24,7 +25,9 @@ function Dashboard() {
     <Gradient className="dashboard">
       {/* Top Bar for Logo and Mana Symbols */}
       <header className="dashboard_topBar">
-        <div className="dashboard_Logo"></div>
+        <div className="dashboard_Logo">
+        <img className="dashboard_Logo" src={Logo} alt="Deckbox Logo" />
+        </div>
         <div className="dashboard_symbols">
           <TextPhaser phrases={wubrgPhrases} />
         </div>
