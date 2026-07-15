@@ -1,186 +1,229 @@
-.menu_container{
-    display: flex;
-    flex-direction: column;
-    height: 40%
-    
+/* Container to center the entire card component on the page */ 
+.create { 
+  display: flex; 
+  min-height: 85vh; 
+  width: 100%; 
+  justify-content: center; 
+  align-items: center; 
+  background-color: var(--dark-bg-color); 
+  padding: 2rem 1rem; 
+  box-sizing: border-box; 
+  overflow: visible ; 
+} 
 
-}
-.menu_header{
-    height: 3rem;
-    width: 100%;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--text-color);
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-self: center;
-}
-.menu_links{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 50%;
-}
-.menu_link{
-    text-decoration: none;
-    color: var(--text-color);
-    padding: 0.5rem;
-    width: 90%;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}   
-.menu_link:hover{
-    background-color: var(--dark-bg-color);
-    border-radius: 5px;
-}
-.menu_navigation_user{
-    display: flex;
-    flex-direction: column;
-    height:50%;
-}
+/* The standalone card panel holding the form */ 
+.create_deck { 
+  background-color: var(--primary-color); 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  border-radius: 12px; 
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); 
+  width: 100%; 
+  max-width: 480px; 
+  padding: 2.5rem; 
+  box-sizing: border-box; 
+  overflow: visible ; /* Allows menus to float outside the card bounds */ 
+} 
 
+/* Header design */ 
+.create_deck-header { 
+  margin-bottom: 2rem; 
+  text-align: center; 
+} 
 
+.create_deck-header h2 { 
+  font-size: 1.85rem; 
+  font-weight: 700; 
+  color: var(--text-color); 
+  margin: 0; 
+  letter-spacing: -0.02em; 
+} 
 
-.menu_navigation_user_desktop .menu_links{
-    display: flex;
-    background-color: var(--dark-bg-color);
-    flex-direction: column !important;
-    justify-content: space-around;
-    align-items: center;
-    width: 15rem;
-    font-size: .8rem;
-    position: fixed;
-    right: 0;
-    z-index: 1000;
-}
-.menu_navigation_user_desktop .menu_links .menu_link {
-    height: 3rem;
+/* Clean vertical stacking for form layout elements */ 
+.create_deck-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1.5rem; 
+  width: 100%; 
+  overflow: visible ; 
+} 
 
-}
-@media screen and (min-width: 768px) {
-.menu_header{
-    display:none;
-}
+/* Unified base form row positioning anchors matching JSX refactor */ 
+.create_deck-group { 
+  position: relative ; /* Core absolute context anchor for lists */ 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.5rem; 
+  width: 100%; 
+  overflow: visible ; 
+  height: auto ; 
+} 
 
-}
+/* Label styling */ 
+.create_deck-group label { 
+  font-size: 0.85rem; 
+  font-weight: 600; 
+  color: var(--text-color); 
+  opacity: 0.85; 
+  letter-spacing: 0.03em; 
+  text-transform: uppercase; 
+} 
 
-/* Container must be relative so the list can be absolute to it */
-.dropdown {
-  position: relative;
-  display: block; /* Or block, depending on your layout */
-  width: 100%;
-  margin-top: 5px;
-}
-.dropdown_container{
-  display: block; /* Or block, depending on your layout */
-  width: 100%;
-  margin-top: 5px;
-}
+/* Unified text input normalization styles matching .create_deck-input */ 
+.create_deck-input { 
+  width: 100%; 
+  padding: 14px 16px; 
+  background-color: var(--dark-bg-color); 
+  color: var(--text-color); 
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  border-radius: 8px; 
+  font-size: 1rem; 
+  font-family: inherit; 
+  transition: border-color 0.2s, box-shadow 0.2s; 
+  box-sizing: border-box; 
+} 
 
-/* The Toggle Button */
-.dropdown_toggle {
-  width: 100%;
-  padding: 10px 15px;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  border: 1px solid var(--text-color);
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.create_deck-input:focus { 
+  outline: none; 
+  border-color: var(--accent-color); 
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05); 
+} 
 
-/* The List - Fixed visibility */
-.dropdown_list {
-  top: 100%; /* Sits directly below the button */
-  
-  position: absolute !important;
-  left: 0;
-  width: 100%;
-  background-color: var(--bg-color);
-  border: 1px solid var(--text-color);
-  border-top: none; /* Avoids double border between button and list */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 2000;
+/* ======================================================== 
+   DROPDOWN & SUGGESTIONS FLOATING OVERLAYS FIXED BLOCK 
+   ======================================================== */ 
 
-  
-  /* Remove list styling */
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  
-  /* Optional: Limit height if you have many formats */
-
+/* Separate custom component container wrapper logic from floating lists */
+.dropdown_container {
+  position: relative ; 
+  display: block ;
+  width: 100% ;
+  margin: 0 ;
 }
 
-/* List Items */
-.dropdown_list-item {
+/* Targets BOTH your custom component dropdown list and native suggestions ul */ 
+.dropdown_list, 
+.create_deck-suggestions-list { 
+  position: absolute ; 
+  top: 100% ; /* Force lists to drop clean below input containers */ 
+  left: 0 ; 
+  width: 100% ; 
+  background-color: var(--dark-bg-color) ; 
+  border: 1px solid rgba(255, 255, 255, 0.15) ; 
+  border-radius: 8px ; 
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) ; 
+  z-index: 999999 ; /* Extreme priority layer over submission button paths */ 
+  list-style: none ; 
+  padding: 0 ; 
+  margin: 4px 0 0 0 ; 
+  box-sizing: border-box ; 
+  max-height: 200px ; 
+  overflow-y: auto ; /* Scroll bar tracks lock interior only */ 
+  overflow-x: hidden ; 
+} 
 
-  padding: 10px 15px;
-  text-align:left;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: background-color 0.2s ease;
-}
+/* Style individual list items across both components */ 
+.dropdown_list-item, 
+.create_deck-suggestions-list li { 
+  padding: 12px 16px ; 
+  cursor: pointer ; 
+  color: var(--text-color) ; 
+  font-size: 0.95rem ; 
+  transition: background-color 0.15s, color 0.15s; 
+  display: block ; 
+  width: 100% ; 
+  box-sizing: border-box ; 
+  text-align: left ; 
+  white-space: nowrap ; 
+  overflow: hidden ; 
+  text-overflow: ellipsis ; 
+} 
 
-/* Hover effect */
-.dropdown_list-item:hover {
-  background-color: var(--dark-bg-color);
-  /* If you have a specific highlight color, use it here */
+/* Highlighting theme colors on active focus */ 
+.dropdown_list-item:hover, 
+.create_deck-suggestions-list li:hover { 
+  background-color: var(--primary-color) ; 
+  color: var(--accent-color) ; 
+} 
+
+/* ======================================================== 
+   FORM ACTIONS & BASICS CONTINUED 
+   ======================================================== */ 
+
+/* Checkbox grouping alignment */ 
+.create_deck-public { 
+  display: flex; 
+  align-items: center; 
+  padding: 0.25rem 0; 
+} 
+
+.create_deck-public label { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.75rem; 
+  cursor: pointer; 
+  font-size: 0.95rem; 
+  color: var(--text-color); 
+  user-select: none; 
+} 
+
+.create_deck-public input[type="checkbox"] { 
+  width: 18px; 
+  height: 18px; 
+  cursor: pointer; 
+  accent-color: var(--accent-color); 
+} 
+
+/* Action button area layout container */ 
+.create_deck-buttons { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.75rem; 
+  margin-top: 1rem; 
+} 
+
+.create_deck-button-create { 
+  width: 100%; 
+  padding: 14px; 
+  background-color: var(--accent-color); 
   color: #fff; 
-}
+  border: none; 
+  border-radius: 8px; 
+  font-size: 1rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: opacity 0.2s, transform 0.1s; 
+} 
 
-/* Optional: Add a small arrow to the button via CSS */
-.dropdown_toggle::after {
-  content: '▼';
-  font-size: 0.8rem;
-  margin-left: 10px;
-}
+.create_deck-button-create:hover { 
+  opacity: 0.95; 
+  transform: translateY(-1px); 
+} 
 
-/* Main Layout links inside desktop top navbar */
-.menu_navigation_desktop .menu_links {
-  flex-direction: row !important;
-  gap: 1.5rem;
-}
+/* Secondary link references */ 
+.create_deck-button-back { 
+  width: 100%; 
+  padding: 12px; 
+  text-align: center; 
+  color: var(--text-color); 
+  opacity: 0.7; 
+  text-decoration: none; 
+  font-size: 0.95rem; 
+  border-radius: 8px; 
+  transition: all 0.2s; 
+} 
 
-.menu_navigation_desktop .menu_link {
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-}
+.create_deck-button-back:hover { 
+  opacity: 1; 
+  background-color: rgba(255, 255, 255, 0.05); 
+} 
 
-.menu_navigation_desktop .menu_link:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--accent-color);
-}
-
-/* Links inside the floating Profile User Dropdown Card */
-.menu_navigation_user_desktop .menu_links {
-  display: flex;
-  flex-direction: column !important;
-  background: transparent;
-  width: 100%;
-  position: static; 
-  padding: 0.25rem 0;
-}
-
-.menu_navigation_user_desktop .menu_link {
-  font-size: 0.85rem;
-  padding: 0.85rem 1.25rem;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left; /* Aligns dropdown listings uniformly left */
-  border-radius: 0;
-}
-
-.menu_navigation_user_desktop .menu_link:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: var(--accent-color);
+/* Custom Scrollbar track styling */ 
+.dropdown_list::-webkit-scrollbar, 
+.create_deck-suggestions-list::-webkit-scrollbar { 
+  width: 6px; 
+} 
+.dropdown_list::-webkit-scrollbar-thumb, 
+.create_deck-suggestions-list::-webkit-scrollbar-thumb { 
+  background: rgba(255, 255, 255, 0.15); 
+  border-radius: 4px; 
 }
