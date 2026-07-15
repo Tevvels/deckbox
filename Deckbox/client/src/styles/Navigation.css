@@ -159,9 +159,9 @@
 
   /* 3. Dropdown Box - Maximized absolute layering */
   .navigation_desktop-dropdown-list {
-    position: absolute;
+    position: fixed;
     right: 0 !important;
-    top: 6rem !important; /* Floats beautifully below button */
+    top: 2.5rem !important; /* Floats beautifully below button */
     background-color: var(--dark-bg-color) !important;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
@@ -206,34 +206,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-
-
-.navigation_user-dropdown-button{
-  border: 1px solid var(--text-color);
-  background-color: var(--dark-bg-color);
-  color: var(--text-color);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}  
-  .navigation_wrapper{
-    justify-content: flex-start;
-  }
-  .navigation_menu-desktop{
-    display: flex;
-    gap: 1rem;
-  }
-
-  .navigation_hamburger{
-    display: none;
-  }
-  .navigation_menu-mobile{
-    display: none;
   }
 }
