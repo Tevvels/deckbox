@@ -143,3 +143,44 @@
   margin-left: 10px;
 }
 
+/* Main Layout links inside desktop top navbar */
+.menu_navigation_desktop .menu_links {
+  flex-direction: row !important;
+  gap: 1.5rem;
+}
+
+.menu_navigation_desktop .menu_link {
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+}
+
+.menu_navigation_desktop .menu_link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--accent-color);
+}
+
+/* Links inside the floating Profile User Dropdown Card */
+.menu_navigation_user_desktop .menu_links {
+  display: flex;
+  flex-direction: column !important;
+  background: transparent;
+  width: 100%;
+  position: static; 
+  padding: 0.25rem 0;
+}
+
+.menu_navigation_user_desktop .menu_link {
+  font-size: 0.85rem;
+  padding: 0.85rem 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left; /* Aligns dropdown listings uniformly left */
+  border-radius: 0;
+}
+
+.menu_navigation_user_desktop .menu_link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--accent-color);
+}
