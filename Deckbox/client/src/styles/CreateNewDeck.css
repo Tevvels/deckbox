@@ -1,177 +1,237 @@
-/* Container to center the entire card component on the page */
-.create {
-  display: flex;
-  min-height: 76.5vh;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--bg-color, #fafafa);
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-}
+/* Container to center the entire card component on the page */ 
+.create { 
+  display: flex; 
+  min-height: 85vh; 
+  width: 100%; 
+  justify-content: center; 
+  align-items: center; 
+  background-color: var(--dark-bg-color); 
+  padding: 2rem 1rem; 
+  box-sizing: border-box; 
+  overflow: visible ;
+} 
 
-/* The standalone card panel holding the form */
-.create_deck {
-  background-color: var(--bg-color, #ffffff);
-  border: 1px solid var(--text-color, #e0e0e0);
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 500px; /* Locks it to a perfectly clean vertical column size */
-  padding: 2.5rem;
-  box-sizing: border-box;
-}
+/* The standalone card panel holding the form */ 
+.create_deck { 
+  background-color: var(--primary-color); 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  border-radius: 12px; 
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); 
+  width: 100%; 
+  max-width: 480px; 
+  padding: 2.5rem; 
+  box-sizing: border-box; 
+  overflow: visible ; /* CRITICAL: Allows menus to float outside the card */
+} 
 
-/* Header design */
-.create_deck-header {
-  margin-bottom: 2rem;
-  text-align: center;
-}
+/* Header design */ 
+.create_deck-header { 
+  margin-bottom: 2rem; 
+  text-align: center; 
+} 
 
-.create_deck-header h2 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--text-color, #222);
-  margin: 0;
-  text-transform: capitalize; /* Clean replacement for harsh underlines/uppercase */
-}
+.create_deck-header h2 { 
+  font-size: 1.85rem; 
+  font-weight: 700; 
+  color: var(--text-color); 
+  margin: 0; 
+  letter-spacing: -0.02em; 
+} 
 
-/* Clean vertical stacking for form layout elements */
-.create_deck-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* Consistent white space between rows */
-  width: 100%;
-}
+/* Clean vertical stacking for form layout elements */ 
+.create_deck-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1.5rem; 
+  width: 100%; 
+  overflow: visible ; /* CRITICAL: Prevents forms from swallowing absolute boxes */
+} 
 
-/* Base form row logic */
-.form-group,
-.create_deck-format,
-.create_deck-commander {
-  position: relative; /* Anchor for absolute search dropdown lists */
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem; /* Space between label and input */
-  width: 100%;
-}
+/* Base form row positioning anchors */ 
+.form-group, 
+.create_deck-format, 
+.create_deck-commander { 
+  position: relative ; /* Core absolute context anchor for lists */
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.5rem; 
+  width: 100%; 
+  overflow: visible ;
+  height: auto ;
+} 
 
-/* Label styling */
-.form-group label,
-.create_deck-format label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-color, #555);
-}
+/* Label styling */ 
+.form-group label, 
+.create_deck-format label,
+.create_deck-commander label { 
+  font-size: 0.85rem; 
+  font-weight: 600; 
+  color: var(--text-color); 
+  opacity: 0.85; 
+  letter-spacing: 0.03em;
+  text-transform: uppercase; 
+} 
 
-/* Form input normalization */
-.create_deck-nameinput,
-.create_deck-commander input[type="text"] {
-  width: 100%;
-  padding: 12px 16px;
-  background-color: var(--bg-color, #fff);
-  color: var(--text-color, #333);
-  border: 1px solid var(--text-color, #ccc);
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box;
-}
+/* Form input normalization styles */ 
+.create_deck-commander-input { 
+  width: 100%; 
+  padding: 14px 16px; 
+  background-color: var(--dark-bg-color); 
+  color: var(--text-color); 
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  border-radius: 8px; 
+  font-size: 1rem; 
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s; 
+  box-sizing: border-box; 
+} 
 
-.create_deck-nameinput:focus,
-.create_deck-commander input[type="text"]:focus {
-  outline: none;
-  border-color: var(--text-color, #000);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
-}
+.create_deck-commander-input:focus { 
+  outline: none; 
+  border-color: var(--accent-color); 
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05); 
+} 
 
-/* Checkbox grouping alignment */
-.create_deck-public {
-  display: flex;
-  align-items: center;
-  padding: 0.25rem 0;
-}
+/* ========================================================
+   DROPDOWN & SUGGESTIONS FLOATING OVERLAYS FIXED BLOCK
+   ======================================================== */
 
-.create_deck-public label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-size: 0.95rem;
-  user-select: none;
-}
-
-.create_deck-public input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-/* Action button area layout container */
-.create_deck-buttons {
-  display: flex;
-  flex-direction: column; /* Stacked layout makes primary actions clearer */
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.create_deck-button-create {
-  width: 100%;
-  padding: 14px;
-  background-color: var(--text-color, #111);
-  color: var(--bg-color, #fff);
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.create_deck-button-create:hover {
-  opacity: 0.9;
-}
-
-.create_deck-button-back {
-  width: 100%;
-  padding: 12px;
-  text-align: center;
-  color: var(--text-color, #666);
-  text-decoration: none;
-  font-size: 0.95rem;
-  border-radius: 6px;
-  transition: background-color 0.2s;
-}
-
-.create_deck-button-back:hover {
-  background-color: var(--dark-bg-color, #f5f5f5);
-}
-
-/* Autocomplete suggestion drop panels */
+/* Targets BOTH your custom Dropdown and your native Scryfall ul elements */
+.dropdown_container,
+.dropdown_list,
 .create-deck-suggestions-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: absolute ;
+  top: 100% ; /* Force lists to drop clean below fields */
+  left: 0 ;
+  width: 100% ;
+  background-color: var(--dark-bg-color) ;
+  border: 1px solid rgba(255, 255, 255, 0.15) ;
+  border-radius: 8px ;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) ;
+  z-index: 999999 ; /* Extreme priority over buttons */
+  list-style: none ;
+  padding: 0 ;
+  margin: 4px 0 0 0 ;
+  box-sizing: border-box ;
+}
+
+/* Style the internal list wrappers */
+.dropdown_list,
+.create-deck-suggestions-list {
+  max-height: 200px ;
+  overflow-y: auto ; /* Safe scroll track locked *inside* dropdown only */
+  overflow-x: hidden ;
+}
+
+/* Style individual option items across both components */
+.dropdown_list-item,
+.create-deck-suggestions-list li { 
+  padding: 12px 16px ; 
+  cursor: pointer ; 
+  color: var(--text-color) ; 
+  font-size: 0.95rem ; 
+  transition: background-color 0.15s; 
+  display: block ;
+  width: 100% ;
+  box-sizing: border-box ;
+  text-align: left ;
+  white-space: nowrap ;
+  overflow: hidden ;
+  text-overflow: ellipsis ;
+} 
+
+/* Highlighting matching theme setup rules */
+.dropdown_list-item:hover,
+.create-deck-suggestions-list li:hover { 
+  background-color: var(--primary-color) ; 
+  color: var(--accent-color) ; 
+} 
+
+/* ========================================================
+   FORM ACTIONS & BASICS CONTINUED
+   ======================================================== */
+
+/* Checkbox grouping alignment */ 
+.create_deck-public { 
+  display: flex; 
+  align-items: center; 
+  padding: 0.25rem 0; 
+} 
+
+.create_deck-public label { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.75rem; 
+  cursor: pointer; 
+  font-size: 0.95rem; 
+  color: var(--text-color);
+  user-select: none; 
+} 
+
+.create_deck-public input[type="checkbox"] { 
+  width: 18px; 
+  height: 18px; 
+  cursor: pointer; 
+  accent-color: var(--accent-color); 
+} 
+
+/* Action button area layout container */ 
+.create_deck-buttons { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.75rem; 
+  margin-top: 1rem; 
+} 
+
+.create_deck-button-create { 
+  width: 100%; 
+  padding: 14px; 
+  background-color: var(--accent-color); 
+  color: #fff; 
+  border: none; 
+  border-radius: 8px; 
+  font-size: 1rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: opacity 0.2s, transform 0.1s; 
+} 
+
+.create_deck-button-create:hover { 
+  opacity: 0.95; 
+  transform: translateY(-1px); 
+}
+
+/* Secondary link references */
+.create_deck-button-back { 
+  width: 100%; 
+  padding: 12px; 
+  text-align: center; 
+  color: var(--text-color); 
+  opacity: 0.7;
+  text-decoration: none; 
+  font-size: 0.95rem; 
+  border-radius: 8px; 
+  transition: all 0.2s; 
+} 
+
+.create_deck-button-back:hover { 
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.05); 
+}
+
+/* Custom Scrollbar track look inside menus */
+.dropdown_list::-webkit-scrollbar,
+.create-deck-suggestions-list::-webkit-scrollbar {
+  width: 6px;
+}
+.dropdown_list::-webkit-scrollbar-thumb,
+.create-deck-suggestions-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.dropdown_container button{
   width: 100%;
-  max-height: 220px;
-  overflow-y: auto;
-  background-color: var(--bg-color, #fff);
-  border: 1px solid var(--text-color, #ccc);
-  border-radius: 6px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  margin-top: 4px;
-  padding: 0;
-  list-style: none;
-  z-index: 10005;
-}
-
-.create-deck-suggestions-list li {
-  padding: 12px 16px;
-  cursor: pointer;
-  color: var(--text-color, #333);
-  font-size: 0.95rem;
-  transition: background-color 0.2s;
-}
-
-.create-deck-suggestions-list li:hover {
-  background-color: var(--dark-bg-color, #f5f5f5);
+  border-radius: 8px;
+  
 }

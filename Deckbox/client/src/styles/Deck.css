@@ -41,7 +41,7 @@
     overflow: hidden;
   }
   .card_entry-image {
-    margin-bottom: -27rem !important;
+    margin-bottom: -27rem ;
     position: relative;
   }
   .card_detail {

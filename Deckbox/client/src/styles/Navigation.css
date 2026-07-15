@@ -22,7 +22,7 @@
   width: 25px;
   height: 3px;
   margin: 5px auto;
-  background-color: var(--text-color) !important;
+  background-color: var(--text-color);
   transition: all 0.3s ease-in-out;
 }
 .navigation_hamburger:hover .bar {
@@ -95,7 +95,7 @@
 
   width: 90%;
   height: 90%;
-  margin:  0 !important;
+  margin:  0 ;
   padding: 1rem;
   background-color: var(--primary-color);
   z-index: 9999;
