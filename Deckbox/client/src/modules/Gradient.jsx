@@ -11,7 +11,7 @@ function Gradient({ children, className = "" }) {
   return (
     <div
       className={`gradient ${className}`}
-      style={{ "--gradient-x": `${pos.x}%`, "--gradient-y": `${pos.y}%` }}
+      style={{  "--gradient-x": `${pos.x}%`, "--gradient-y": `${pos.y}%`,"height":"auto" }}
     >
       {children}
     </div>

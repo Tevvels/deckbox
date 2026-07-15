@@ -7,6 +7,10 @@
   width: 100%;
   min-height: 7rem;
 }
+.search_container-sub{
+  flex-direction:column;
+  
+}
 .search_form {
   display: flex;
   justify-content: center;
@@ -22,6 +26,8 @@
 }
 .suggestions_list {
   grid-area: suggestions;
+  z-index: 10001;
+
 }
 .search_submit {
   grid-area: submit;
