@@ -19,10 +19,8 @@
 }
 
 .dashboard_Logo {
-  width: 120px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.2); /* Replace with your image later */
-  border-radius: 6px;
+  height:7rem;
+  display:block
 }
 
 /* Hero Section (Centerpiece) */
@@ -58,11 +56,7 @@
 .dashboard_searchContainer {
   width: 100%;
   max-width: 650px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 0.5rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   backdrop-filter: blur(4px);
   transition: border-color 0.3s ease;
 }
