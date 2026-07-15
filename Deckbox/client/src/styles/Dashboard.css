@@ -1,22 +1,116 @@
-@media (max-width: 700px) {
+/* Base Layout */
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif; /* Clean modern font */
+  padding: 0 2rem 3rem 2rem;
+  box-sizing: border-box;
+}
+
+/* Header/Top Bar */
+.dashboard_topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard_Logo {
+  width: 120px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2); /* Replace with your image later */
+  border-radius: 6px;
+}
+
+/* Hero Section (Centerpiece) */
+.dashboard_heroSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto !important;
+  width: 100%;
+  height:60vh
+}
+
+.dashboard_header {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.05em;
+  background: linear-gradient(45deg, #ffffff, #a3a3a3);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard_subHeader {
+  font-size: 1.2rem;
+  color: #a3a3a3;
+  margin-bottom: 2.5rem;
+}
+
+/* Premium Search Bar Styling Hook */
+.dashboard_searchContainer {
+  width: 100%;
+  max-width: 650px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.3s ease;
+}
+
+.dashboard_searchContainer:focus-within {
+  border-color: #0070f3; /* Highlighting border on focus */
+}
+
+/* Community Section Layout */
+.dashboard_communitySection {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section_title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #e5e5e5;
+}
+
+/* --- Responsive Layout for Mobile Screenshots --- */
+@media (max-width: 768px) {
   .dashboard {
-    display: flex;
+    padding: 0 1rem 2rem 1rem;
+  }
+
+  .dashboard_topBar {
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 1rem;
+    padding: 1rem 0;
   }
-  .dashboard_container-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .dashboard_heroSection {
+    padding: 3rem 0;
   }
+
   .dashboard_header {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
-  .dashboard_container-search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 95%;
-    height: 95%;
+
+  .dashboard_subHeader {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .dashboard_searchContainer {
+    width: 100%;
   }
 }

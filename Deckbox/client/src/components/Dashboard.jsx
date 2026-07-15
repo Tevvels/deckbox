@@ -9,7 +9,6 @@ import TextPhaser from "../modules/TextPhaser";
 import Dice from "./Dice";
 import Players from "./Players";
 
-// Dashboard component
 function Dashboard() {
   const [game, setGame] = useState(false);
   const wubrgPhrases = [
@@ -21,32 +20,35 @@ function Dashboard() {
     { type: "symbol", value: "ms-c" },
   ];
 
-  const handleGameClick = () => {
-    setGame(true);
-  };
-  const handleGameClose = () => {
-    setGame(false);
-  };
-
   return (
     <Gradient className="dashboard">
-      <div className="dashboard_Logo"></div>
-      <Gradient className="dashboard_container-header">
-        <h1 className="header dashboard_header">
-          {" "}
-          Welcome to Deckbox Dashboard{" "}
-        </h1>
-      </Gradient>
-      <div className="dashboard_container-search">
-        <Storage />
-      </div>
-      <div className="dashboard_container-upperBlock">
-        <TextPhaser phrases={wubrgPhrases} />
-      </div>
+      {/* Top Bar for Logo and Mana Symbols */}
+      <header className="dashboard_topBar">
+        <div className="dashboard_Logo"></div>
+        <div className="dashboard_symbols">
+          <TextPhaser phrases={wubrgPhrases} />
+        </div>
+      </header>
 
-      <div className="dashboard_container-public">
-        <PublicDeckDisplay />
-      </div>
+      {/* Hero Section: Centered Heading & Moxfield-style Search */}
+      <main className="dashboard_heroSection">
+        <div className="dashboard_heroText">
+          <h1 className="dashboard_header">Welcome to Deckbox</h1>
+          <p className="dashboard_subHeader">Search cards, build decks, craft strategies.</p>
+        </div>
+        
+        <div className="dashboard_searchContainer">
+          <Storage /> 
+        </div>
+      </main>
+
+      {/* Community Section */}
+      <section className="dashboard_communitySection">
+        <h2 className="section_title">Community Decks</h2>
+        <div className="dashboard_container-public">
+          <PublicDeckDisplay />
+        </div>
+      </section>
     </Gradient>
   );
 }
