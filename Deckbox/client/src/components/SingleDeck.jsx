@@ -166,7 +166,7 @@ function SingleDeck({ deck, setDeck }) {
   if (!deck) return <p className="loading loadinga_notFound">Deck not found</p>;
 
   return (
-    <div className="deck">
+    <div className="deckbuild">
       {isOwner && (
         <AddCardButton
           deckId={deckId}
