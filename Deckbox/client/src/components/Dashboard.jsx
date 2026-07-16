@@ -8,7 +8,7 @@ import Gradient from "../modules/Gradient";
 import TextPhaser from "../modules/TextPhaser";
 import Dice from "./Dice";
 import Players from "./Players";
-import Logo from '../photos/logo.2.png'
+import Logo from '../photos/Logo.2.png'
 
 function Dashboard() {
   const [game, setGame] = useState(false);
