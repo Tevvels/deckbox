@@ -1,3 +1,60 @@
 .deck{
+position:relative;
+height: auto;
+width: 100%;
+}
+.deck_container{
+  display:grid;
+  grid-template-columns: auto 60% auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+  "stats commander . "
+  "preview decklist desklist"
+  "token token token"
+
+}
+.deck_list{
+  grid-area:decklist;
+}
+.deck_container-token{
+  grid-area:token;
+}
+.deck_container-preview{
+  grid-area:preview;
+}
+.deck_container-stats{
+  grid-area:stats;
+}
+
+.card_preview{
   display:flex;
+}
+.card_preview-a ,.card_preview-b{
+  padding:1rem;
+}
+.sort_order{
+  display:flex;
+}
+.deck_commander{
+  display:grid;
+  grid-template-areas:
+  "name name"
+  "img type"
+  "img oracle"
+}
+
+.deck_commander-name{
+  grid-area:name;
+}
+
+.deck_commander-img{
+  grid-area:img;
+}
+
+.deck_commander-type{
+  grid-area:type;
+}
+
+.deck_commander-oracle{
+  grid-area:oracle;
 }

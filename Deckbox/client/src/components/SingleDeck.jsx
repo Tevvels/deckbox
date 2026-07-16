@@ -164,7 +164,7 @@ function SingleDeck({ deck, setDeck }) {
       <p className="loading loading_error"> Error loading deck: {error} </p>
     );
   if (!deck) return <p className="loading loadinga_notFound">Deck not found</p>;
-
+    console.log(deck)
   return (
     <div className="deckbuild">
       {isOwner && (
