@@ -1,60 +1,139 @@
-.deck{
-position:relative;
-height: auto;
-width: 100%;
-}
-.deck_container{
-  display:grid;
-  grid-template-columns: auto 60% auto;
-  grid-template-rows: auto;
-  grid-template-areas:
-  "stats commander . "
-  "preview decklist desklist"
-  "token token token"
+/* ==========================================================================
+   1. LAYOUT CONTAINERS
+   ========================================================================== */
 
-}
-.deck_list{
-  grid-area:decklist;
-}
-.deck_container-token{
-  grid-area:token;
-}
-.deck_container-preview{
-  grid-area:preview;
-}
-.deck_container-stats{
-  grid-area:stats;
+.deck {
+  position: relative;
+  width: 100%;
 }
 
-.card_preview{
-  display:flex;
+.deck_header {
+  width: 100%;
+  height: 20%;
+  text-align: center;
+  text-transform: uppercase;
 }
-.card_preview-a ,.card_preview-b{
-  padding:1rem;
+
+.deck_container {
+  display: grid;
+  grid-template-columns: 20% 1fr 20%;
+  grid-template-rows: auto auto auto;
+  grid-template-areas: 
+    "stats commander ."
+    "preview decklist decklist"
+    "token token token";
+  gap: 1rem;
+  width: 100%;
 }
-.sort_order{
+
+/* Grid Area Assignments */
+.deck_container-stats   { grid-area: stats; }
+.deck_commander         { grid-area: commander; }
+.deck_container-preview { grid-area: preview; }
+.deck_list              { grid-area: decklist; }
+.deck_container-token   { grid-area: token; }
+
+
+/* ==========================================================================
+   2. COMMANDER COMPONENT
+   ========================================================================== */
+
+.deck_commander {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 
+    "name name"
+    "img type"
+    "img oracle";
+  gap: 0.75rem;
+}
+
+.deck_commander-name   { grid-area: name; }
+.deck_commander-img    { grid-area: img; }
+.deck_commander-type   { grid-area: type; }
+.deck_commander-oracle { grid-area: oracle; }
+
+
+/* ==========================================================================
+   3. PREVIEW & UTILITY COMPONENTS
+   ========================================================================== */
+
+.card_preview {
+  display: flex;
+  gap: 1rem;
+}
+
+.card_preview-a,
+.card_preview-b {
+  padding: 1rem;
+  flex: 1; /* Ensures uniform spacing inside preview modules */
+}
+
+.sort_order {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+
+/* ==========================================================================
+   4. STATS & MANA GRAPH GRAPHICS
+   ========================================================================== */
+
+.mana_symbols-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  height: 150px; /* Swapped out the 25% height rule for a concrete baseline scale */
+  padding-bottom: 0.5rem;
+}
+
+.mana_graph-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.graph_bar {
+  width: 2rem;
+  min-height: 4px; /* Slightly heightened baseline visibility */
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.mana_symbol {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   5. GLOBAL UTILITIES
+   ========================================================================== */
+
+.inactive {
+  display: none !important;
+}
+
+
+.view-page{
   display:flex;
+  flex-direction: row-reverse;
+  
 }
 .deck_commander{
-  display:grid;
-  grid-template-areas:
-  "name name"
-  "img type"
-  "img oracle"
+  width: 60%;
+  margin: auto 0;
 }
 
-.deck_commander-name{
-  grid-area:name;
-}
-
-.deck_commander-img{
-  grid-area:img;
-}
-
-.deck_commander-type{
-  grid-area:type;
-}
-
-.deck_commander-oracle{
-  grid-area:oracle;
+.decklist-main-column{
+  width:100%;
+  background: grey;
 }
