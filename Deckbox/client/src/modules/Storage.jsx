@@ -12,7 +12,6 @@ const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 import "../styles/Search.css";
 import Skeleton from "../components/Skeleton";
 
-// A debounce function - this is to reduce the number of api requests during typing.
 
 function Storage() {
   const {
@@ -39,6 +38,11 @@ function Storage() {
     handleAddClick,
   } = UseCardSearch();
   const { pathname } = useLocation();
+  console.log(sameNameCard);
+
+
+  const INITIAL_VISIBLE_COUNT = 15;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
   const currentInDeckCount =
     selectedCard && deckCountMap ? deckCountMap[selectedCard?.name] || 0 : 0;
@@ -63,6 +67,7 @@ function Storage() {
       if (data.object === "error") throw new Error(data.details);
       setSuggestions([]);
       setSameNameCard(data.data);
+      setVisibleCount(INITIAL_VISIBLE_COUNT);
       if (data.data.length > 0) setSelectedCard(data.data[0]);
     } catch (err) {
       setError(err.message);
@@ -142,7 +147,8 @@ function Storage() {
             className="search_container-sub search_container-card"
             style={{ display: "flex", overflowX: "auto", padding: "10px" }}
           >
-            {sameNameCard.map((card) => (
+            {console.log(sameNameCard)}
+            {sameNameCard.slice(0,visibleCount).map((card) => (
               <div
                 className="search_card"
                 key={card.id}
@@ -166,6 +172,11 @@ function Storage() {
                   }}
                   onClick={() => handleArtworkClick(card)}
                 />
+                <img
+                src={
+                  `https://svgs.scryfall.io/sets/${card.set}.svg`
+                }
+                ></img>
                 {/* The Quantity Badge */}
                 {deckCountMap[card.name] > 0 && (
                   <div
@@ -194,6 +205,17 @@ function Storage() {
           </div>
         </div>
       )}
+      {sameNameCard.length > visibleCount && (
+        <button
+          className={"buttons search_loadMore"}
+          onClick={()=> setVisibleCount((prev) => prev === INITIAL_VISIBLE_COUNT ? sameNameCard.length : INITIAL_VISIBLE_COUNT)}
+        >
+          Load More
+        {visibleCount === INITIAL_VISIBLE_COUNT ? "Load More" : "Show Less"}
+        </button> 
+      )}
+
+
 
       {selectedCard && (
         <div

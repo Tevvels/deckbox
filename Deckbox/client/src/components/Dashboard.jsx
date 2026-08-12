@@ -9,8 +9,9 @@ import TextPhaser from "../modules/TextPhaser";
 import Dice from "./Dice";
 import Players from "./Players";
 import Logo from '../photos/Logo.2.png'
+import MyDecks from "./MyDecks";
 
-function Dashboard() {
+function Dashboard( {isLoggedIn} ) {
   const [game, setGame] = useState(false);
   const wubrgPhrases = [
     { type: "symbol", value: "ms-w" },
@@ -25,17 +26,13 @@ function Dashboard() {
     <Gradient className="dashboard">
       {/* Top Bar for Logo and Mana Symbols */}
       <header className="dashboard_topBar">
-        <div className="dashboard_Logo">
-        <img className="dashboard_Logo" src={Logo} alt="Deckbox Logo" />
-        </div>
-        <div className="dashboard_symbols">
-          <TextPhaser phrases={wubrgPhrases} />
-        </div>
-      </header>
 
       {/* Hero Section: Centered Heading & Moxfield-style Search */}
       <main className="dashboard_heroSection">
         <div className="dashboard_heroText">
+        <div className="dashboard_Logo">
+        <img className="dashboard_Logo" src={Logo} alt="Deckbox Logo" />
+        </div>
           <h1 className="dashboard_header">Welcome to Deckbox</h1>
           <p className="dashboard_subHeader">Search cards, build decks, craft strategies.</p>
         </div>
@@ -43,7 +40,18 @@ function Dashboard() {
         <div className="dashboard_searchContainer">
           <Storage /> 
         </div>
-      </main>
+      </main>      
+      </header>
+      {/* Peronal Deck Section */}
+      {isLoggedIn && (
+        <section className="dashboard_personalDeckSection">
+          <h2 className="section_title">My Decks</h2>
+          <MyDecks />
+        </section>
+      )}
+
+          
+
 
       {/* Community Section */}
       <section className="dashboard_communitySection">

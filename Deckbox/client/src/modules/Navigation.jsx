@@ -16,7 +16,8 @@ function Navigation({ onLogout, isLoggedIn }) {
   const navLinks = [ 
     { name: "Home", path: "/" }, 
     { name: "Players", path: "/players" }, 
-    { name: "Public Decks", path: "/publicdecks" }, 
+    { name: "Public Decks", path: "/publicdecks" },
+    (!isLoggedIn ? { name: "Login", path: "/login" }:{name:"", path:""} ), 
   ]; 
 
   const profilelinks = [ 

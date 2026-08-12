@@ -32,7 +32,7 @@ export default function DeckOverviewPage({ name, format, deckMetrics, commanderC
                   style={{ height: `${barHeightPercent}%` }}
                 ></div>
                 <span className={`mana_symbol ${deckMetrics.colors.has(m) ? "active" : "inactive"}`}>
-                  <i className={`ms ms-${m.toLowerCase()} ms-cost ms-span`} />{" "}
+                  {/* <i className={`ms ms-${m.toLowerCase()} ms-cost ms-span`} />{" "} */}
                   {deckMetrics.mana[m]} ({barHeightPercent.toFixed(1)}%)
                 </span>
               </div>
