@@ -19,8 +19,25 @@
 }
 
 .dashboard_Logo {
-  height:7rem;
-  display:block
+  height:10rem;
+  display:block;
+  grid-area: logo;
+}
+.dashboard_header{
+  grid-area: header;
+ 
+}
+.dashboard_subHeader{
+  grid-area: subHeader;
+}
+.dashboard_heroText{
+  display:grid;
+  grid-template-areas:
+  "logo header"
+  "logo subHeader";
+  grid-template-columns: auto 1fr;
+  justify-items: center;
+  align-items: center;
 }
 
 /* Hero Section (Centerpiece) */

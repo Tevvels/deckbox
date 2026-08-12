@@ -9,6 +9,7 @@ const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 const SCRYFALL_API = 'https://api.scryfall.com';
 
 // --- Custom Hooks ---
+// Debounce hook to limit the rate of function calls
 const useDebounce = (callback, delay) => {
   const timeoutRef = useRef(null);
   return useCallback((...args) => {
@@ -16,6 +17,7 @@ const useDebounce = (callback, delay) => {
     timeoutRef.current = setTimeout(() => callback(...args), delay);
   }, [callback, delay]);
 };
+// Hook to manage commander search suggestions
 
 const useCommanderSearch = () => {
   const [suggestions, setSuggestions] = useState([]);
@@ -44,6 +46,8 @@ const useCommanderSearch = () => {
 };
 
 // --- Main Component ---
+// Component to create a new deck.
+
 function CreateNewDeck({ onAdd }) {
   const navigate = useNavigate();
   const [deckName, setDeckName] = useState('');
@@ -52,7 +56,6 @@ function CreateNewDeck({ onAdd }) {
   const [commanderName, setCommanderName] = useState('');
   const [selectedCommanderData, setSelectedCommanderData] = useState(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
   const { suggestions, fetchSuggestions, setSuggestions } = useCommanderSearch();
   const debouncedFetch = useDebounce(fetchSuggestions, 300);
 

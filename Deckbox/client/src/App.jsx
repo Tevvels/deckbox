@@ -111,7 +111,7 @@ function App() {
       <main>
         <Navigation isLoggedIn={!!token} onLogout={handleLogout} />
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard isLoggedIn={!!token} />} />
           <Route path="/publicdecks" element={<PublicDeckDisplay />} />
           if(!token) {
           <>

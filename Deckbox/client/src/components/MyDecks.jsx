@@ -83,6 +83,7 @@ function MyDecks() {
             <DeckCard key={deck._id} deck={deck} onDelete={deleteDeck} />
           ))}
         </div>
+        {}
         <Link
           className="links my_Deck-link my_Deck-link-dashboard "
           to="/dashboard"

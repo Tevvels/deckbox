@@ -61,6 +61,7 @@
 .card_preview {
   display: flex;
   gap: 1rem;
+  flex-direction: column
 }
 
 .card_preview-a,
@@ -137,3 +138,15 @@
   width:100%;
   background: grey;
 }
+
+.deck_container-stats{
+  width:50%;
+}
+.deck_commander{
+  width:100%;
+}
+
+.decklist-split-view{
+  display:flex;
+  flex-direction: column;
+} 
