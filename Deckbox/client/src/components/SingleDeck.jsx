@@ -179,6 +179,9 @@ function SingleDeck({ deck, setDeck }) {
         isOwner={isOwner}
         format={deck.format}
         onCardClick={handleCardClick}
+        selectedCard={selectedCard}
+        setSelectedCard={setSelectedCard}
+        
         onDeleteDeck={() => deleteDeck(deck._id)}
         OnDeleteCard={handleDeleteClick}
       ></DeckDetail>

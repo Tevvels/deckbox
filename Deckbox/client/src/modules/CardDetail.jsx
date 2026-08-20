@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Gradient from "./Gradient";
 import { set } from "mongoose";
+import Card from "../components/Card/Card";
 // have it so when I click on the card it goes to this page with more details
 // import Card from '../data/Card.json'
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
-const getCardImage = (card, size = "small") => {
-  if (card.image_uris) {
-    return card.image_uris[size];
-  }
-  if (card.card_faces && card.card_faces[0].image_uris) {
-    return card.card_faces[0].image_uris[size];
-  }
-  return "https://placeholod.co";
-};
 
 function CardDetail({ card, onClose, onUpdateSuccess }) {
   const [AllPrints, setAllPrints] = useState([]);
@@ -80,56 +72,14 @@ function CardDetail({ card, onClose, onUpdateSuccess }) {
 
   if (!card || !currentImage) return null;
   return (
-    <Gradient className="card_detail card_detail-container">
-      <button
-        className="buttons card_detail-button card_detail-updateArt"
-        onClick={handleUpdateArt}
-      >
-        Update Card Art
-      </button>
 
-      <button className="buttons button-close" onClick={onClose}>
-        X
-      </button>
-
-      {/* card detail includes name, oracle text, selection for images */}
-      <h1 className="card_detail-name">{currentImage?.name}</h1>
-      <p className="card_detail-typeline">{currentImage?.type_line}</p>
-      <p className="card_detail-oracle">{currentImage?.oracle_text}</p>
-      <div className="card_detail-container-sub card_detail-container-imageList">
-        {AllPrints.length > 0 ? (
-          AllPrints.map((print) => (
-            <img
-              className=" card card_detail-img"
-              key={print.id}
-              src={getCardImage(print, "small")}
-              alt={print.name}
-              style={{
-                border:
-                  print.id === currentImage.id
-                    ? "2px solid blue"
-                    : "1px solid gray",
-                cursor: "pointer",
-                margin: "5px",
-              }}
-              onClick={() => setCurrentImage(print)}
-            />
-          ))
-        ) : (
-          <p className="card_detail-none">No other prints available.</p>
-        )}
-        <div className="card_detail-legalities">
-          {currentImage?.legalities &&
-            Object.entries(currentImage.legalities).map(([format, status]) => (
-              <div className="card_detail-legality-sub" key={format}>
-                <strong>{` ${format.replace(/_/g, " ")} `}:</strong>{" "}
-                {` ${status.replace(/_/g, " ")} `}
-              </div>
-            ))}
-        </div>
-      </div>
-    </Gradient>
-  );
+      <Card
+        currentImage={currentImage}
+        Allprints={AllPrints}
+        onSelectPrint={setCurrentImage}
+        OnUpdateArt={handleUpdateArt}
+        onClose={onClose}
+      />);
 }
 
 export default CardDetail;

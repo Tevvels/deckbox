@@ -106,12 +106,6 @@ export default function DeckDetailPage({
     return init;
   }, [cards]);
 
-  useEffect(() => {
-    if (cards.length > 0 && !cardPreview) {
-      const initialCard = cards.find((e) => e.cardId?.name === name)?.cardId || cards[0].cardId;
-      setCardPreview(initialCard);
-    }
-  }, [cards, name, cardPreview]);
 
   return (
     <div className="deck-page-layout">
