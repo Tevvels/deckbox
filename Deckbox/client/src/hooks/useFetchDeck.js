@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
 export function useFetchDeck(deckId,setDeck) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,8 +14,17 @@ export function useFetchDeck(deckId,setDeck) {
             setIsLoading(true);
             setIsOwner(false);
             setError(null);
+
             const token = localStorage.getItem("token");
-            const currentUser = JSON.parse(localStorage.getItem("user"));
+            
+            let currentUser = null;
+            try{
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) currentUser = JSON.parse(storedUser);
+            } catch(parseError) {
+                console.error( `Error parsing user from localStorage: ${parseError}`);
+            }
+            
             let data = null;
 
             try {
@@ -45,7 +55,7 @@ export function useFetchDeck(deckId,setDeck) {
                 }
                 setDeck(data);
             } catch (err) {
-                console.error(`Fetch deck hook error: ${e}`);
+                console.error(`Fetch deck hook error: ${err}`);
                 setError(err.message);
                 setDeck(null);
 

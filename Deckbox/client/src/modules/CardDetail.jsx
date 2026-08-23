@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Gradient from "./Gradient";
 import { set } from "mongoose";
-import Card from "../components/Card/Card";
+import Card from "../features/cards/Card";
 // have it so when I click on the card it goes to this page with more details
 // import Card from '../data/Card.json'
 

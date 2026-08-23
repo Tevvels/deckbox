@@ -1,31 +1,27 @@
-import React from 'react'
-import useTokens from '../modules/Tokens'
-import DeckDetailPage from '../DeckDetail';
+import React,{useState,useEffect,useMemo} from 'react'
+import { useParams,useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import { useFetchDeck } from '../../hooks/useFetchDeck';
+import { useDeckMetrics } from '../../hooks/useDeckMetrics';
+import { useTokens } from '../../modules/Tokens';
+import DeckDetail from './DeckDetail';
 function Deck({deck, setDeck, cards, name}) {
     
     const { deckId} = useParams();
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedCard, setSelectedCard] = useState(null);
-    const [isOwner, setIsOwner] = useState(false);
-    const [sortBy, setSortBy] = useState("none");
-    const [deckData, setDeckData] = useState(null);
-    const [cardPreview, setCardPreview] = useState(null);
-    const [allprints, setAllPrints] = useState([]);
-    const [currentImage,setCurrentImage] = useState(card);
     const navigate = useNavigate();
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [cardPreview, setCardPreview] = useState(null);
+    const [currentImage,setCurrentImage] = useState(null);
+
+    
+    const {isLoading,error,isOwner} = useFetchDeck(deckId,setDeck);
+    
+    const deckMetrics = useDeckMetrics(deck?.cards || cards || []);
 
 
 
-const commanderEntry = deck?.cards?.find(
-    (entry) =>
-        entry.isCommander ||
-        entry?.cardId?.type_line?.includes("legendary Creature"),
-);
-const colorIdentity =
-    commanderEntry?.cardId?.color_identity?.join("").toLowerCase() || "";
 
-// Function to delete the deck, with a confirmation prompt and API call to delete the deck from the server. If successful, it navigates back to the user's decks page.
 
 const deleteDeck = async (idtowait) => {
     if (!window.confirm("are you sure you want to delete this deck?")) return;
@@ -41,6 +37,7 @@ const deleteDeck = async (idtowait) => {
         console.error("Error deleting deck:", err);
 
     }
+};
 
 // Set the initial card preview when the component mounts or when the cards or name change
 
@@ -65,12 +62,18 @@ const handleUpdateArt = (updatedCard) => {
     setSelectedCard(updatedCard);
 }
 
-
+if(isLoading) return <div>loading deck data</div>
+if(error) return <div>Error: {error}</div>
 
   return (
     <main>
+        {console.log(deck)}
+        {deck ? (
         <DeckDetail
-            deck={deckData}
+            deck={deck}
+            cards={deck.cards ||[]}
+            name={deck.name || "Unnamed Deck"}
+            format={deck.format || "Unknown Format"}
             deckMetrics={deckMetrics}
             cardPreview={cardPreview}
             setCardPreview={setCardPreview}
@@ -78,8 +81,9 @@ const handleUpdateArt = (updatedCard) => {
             onDeleteDeck={deleteDeck}
             isOwner={isOwner}
         />
+        ):(<div>no deck</div>)}
     </main>
   )
 }
-}
+
 export default Deck
