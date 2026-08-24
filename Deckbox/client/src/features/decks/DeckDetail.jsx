@@ -76,6 +76,7 @@ setCardPreview}) {
         </header>
         <main className='deck-page-content'>
                 <DeckOverview
+                    manaTypes={MANA_TYPES}
                     name={name}
                     format={format}
                     deckMetrics={deckMetrics}

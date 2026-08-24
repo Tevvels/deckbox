@@ -45,7 +45,6 @@ function Dashboard( {isLoggedIn} ) {
       {/* Peronal Deck Section */}
       {isLoggedIn && (
         <section className="dashboard_personalDeckSection">
-          <h2 className="section_title">My Decks</h2>
           <MyDecks />
         </section>
       )}

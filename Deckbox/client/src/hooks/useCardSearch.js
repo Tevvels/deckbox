@@ -18,7 +18,7 @@ const useDebounce = (callback, delay) => {
   );
 };
 
-export const UseCardSearch = () => {
+export const useCardSearch = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { deckId } = useParams();
