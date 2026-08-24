@@ -1,8 +1,8 @@
 import React from "react";
-import Gradient from "../modules/Gradient";
 
+const MANA_TYPES = ["W", "U", "B", "R", "G", "C"];
 
-export default function DeckOverviewPage({ name, format, deckMetrics, commanderCard,manaTypes }) {
+export default function DeckOverviewPage({ name, format, deckMetrics, commanderCard }) {
   return (
     <div className="view-page overview-view">
       {format === "Commander" && commanderCard && (
@@ -18,10 +18,10 @@ export default function DeckOverviewPage({ name, format, deckMetrics, commanderC
         </div>
       )}
 
-      <Gradient className="deck_container-stats">
+      <div className="deck_container-stats">
         <div className="deck_header">{name} Distribution</div>
         <div className="mana_symbols-stats">
-          {manaTypes.map((m) => {
+          {MANA_TYPES.map((m) => {
             const totalManaCount = Object.values(deckMetrics.mana).reduce((a, b) => a + b, 0) || 1;
             const barHeightPercent = (deckMetrics.mana[m] / totalManaCount) * 100;
             return (
@@ -48,7 +48,7 @@ export default function DeckOverviewPage({ name, format, deckMetrics, commanderC
             )
           ))}
         </div>
-      </Gradient>
+      </div>
     </div>
   );
 }

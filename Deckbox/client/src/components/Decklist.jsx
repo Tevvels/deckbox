@@ -16,7 +16,7 @@ export default function DecklistPage({
   manaTypes,
 }) {
   const [withImage, setWithImage] = useState(false);
-
+  console.log("19line", cardPreview)
   return (
     <div className="view-page decklist-split-view">
       <div className="decklist-main-column">
@@ -57,7 +57,14 @@ export default function DecklistPage({
                     const symbols = entry.cardId.mana_cost?.match(/\{([^}]+)\}/g) || [];
 
                     return (
-                      <li key={entry._id} className="card_list-item" onClick={() => onCardClick(entry.cardId)} onMouseEnter={() => setCardPreview(entry.cardId)}>
+                      <li key={entry._id} 
+                        className="card_list-item" 
+                        onClick={() => {
+                        setCardPreview(entry.cardId);
+                        if(onCardClick) onCardClick(entry.cardId);
+                      }} 
+
+                        >
                         {withImage ? (
                           <img className="card card_entry-image" src={entry.cardId.image_uris?.normal || entry.cardId.card_faces?.[0]?.image_uris?.normal} alt={entry.cardId.name} />
                         ) : (
@@ -95,7 +102,10 @@ export default function DecklistPage({
           {cardPreview ? (
             <div className="card_preview">
               <div className="card_preview-a"><CardDetail card={cardPreview} /></div>
-              <div className="card_preview-b"><p>change art?</p><button>click here</button></div>
+              <div className="card_preview-b">
+                <p>change art?</p>
+                <button>click here</button></div>
+                <button onClick={()=>setCardPreview(null)}>Close</button>
             </div>
           ) : (
             <p>Hover over a card to see details</p>

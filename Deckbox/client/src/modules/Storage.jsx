@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "../styles/Search.css";
-import { UseCardSearch } from "../components/UseCardSearch";
+import { useCardSearch } from "../hooks/useCardSearch";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 import "../styles/Search.css";
 import Skeleton from "../components/Skeleton";
@@ -36,7 +36,7 @@ function Storage() {
     deckCountMap,
     cameFromDeck,
     handleAddClick,
-  } = UseCardSearch();
+  } = useCardSearch();
   const { pathname } = useLocation();
   console.log(sameNameCard);
 

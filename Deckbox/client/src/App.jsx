@@ -21,6 +21,7 @@ import Gradient from "./modules/Gradient.jsx";
 import "./styles/Deck.css";
 import "./styles/Dice.css";
 import "./styles/Menu.css";
+import Deck from "./features/decks/Deck.jsx";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 function App() {
@@ -126,6 +127,7 @@ function App() {
           <Route path="/deck/new" element={<CreateNewDeck onAdd={addItem} />} />
           <Route path="/players" element={<Players />} />
           <Route path="/mydecks" element={<MyDecks />} />
+          <Route path="/refractor" element={<Deck />} />
           <Route
             path="/login"
             element={
@@ -147,8 +149,9 @@ function App() {
           />
           <Route
             path="/deck/:deckId"
-            element={<SingleDeck deck={activeDeck} setDeck={setActiveDeck} />}
+            element={<Deck deck={activeDeck} setDeck={setActiveDeck} />}
           />
+          
           <Route
             path="/deck/:deckId/search"
             element={
