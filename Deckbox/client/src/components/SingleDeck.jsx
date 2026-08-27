@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CardDetail from "../modules/CardDetail";
-import DeckDetail from "./DeckDetail";
-import DeckCard from "./DeckCard";
+import DeckDetail from "../features/decks/DeckDetail";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 import "../styles/MyDecks.css";
 import Skeleton from "./Skeleton";
@@ -19,6 +18,8 @@ const AddCardButton = ({ deckId, isCommander, colorIdentity }) => (
     </Link>
   </div>
 );
+
+//  lists of decks 
 
 function SingleDeck({ deck, setDeck }) {
   const { deckId } = useParams();

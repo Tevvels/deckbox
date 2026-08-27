@@ -6,9 +6,9 @@ export default function TokensPage({ sortedCards }) {
   
 
   return (
-    <div className="view-page tokens-view">
-        <h2>Tokens Required</h2>
-        <div className="tokens_grid_layout">
+    <>
+        <section className="tokens">
+          <h2>Tokens Required</h2>
           {tokens?.length > 0 ? (
             tokens.map((token, index) => (
               <div key={index} className="token-card-wrapper">
@@ -23,7 +23,7 @@ export default function TokensPage({ sortedCards }) {
           ) : (
             <p className="no-tokens-msg">No tokens required for this deck configuration.</p>
           )}
-        </div>
-    </div>
+        </section>
+    </>
   );
 }

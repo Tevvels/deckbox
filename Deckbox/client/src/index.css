@@ -2,31 +2,60 @@
   box-sizing: border-box;
   margin: 0 ;
   padding: 0 ;
+}
+:root {
+
   outline-color: transparent;
   text-decoration: none;
   border: none;
   color: var(--text-color);
 
-  --dark-bg-color: #060c2f;
-  --med-dark-bg-color: #1a1f5b;
-  --med-bg-color: #264b3f;
-  --light-bg-color: #3e78b2;
-  --primary-color: #004ba8;
-  --text-color: #ccdbe1;
+  color-scheme: light;
+  
+    --dark:#004ba8;
+    --accent:#ffffff;
+    --light:#f0f4f8;
+   --text-color:#060c2f;
   --is-active: 1;
 
   font-family: "Spline Sans", sans-serif;
 }
+@media (prefers-color-scheme: dark){
+  :root {
+    color-scheme:dark;
+    --dark:#060c2f;
+    --accent:#3e78b2;
+    --light:#f0f4f8;
+    --text-color:#ccdbe1;
+  }
+}
+
+html[data-theme="dark"]{
+    --dark:#060c2f;
+    --accent:#3e78b2;
+    --light:#f0f4f8;
+    --text-color:#ccdbe1;
+}
+html[data-theme="light"]{
+
+    --dark:#004ba8;
+    --accent:#ffffff;
+    --light:#f0f4f8;
+    --text-color:#060c2f;
+}
+
 html,body{
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+
 .gradient {
   height: auto;
   background: radial-gradient(
     circle at var(--gradient-x, 50%) var(--gradient-y, 50%),
-    var(--dark-bg-color),
-    var(--med-dark-bg-color)
+    var(--dark),
+    var(--accent)
   );
   transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -77,7 +106,7 @@ html,body{
   height: 1.5rem;
   cursor: pointer;
 }
-.sort_controls {
+.sort_controls,.control_group {
   display: flex;
   width: 100%;
 }
@@ -87,4 +116,9 @@ html,body{
   /* max-width: 90vw; */
   /* aspect-ratio: 63/88; dimensions for a standard mtg card */
   border-radius: 4.75% / 3.5%;
+}
+.inactive{
+  background-color: rgba(155,155,155,0.6);
+  color: rgba(155,155,155,0.6);
+  opacity: 50%;
 }

@@ -33,6 +33,11 @@
 .navigation_hamburger.open  .bar:nth-child(3) {
   transform: rotate(-45deg) translateY(-8px);
 }
+.navigation_header
+{
+  color:var(--text-color);
+  
+}
 
 
 
@@ -141,7 +146,7 @@
   /* The Rounded Profile Icon Button */
   .navigation_user-dropdown-button {
     border: 2px solid var(--text-color);
-    background-color: var(--dark-bg-color);
+    background-color: var(--dark);
     color: var(--text-color);
     border-radius: 50%;
     width: 40px;
@@ -165,7 +170,7 @@
     position: fixed;
     right: 0 !important;
     top: 2.5rem !important; /* Floats beautifully below button */
-    background-color: var(--dark-bg-color) !important;
+    background-color: var(--dark) !important;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);

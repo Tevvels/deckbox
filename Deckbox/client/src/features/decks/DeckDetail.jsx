@@ -65,16 +65,13 @@ setCardPreview}) {
 
 
     return (
-    <div className='deck-page-layout'>
-        <header className='deck-page-navigation'>
-            <h1 className='deck-page-title'>
-                {name}<span className="format-tag">{format}</span>
+    <>
+        <header className='deck-header'>
+            <h1 className='deck-title'>
+                {name}
             </h1>
-            <div className="tab-navigation">
-                <button className={activeTab === "overview" ? "active" : ""} onClick={()=>setActiveTab("overview")}>overview</button>
-            </div>
         </header>
-        <main className='deck-page-content'>
+        <>
                 <DeckOverview
                     manaTypes={MANA_TYPES}
                     name={name}
@@ -97,9 +94,9 @@ setCardPreview}) {
                  />
 
                 <Tokens  sortedCards={sortedCards} />
-        </main>
+        </>
 
-    </div>
+    </>
   )
 
 

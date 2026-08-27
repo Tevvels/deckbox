@@ -25,6 +25,6 @@
   width: 25%;
   cursor: pointer;
   box-shadow:
-    0 0 2px inset var(--primary-color),
-    0 0 2px var(--primary-color);
+    0 0 2px inset var(--accent),
+    0 0 2px var(--accent);
 }

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import { useFetchDeck } from '../../hooks/useFetchDeck';
 import { useDeckMetrics } from '../../hooks/useDeckMetrics';
-import { useTokens } from '../../modules/Tokens';
 import DeckDetail from './DeckDetail';
 function Deck({deck, setDeck, cards, name}) {
     
@@ -66,8 +65,7 @@ if(isLoading) return <div>loading deck data</div>
 if(error) return <div>Error: {error}</div>
 
   return (
-    <main>
-        {console.log(deck)}
+    <main className="deck">
         {deck ? (
         <DeckDetail
             deck={deck}
