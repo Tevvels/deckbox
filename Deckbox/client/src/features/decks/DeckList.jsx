@@ -21,7 +21,7 @@ export default function DeckList({
 
   return (
     <>
-        <section className="view-page decklist">
+        <section className="deck-decklist">
             <div className='sort_controls'>
                 <span className="control_label">
                     Group By:

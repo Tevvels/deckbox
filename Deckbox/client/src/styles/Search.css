@@ -37,24 +37,24 @@
   align-items: center;
   justify-content: center;
   box-shadow:
-    0 0 2px inset var(--primary-color),
-    0 0 2px var(--primary-color);
+    0 0 2px inset var(--accent),
+    0 0 2px var(--accent);
   border: 2px solid black;
 }
 .search_submit:hover {
-  background-color: var(--med-bg-color);
-  color: var(--dark-bg-color);
+  background-color: var(--accent);
+  color: var(--dark);
 }
 
 .search_searchBar {
-  background: var(--dark-bg-color);
+  background: var(--dark);
   height: 100%;
   width: 100%;
   color: var(--text-color);
   border-radius: 0.5rem 0 0 0.5rem;
   box-shadow:
-    0 0 2px inset var(--primary-color),
-    0 0 2px var(--primary-color);
+    0 0 2px inset var(--accent),
+    0 0 2px var(--accent);
   border: 2px solid black;
 }
 
@@ -64,11 +64,11 @@
   flex-direction: column;
   gap: 0.25rem;
   width: 95%;
-  background: var(--light-bg-color);
+  background: var(--light);
 }
 .suggestions_list li {
-  color: var(--med-bg-color);
-  border: 2px solid var(--primary-color);
+  color: var(--text-color);
+  border: 2px solid var(--accent);
   display: flex;
   gap: 0.25rem;
   padding: 0.25rem;

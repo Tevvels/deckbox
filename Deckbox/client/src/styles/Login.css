@@ -1,6 +1,6 @@
 .portal {
   display: flex;
-  background: var(--dark-bg-color);
+  background: var(--dark);
   height: 100dvh;
   justify-content: center;
   align-items: center;
@@ -30,10 +30,10 @@
 .portal_form input {
   width: 50%;
   height: 2rem;
-  background: var(--dark-bg-color);
+  background: var(--dark);
   color: var(--text-color);
   border: none;
-  border-bottom: 1px solid var(--primary-color);
+  border-bottom: 1px solid var(--accent);
 }
 .portal_buttons {
   display: flex;
@@ -45,9 +45,9 @@
   height: 2rem;
   width: 30%;
   text-transform: uppercase;
-  background: var(--dark-bg-color);
+  background: var(--dark);
   color: var(--text-color);
-  border: 1px solid var(--primary-color) ;
+  border: 1px solid var(--accent) ;
   justify-content: center;
   align-items: center;
   padding: 0.5rem 1rem;
@@ -55,8 +55,8 @@
   border-radius: 0.5rem;
 }
 .portal_buttons button:hover {
-  background: var(--primary-color);
-  color: var(--dark-bg-color);
+  background: var(--accent);
+  color: var(--dark);
   cursor: pointer;
 }
 @media screen and (max-width: 61.9rem) {
@@ -73,7 +73,7 @@
     height: 2rem;
     width: 100%;
     text-transform: uppercase;
-    background: var(--dark-bg-color);
+    background: var(--dark);
     color: var(--text-color);
     border: none;
     justify-content: center;
@@ -98,9 +98,9 @@
   .portal_form input {
     width: 80%;
     height: 2rem;
-    background: var(--dark-bg-color);
+    background: var(--dark);
     color: var(--text-color);
     border: none;
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--accent);
   }
 }

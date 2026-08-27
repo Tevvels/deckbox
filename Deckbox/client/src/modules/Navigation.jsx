@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom"; 
 import "../styles/Navigation.css"; 
 import MenuLoop from "../components/MenuLoop.tsx"; 
-
+import ThemeMode from "../components/ThemeMode.jsx";
 function Navigation({ onLogout, isLoggedIn }) { 
   const location = useLocation(); 
   const [isProfileOpen, setIsProfileOpen] = useState(false); 
@@ -101,6 +101,7 @@ function Navigation({ onLogout, isLoggedIn }) {
           </div> 
         )} 
       </nav> 
+      <ThemeMode />
     </div> 
   ); 
 } 

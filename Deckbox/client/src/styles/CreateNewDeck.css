@@ -5,7 +5,7 @@
   width: 100%; 
   justify-content: center; 
   align-items: center; 
-  background-color: var(--dark-bg-color); 
+  background-color: var(--dark); 
   padding: 2rem 1rem; 
   box-sizing: border-box; 
   overflow: visible ;
@@ -13,7 +13,7 @@
 
 /* The standalone card panel holding the form */ 
 .create_deck { 
-  background-color: var(--primary-color); 
+  background-color: var(--accent); 
   border: 1px solid rgba(255, 255, 255, 0.08); 
   border-radius: 12px; 
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); 
@@ -76,7 +76,7 @@
 .create_deck-commander-input { 
   width: 100%; 
   padding: 14px 16px; 
-  background-color: var(--dark-bg-color); 
+  background-color: var(--dark); 
   color: var(--text-color); 
   border: 1px solid rgba(255, 255, 255, 0.15); 
   border-radius: 8px; 
@@ -104,7 +104,7 @@
   top: 100% ; /* Force lists to drop clean below fields */
   left: 0 ;
   width: 100% ;
-  background-color: var(--dark-bg-color) ;
+  background-color: var(--dark) ;
   border: 1px solid rgba(255, 255, 255, 0.15) ;
   border-radius: 8px ;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) ;
@@ -143,7 +143,7 @@
 /* Highlighting matching theme setup rules */
 .dropdown_list-item:hover,
 .create-deck-suggestions-list li:hover { 
-  background-color: var(--primary-color) ; 
+  background-color: var(--accent) ; 
   color: var(--accent-color) ; 
 } 
 
