@@ -3,7 +3,6 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CardDetail from "../modules/CardDetail";
 import DeckDetail from "../features/decks/DeckDetail";
-import DeckCard from "./DeckCard";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 import "../styles/MyDecks.css";
 import Skeleton from "./Skeleton";

@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import CardDetail from '../../modules/CardDetail';
 
+
 export default function DeckList({
     sortedCards,
     sortBy,
@@ -43,10 +44,12 @@ export default function DeckList({
                 <button className="buttons button_imageToggle" onClick={()=> setWithImage(!withImage)}>
                     {withImage? "Name list":"Image list"}
                 </button>
-            <ul className={`deck_list ${sortBy}`}>
+            <ul className={`decklist ${sortBy}`}>
                 {Object.entries(sortedCards).map(([category,entries])=>(
-                    <li key={category} className="deck_list-item">
-                        <h3 className="deck_header-sub">{category} ({entries.reduce((sum,i)=> sum +(i.quantity || 1),0)})</h3>
+                    
+                    <li key={category} className="decklist-item">
+                        {console.log(entries.reduce((sum,i)=> sum +(i.quantity || 1),0))}
+                        <h3 className="decklist-category-header">{entries.reduce((sum,i)=> sum +(i.quantity || 1),0) <= 1 ? category:`${category}s`} ({entries.reduce((sum,i)=> sum +(i.quantity || 1),0)})</h3>
                     {entries.map((entry)=>{
                         const isLand = entry.cardId.type_line?.toLowerCase().includes("land");
                         const symbols = entry.cardId.mana_cost?.match(/\{([^}]+)\}/g)|| [];
@@ -58,29 +61,32 @@ export default function DeckList({
                                 if(onCardClick) onCardClick(entry.cardId);
                             }}
                             >
-                                {console.log("line 61:",cardPreview)}
-                            {
-                                withImage? (
-                                    <img className="card card_entry-image" src ={entry.cardId.image_uris?.normal || entry.cardId.card_faces?.[0]?.image_uris?.normal} alt={entry.cardId.name} />
-                                ) :(
+                             {/* image display */}
+                            {withImage? (
+                                    <img className="card card_entry-image" src= {entry.cardId.image_uris?.normal || entry.cardId.card_faces?.[0]?.image_uris?.normal} alt={entry.cardId.name} />
+                                ) : (
                                     <h3>{entry.cardId.name}</h3>
                                 )
                             }
+
+
+                            {/* text display */}
                             {!withImage && !isLand &&(
                                 <div className="mana_cost_container">
                                 {symbols.length > 0? symbols.map((s,i)=>{
                                     const sym = s.replace("{","").replace("}","");
                                     return (
-                                        <span key={i} className={`mana_symbol ${manaTypes.includes(sym) ? "active":"inactive"}`}>
+                                        <span key={i} className={`mana_symbol }`}>
                                         <i className={`ms ms-${sym.toLowerCase()} ms-cost ms-span`} />
                                         </span>
                                     );
                                 }):
                                 <span className="mana_symbol inactive">
-                                <i className='ms ms-c ms-cost ms-span'/>
-                            </span>}</div>
+                                    <i className='ms ms-c ms-cost ms-span'/>
+                                </span>}
+                            </div>
                             )}
-                            <span className="card_quantity">X{entry.quantity}</span>
+                           {entry.quantity > 1 ? <span className="card_quantity">X{entry.quantity}</span>:""}
                             {isOwner && (
                                 <button className="buttons buttons_delete" onClick={(e)=>{e.stopPropagation(); onDeleteCard(entry._id || entry.cardId.id);}}>X</button>
                             )}

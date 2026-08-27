@@ -9,6 +9,7 @@
     "deck-decklist"
     "tokens";
     gap:1rem;
+    border: .5rem solid transparent
 }
 .deck-header{
     grid-area:deck-header;
@@ -34,17 +35,47 @@
 }
 
 .mana_symbols-stats{
+    grid-area:stats;
     display:flex;
-    min-height:15rem; 
+    min-height:15rem;
+    width: 80%; 
     background:grey;
+    box-shadow: 0 0 .2rem inset var(--dark),0 0 .2rem var(--light);
+    border-radius: .5rem;
+    gap: 1rem;
+    color:var(--text-color);
 }
 .deck-container-stats{
-    grid-area:deck-container-stats;
     display: flex;
+    justify-content: center;
+    gap:.5rem;
 }
 .deck-decklist{
     grid-area:deck-decklist;
+    background:grey;
+    
+}
+.decklist-item{
+    display: flex;
+    flex-direction: column;
+    min-height:5rem;
 }
 .tokens{
     grid-area:tokens;
+}
+
+.graph_bar{
+    border:1px solid white;
+}
+.mana_graph-column{
+    display:flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    
+}
+.card_list-item{
+    display:flex;
+    justify-content: space-evenly;
+    border:1px solid var(--text-color);
+    width: 50%;
 }
