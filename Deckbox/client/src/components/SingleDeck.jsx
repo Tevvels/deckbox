@@ -182,7 +182,6 @@ function SingleDeck({ deck, setDeck }) {
         onCardClick={handleCardClick}
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
-        
         onDeleteDeck={() => deleteDeck(deck._id)}
         OnDeleteCard={handleDeleteClick}
       ></DeckDetail>

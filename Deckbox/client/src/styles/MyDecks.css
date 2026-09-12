@@ -18,6 +18,7 @@
     height:250px;
     border-radius: 1rem;
     display:flex;
+    overflow: hidden;
 }
   .deck_card-container {
     display: grid;

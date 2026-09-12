@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "../styles/MyDecks.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import DeckCard from "./DeckCard";
 import Skeleton from "./Skeleton";
 
@@ -13,6 +13,8 @@ function MyDecks() {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   // Delete deck function
   const deleteDeck = async (deckId) => {
@@ -83,14 +85,18 @@ function MyDecks() {
             <DeckCard key={deck._id} deck={deck} onDelete={deleteDeck} />
           ))}
         </div>
-        {}
-        <Link
+        
+      
+          {location.pathname === "/"? "" :<Link
           className="links my_Deck-link my_Deck-link-dashboard "
-          to="/dashboard"
+          to="/"
         >
-          {" "}
-          Back to Dashboard{" "}
+          Back to Dashboard
         </Link>
+         }
+        
+      
+
       </div>
     </div>
   );

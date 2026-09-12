@@ -1,14 +1,31 @@
 import React,{useState,useEffect,useMemo} from 'react'
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams,useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { useFetchDeck } from '../../hooks/useFetchDeck';
 import { useDeckMetrics } from '../../hooks/useDeckMetrics';
+import { useDeckActions } from '../../hooks/useDeckActions';
 import DeckDetail from './DeckDetail';
+
+
+const AddCard = ({deckId, isCommander,text}) =>(
+    <div className="add-card">
+        <Link to={`/deck/${deckId}/search`}
+        className="links deck-link deck-add-card-link"
+        state={{fromDeck:true,isCommander}}>
+            {text}
+
+        </Link>
+    </div>
+);
+
+
 function Deck({deck, setDeck, cards, name}) {
     
     const { deckId} = useParams();
     const navigate = useNavigate();
+
+    //core states
     const [selectedCard, setSelectedCard] = useState(null);
     const [cardPreview, setCardPreview] = useState(null);
     const [currentImage,setCurrentImage] = useState(null);
@@ -20,25 +37,8 @@ function Deck({deck, setDeck, cards, name}) {
 
 
 
-
-
-const deleteDeck = async (idtowait) => {
-    if (!window.confirm("are you sure you want to delete this deck?")) return;
-    const token = localStorage.getItem("token");
-    try{
-        await axios.delete(`${API_BASE}/cardStorage/${idtowait}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        navigate("/mydecks");
-    } catch (err) {
-        console.error("Error deleting deck:", err);
-
-    }
-};
-
-// Set the initial card preview when the component mounts or when the cards or name change
+const {deleteDeck,handleDeleteCardInstance,handleUpdateArt} =
+    useDeckActions(deckId,setDeck,navigate,isOwner);
 
 
 const handleCardClick = (card) => {
@@ -46,26 +46,21 @@ const handleCardClick = (card) => {
     setCurrentImage(card);
 }
 
-const handleCloseCardDetail = () => {
-    setSelectedCard(null);
-    setCurrentImage(null);
-}
-const handleUpdateArt = (updatedCard) => {
-    setDeck((prevDeck) => {
-        const updatedCards = prevDeck.cards.map((entry) =>
-            entry.cardId._id === updatedCard._id ? { ...entry, cardId: updatedCard } : entry
-        );
-        return { ...prevDeck, cards: updatedCards };
-    });
-    setCurrentImage(updatedCard);
-    setSelectedCard(updatedCard);
-}
 
 if(isLoading) return <div>loading deck data</div>
 if(error) return <div>Error: {error}</div>
 
+
   return (
     <main className="deck">
+
+        {isOwner && deck && (
+            <AddCard
+                deckId={deckId}
+                isCommander={deck.format ==="commander"}
+                text="Add Card"
+                />
+        )}
         {deck ? (
         <DeckDetail
             deck={deck}
@@ -76,7 +71,8 @@ if(error) return <div>Error: {error}</div>
             cardPreview={cardPreview}
             setCardPreview={setCardPreview}
             onCardClick={(card) => {setSelectedCard(card);}}
-            onDeleteDeck={deleteDeck}
+            onDeleteCard={handleDeleteCardInstance}
+            onDeleteDeck={()=>deleteDeck(deck._id)}
             isOwner={isOwner}
         />
         ):(<div>no deck</div>)}

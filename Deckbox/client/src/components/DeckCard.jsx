@@ -53,7 +53,7 @@ function DeckCard({ deck, onDelete, showOwner = false, className }) {
   const colorIdentityStyle = getDeckColorIdentity(deck.color_identity);
   const validCards = deck.cards?.filter((c) => c && c.cardId) || [];
   const firstCard = validCards.length > 0 ? validCards[0].cardId : null;
-
+  console.log("deck : " , deck);
   const imageUrl =
     firstCard?.image_uris?.art_crop ||
     firstCard?.card_faces?.[0]?.image_uris?.art_crop ||

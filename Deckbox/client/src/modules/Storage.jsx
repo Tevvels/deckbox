@@ -37,10 +37,9 @@ function Storage() {
     cameFromDeck,
     handleAddClick,
   } = useCardSearch();
+
+
   const { pathname } = useLocation();
-  console.log(sameNameCard);
-
-
   const INITIAL_VISIBLE_COUNT = 15;
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
@@ -83,11 +82,8 @@ function Storage() {
 
   return (
     <div className="search search_container">
-      {dashboardScreen ? (
-        " "
-      ) : (
-        <h2 className="search_header">Add Cards to deck</h2>
-      )}
+      {dashboardScreen ? null:<h2 className="search_header">Add Cards to deck</h2>}
+      
       <form className="search_form" onSubmit={handleSearchSubmission}>
         <div className="search_input-wrapper">
           <input
@@ -210,7 +206,6 @@ function Storage() {
           className={"buttons search_loadMore"}
           onClick={()=> setVisibleCount((prev) => prev === INITIAL_VISIBLE_COUNT ? sameNameCard.length : INITIAL_VISIBLE_COUNT)}
         >
-          Load More
         {visibleCount === INITIAL_VISIBLE_COUNT ? "Load More" : "Show Less"}
         </button> 
       )}

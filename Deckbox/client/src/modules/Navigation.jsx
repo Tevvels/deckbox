@@ -63,6 +63,8 @@ function Navigation({ onLogout, isLoggedIn }) {
               {isProfileOpen && ( 
                 <div className="navigation_desktop-dropdown-list"> 
                   <MenuLoop context="navigation_user_desktop" navLinks={profilelinks} headerName={""} /> 
+                  <ThemeMode />
+                  
                   <button 
                     className="menu_link navigation_desktop-logout" 
                     onClick={() => { onLogout(); closeAllMenus(); }} 
@@ -101,7 +103,6 @@ function Navigation({ onLogout, isLoggedIn }) {
           </div> 
         )} 
       </nav> 
-      <ThemeMode />
     </div> 
   ); 
 } 
