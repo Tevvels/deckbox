@@ -9,7 +9,6 @@ import MyDecks from "./components/MyDecks";
 import CreateNewDeck from "./components/CreateNewDeck";
 import Players from "./components/Players";
 import SingleDeck from "./components/SingleDeck";
-import Storage from "./modules/Storage.jsx";
 import PublicDeckDisplay from "./components/PublicDeckDisplay.jsx";
 import "./styles/GridDisplay.css";
 import Footer from "./modules/Footer.jsx";
@@ -22,6 +21,7 @@ import "./styles/Deck.css";
 import "./styles/Dice.css";
 import "./styles/Menu.css";
 import Deck from "./features/decks/Deck.jsx";
+import SearchContainer from "./features/cardSearch/SearchContainer.jsx";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 function App() {
@@ -114,13 +114,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard isLoggedIn={!!token} />} />
           <Route path="/publicdecks" element={<PublicDeckDisplay />} />
-          if(!token) {
+          {!token ? (
           <>
             <Route path="/register" element={<Register onShowLogin={showLogin} />} />
             <Route path="/forgot" element={<ForgotPassword onShowLogin={showLogin} />} />
             <Route path="/login" element={<Login onLogin={handleLogin} onShowRegister={showRegister} onShowForgot={showForgot} />} />
           </>
-          }
+          ): (
+            <Route path="/login" element={<Login onLogin={handleLogin} onShowRegister={showRegister} onShowForgot={showForgot} />} />
+          )}
           <Route path="/profile" element={<div>Profile Page</div>} />
           <Route path="/settings" element={<div>Settings Page</div>} />
           <Route path="/deck/" element={<MyDecks />} />
@@ -141,7 +143,7 @@ function App() {
           <Route
             path="/storage"
             element={
-              <Storage
+              <SearchContainer
                 addCardToDeck={cardAdded}
                 deckCards={activeDeck?.cards || []}
               />
@@ -155,13 +157,13 @@ function App() {
           <Route
             path="/deck/:deckId/search"
             element={
-              <Storage
+              <SearchContainer
                 addCardToDeck={addCardToActiveDeck}
                 currentDeckList={activeDeck?.cards || []}
               />
             }
           />
-          <Route path="/search" element={<SearchResults />} />
+          <Route path="/search" element={<SearchContainer addCardToDeck={addItem} />} />
           <Route path="*" element={<Gradient>404 Not Found</Gradient>} />
         </Routes>
       </main>

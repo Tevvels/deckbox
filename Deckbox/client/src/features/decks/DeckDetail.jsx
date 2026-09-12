@@ -5,6 +5,7 @@ import React,{useState,useMemo} from 'react';
 import DeckList from './DeckList';
 import DeckOverview from './DeckOverview';
 import Tokens from  './Tokens'
+import { CardSearchProvider } from '../../hooks/useCardSearch';
 
 
 const getSortedGroups = (cards,sortBy,subSortBy) =>{
@@ -52,8 +53,8 @@ export default function DeckDetail({    cards =[],
     onDeleteCard,
     format,
     deckMetrics,
-cardPreview,
-setCardPreview}) {
+    cardPreview,
+    setCardPreview}) {
 
         const [activeTab,setActiveTab] = useState("decklist");
         const [sortBy,setSortBy] = useState("type");
@@ -72,6 +73,7 @@ setCardPreview}) {
             </h1>
         </header>
         <>
+            <CardSearchProvider />
                 <DeckOverview
                     manaTypes={MANA_TYPES}
                     name={name}

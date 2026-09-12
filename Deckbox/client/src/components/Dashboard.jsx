@@ -10,6 +10,7 @@ import Dice from "./Dice";
 import Players from "./Players";
 import Logo from '../photos/Logo.2.png'
 import MyDecks from "./MyDecks";
+import SearchContainer from "../features/cardSearch/SearchContainer";
 
 function Dashboard( {isLoggedIn} ) {
   const [game, setGame] = useState(false);
@@ -38,7 +39,7 @@ function Dashboard( {isLoggedIn} ) {
         </div>
         
         <div className="dashboard_searchContainer">
-          <Storage /> 
+          <SearchContainer /> 
         </div>
       </main>      
       </header>
