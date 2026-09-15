@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
@@ -72,14 +73,14 @@ export default function Login({ onLogin, onShowRegister, onShowForgot }) {
               Login
             </button>
             <button
-              onClick={() => {
-                setError(null);
-                onShowRegister && onShowRegister();
-              }}
               className=" buttons portal_button portal_button-create"
+>
+            <Link
+              to="/register"
             >
               Create account
-            </button>
+            </Link>
+ </button>
             <button
               onClick={() => {
                 setError(null);
