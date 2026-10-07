@@ -14,7 +14,6 @@ export const CardSearchProvider = ({ children }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [sameNameCard, setSameNameCard] = useState([]);
   const [deckCountMap, setDeckCountMap] = useState({});
-  const cameFromDeck = location.state?.fromDeck;
   const [cardQuery, setCardQuery] = useState("");
   const [colorIdentity, setColorIdentity] = useState(location.state?.colorIdentity || "");
   const [filterByIdentity, setFilterByIdentity] = useState(true);
@@ -22,6 +21,10 @@ export const CardSearchProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const timeoutRef = useRef(null);
+  
+  const [isOwner, setIsOwner] = useState(false);
+  
+  const cameFromDeck = !!(location.state?.fromDeck || deckId);
 
   const getSafeToken = useCallback(() => {
     const rawToken = localStorage.getItem("token");
@@ -39,6 +42,11 @@ export const CardSearchProvider = ({ children }) => {
   };
 
   const handleAddClick = async () => {
+    if (!isOwner) {
+      alert("You do not have permission to add cards to this deck.");
+      return;
+    }
+
     const token = getSafeToken();
     if (!selectedCard) return;
     try {
@@ -76,72 +84,79 @@ export const CardSearchProvider = ({ children }) => {
     }
   };
 
+  // 1. Fetch deck details (Color identity and ownership verification)
   useEffect(() => {
-    const fetchDeckColors = async () => {
+    const fetchDeckDetails = async () => {
       const token = getSafeToken();
-      if (!deckId || colorIdentity) return;
+      if (!deckId) return;
       try {
         const response = await fetch(`${API_BASE}/cardStorage/${deckId}`, {
-          headers: { Authorization: token ? `Bearer ${token}` : "", },
+          headers: { Authorization: token ? `Bearer ${token}` : "" },
         });
         if (response.ok) {
           const data = await response.json();
-          if (data.color_identity) {
+          if (data.color_identity && !colorIdentity) {
             setColorIdentity(data.color_identity.join("").toLowerCase());
+          }
+          if (data.isOwner !== undefined) {
+            setIsOwner(data.isOwner);
+          } else {
+            // Fallback true value if backend does not pass explicit true/false check flags
+            setIsOwner(true);
           }
         }
       } catch (err) {
-        console.error("Error fetching deck colors:", err);
+        console.error("Error fetching deck details:", err);
       }
     };
-    fetchDeckColors();
+    fetchDeckDetails();
   }, [deckId, colorIdentity, getSafeToken]);
 
+  // 2. Fetch search suggestion autocomplete entries from Scryfall API
 const fetchSuggestions = useCallback(async (query) => {
   const cleanQuery = query ? query.trim() : "";
 
-  // Require at least 2 characters
+  // Require at least 2 characters before searching
   if (cleanQuery.length < 2) {
     setSuggestions([]);
     return;
   }
 
+  setLoading(true);
+  setError(null);
+
   try {
-    let identityFilter = "";
-    if (filterByIdentity && colorIdentity) {
-      identityFilter = ` identity:${colorIdentity}`;
-    }
+    const response = await fetch(
+      `https://api.scryfall.com/cards/search?q=${encodeURIComponent(cleanQuery)}`
+    );
 
-    const fullQuery = cleanQuery + identityFilter;
-
-    // Scryfall autocomplete endpoint
-    const finalUrl = `https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(fullQuery)}`;
-
-    const response = await fetch(finalUrl);
     const data = await response.json();
 
-    if (data?.data) {
-      // Autocomplete already returns an array of names
-      const uniqueNames = Array.from(new Set(data.data)).slice(0, 10);
+    if (data.data) {
+
+
+      const cardNames = data.data.map((card) => card.name);
+      const uniqueNames = Array.from(new Set(cardNames)).slice(0, 10);
       setSuggestions(uniqueNames);
     } else {
       setSuggestions([]);
     }
   } catch (err) {
     console.error("Auto Complete Error:", err);
-    setSuggestions([]);
+    setError(err);
+  } finally {
+    setLoading(false);
   }
-}, [colorIdentity, filterByIdentity]);
+}, [colorIdentity]);
+const handleInputChange = (e) => {
+  const value = e.target.value;
+  setCardQuery(value);
+  if(timeoutRef.current) clearTimeout(timeoutRef.current);
+  timeoutRef.current = setTimeout(() => {
+    fetchSuggestions(value);
+  }, 300);
+};
 
-
-  const handleInputChange = (e) => {
-    const val = e.target.value;
-    setCardQuery(val);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => fetchSuggestions(val), 300);
-  };
-
-  // Fixed: Map tracker lookup targeting card name to match your handleAddClick property maps
   const currentInDeckCount = selectedCard ? deckCountMap[selectedCard.name] || 0 : 0;
 
   const value = {
@@ -155,7 +170,9 @@ const fetchSuggestions = useCallback(async (query) => {
     selectedCard, setSelectedCard,
     handleArtworkClick, deckCountMap,
     cameFromDeck, currentInDeckCount,
-    handleAddClick
+    handleAddClick,
+    colorIdentity, setColorIdentity,
+    isOwner
   };
 
   return (

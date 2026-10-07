@@ -56,9 +56,15 @@ function SearchInputForm() {
 
             {colorIdentity && (
                 <div className="filter toggle">
-                    <label onClick={
-                        setFilterByIdentity(e.target.checked)}
+                    <label>
+                        <input
+                        value="checkbox"
+                        checked={filterByIdentity}
+                        onChange={(e)=>setFilterByIdentity(e.target.checked)}
                         />
+                        limit to deck colors ({colorIdentity.toUpperCase()})
+                    
+                        </label> 
                 </div>
             )}
             <button className="buttons search-input" type="submit">Search</button>
