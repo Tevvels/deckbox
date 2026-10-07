@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { useLocation } from 'react-router-dom';
 import SearchInputForm from './SearchInputForm';
 import SearchResultsGrid from './SearchResultsGrid';
@@ -15,7 +15,7 @@ function SearchContainer() {
     return (
         <CardSearchProvider>
             <SearchInputForm />
-            {hasQuery ? <SearchResultsGrid searchString={search}/>:(
+            {hasQuery ? <SearchResultsGrid  searchString={search}/>:(
                 <div className="search-welcome-msg">
                     <p>search for a new card</p>
                 </div>

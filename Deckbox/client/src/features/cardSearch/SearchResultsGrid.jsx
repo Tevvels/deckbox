@@ -21,12 +21,15 @@ function SearchResultsGrid({searchString}) {
         setSelectedCard,
         deckCountMap,
         colorIdentity,
+        addCard,filterByIdentity
     } = useCardSearch();
     
 
     const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
     useEffect(()=>{
+        if(filterByIdentity && colorIdentity === null) return;
+
         const queryParams = new URLSearchParams(searchString);
         const cardQuery = queryParams.get("q");
 
@@ -44,8 +47,9 @@ function SearchResultsGrid({searchString}) {
                 const data = await response.json();
                 if(data?.data){
                     let results = data.data;
+
                     console.log(colorIdentity)
-                    if(colorIdentity){
+                    if(colorIdentity !==null){
                         const deckColors = colorIdentity.toLowerCase();
                          results = results.filter(card =>{
                             const cardColors = card.color_identity.join("").toLowerCase() || "";
@@ -82,6 +86,9 @@ function SearchResultsGrid({searchString}) {
                             <PrintedCardItem
                             key={card.id}
                             card={card}
+                            onClick={()=>setSelectedCard(card)}
+                            onAddClick={()=>addCard(card)}
+                            isOwner={true}
                             isSelected={selectedCard?.id === card.id}
                             quantityInDeck={deckCountMap?.[card.name] || 0}
                             />

@@ -15,7 +15,7 @@ export const CardSearchProvider = ({ children }) => {
   const [sameNameCard, setSameNameCard] = useState([]);
   const [deckCountMap, setDeckCountMap] = useState({});
   const [cardQuery, setCardQuery] = useState("");
-  const [colorIdentity, setColorIdentity] = useState(location.state?.colorIdentity || "");
+  const [colorIdentity, setColorIdentity] = useState(location.state?.colorIdentity ?? null);
   const [filterByIdentity, setFilterByIdentity] = useState(true);
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,9 +46,26 @@ export const CardSearchProvider = ({ children }) => {
       alert("You do not have permission to add cards to this deck.");
       return;
     }
+    if(!selectedCard) {
+      alert("No card selected to add.");
+      return;
+    }
+    console.log("color identity " + colorIdentity);
+    if(colorIdentity !== null){
+      console.log("Checking color identity constraints...");
+      const deckColors = (colorIdentity || "")
+      .toLowerCase().replace(/[^wubrg]/g,"");
+      const cardColors = (selectedCard.color_identity || []).join("").toLowerCase();
+      console.log(`Deck colors: ${deckColors}, Card colors: ${cardColors}`);
+      const illegalColors = [...cardColors].filter(c => !deckColors.includes(c));
+      console.log("Illegal colors found:", illegalColors);
+      if(illegalColors.length > 0){
+        alert(`Cannot add card. It contains colors not in the deck's color identity: ${illegalColors.join(", ")}`);
+        return;
+      }
+    }
 
     const token = getSafeToken();
-    if (!selectedCard) return;
     try {
       const syncResponse = await fetch(`${API_BASE}/cardStorage/sync-card`, {
         method: "POST",
@@ -95,9 +112,14 @@ export const CardSearchProvider = ({ children }) => {
         });
         if (response.ok) {
           const data = await response.json();
-          if (data.color_identity && !colorIdentity) {
-            setColorIdentity(data.color_identity.join("").toLowerCase());
-          }
+          if (data.color_identity && colorIdentity === null) {
+  const normalized = Array.isArray(data.color_identity)
+    ? data.color_identity.join("").toLowerCase()
+    : String(data.color_identity).toLowerCase().replace(/[^wubrg]/g, "");
+
+  setColorIdentity(normalized);
+}
+          console.log(colorIdentity, data.color_identity);
           if (data.isOwner !== undefined) {
             setIsOwner(data.isOwner);
           } else {

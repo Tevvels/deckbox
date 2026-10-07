@@ -144,7 +144,6 @@ function App() {
             path="/storage"
             element={
               <SearchContainer
-                addCardToDeck={cardAdded}
                 deckCards={activeDeck?.cards || []}
               />
             }

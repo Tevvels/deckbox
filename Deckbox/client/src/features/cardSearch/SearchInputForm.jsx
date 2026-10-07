@@ -58,7 +58,7 @@ function SearchInputForm() {
                 <div className="filter toggle">
                     <label>
                         <input
-                        value="checkbox"
+                        type="checkbox"
                         checked={filterByIdentity}
                         onChange={(e)=>setFilterByIdentity(e.target.checked)}
                         />
