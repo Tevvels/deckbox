@@ -3,7 +3,7 @@ import { useCardSearch } from '../../hooks/useCardSearch';
 
 
 function PrintedCardItem({card, isSelected, quantityInDeck}){
-    const {setSelectedCard,handleArtworkClick} = useCardSearch()
+    const {setSelectedCard,handleArtworkClick,handleAddClick} = useCardSearch()
     const handleClick = ()=>{
         setSelectedCard(card);
         if(typeof handleArtworkClick === 'function'){
@@ -42,7 +42,11 @@ function PrintedCardItem({card, isSelected, quantityInDeck}){
                 display:"block",
                 margin: "4px auto 0"
             }} />
+            {/* {isOwner && ( */}
+            <button onClick={handleAddClick}>Add</button>
+            {/* )} */}
             {quantityInDeck}
+
         </div>
 
     )

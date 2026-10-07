@@ -11,15 +11,27 @@ const INITIAL_VISIBLE_COUNT = 15;
 function SearchResultsGrid({searchString}) {
 
     const {
-        loading,setLoading,error,setError,sameNameCard,setSameNameCard,selectedCard,setSelectedCard,deckCountMap} = useCardSearch();
+        loading,
+        setLoading,
+        error,
+        setError,
+        sameNameCard,
+        setSameNameCard,
+        selectedCard,
+        setSelectedCard,
+        deckCountMap,
+        colorIdentity,
+        addCard,filterByIdentity
+    } = useCardSearch();
     
 
     const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
     useEffect(()=>{
+        if(filterByIdentity && colorIdentity === null) return;
+
         const queryParams = new URLSearchParams(searchString);
         const cardQuery = queryParams.get("q");
-        const identityFilter = queryParams.get("identity");
 
         if(!cardQuery) return;
 
@@ -27,15 +39,26 @@ function SearchResultsGrid({searchString}) {
             setLoading(true);
             setError(null);
             try {
-                const identityConstraint = identityFilter ?  
-                `identity:${identityFilter}` :"";
+                const identityConstraint = colorIdentity ?  
+                `identity:${colorIdentity}` :"";
                 const fullQuery = `${cardQuery} ${identityConstraint}`.trim();
                 const url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}&unique=cards`;
                 const response = await fetch(url);
                 const data = await response.json();
                 if(data?.data){
-                    setSameNameCard(data.data);
-                    setSelectedCard(data.data[0]);
+                    let results = data.data;
+
+                    console.log(colorIdentity)
+                    if(colorIdentity !==null){
+                        const deckColors = colorIdentity.toLowerCase();
+                         results = results.filter(card =>{
+                            const cardColors = card.color_identity.join("").toLowerCase() || "";
+                            return [...cardColors].every(c => deckColors.includes(c));
+                         })
+                    }
+                    console.log(results)
+                    setSameNameCard(results);
+                    setSelectedCard(results[0] || null);
                 } else {
                     setSameNameCard([]);
                 }
@@ -63,6 +86,9 @@ function SearchResultsGrid({searchString}) {
                             <PrintedCardItem
                             key={card.id}
                             card={card}
+                            onClick={()=>setSelectedCard(card)}
+                            onAddClick={()=>addCard(card)}
+                            isOwner={true}
                             isSelected={selectedCard?.id === card.id}
                             quantityInDeck={deckCountMap?.[card.name] || 0}
                             />

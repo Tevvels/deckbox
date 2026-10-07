@@ -49,11 +49,14 @@ export default function DeckList({
                     
                     <li key={category} className="decklist-item">
                         {console.log(entries.reduce((sum,i)=> sum +(i.quantity || 1),0))}
+                    
                         <h3 className="decklist-category-header">{entries.reduce((sum,i)=> sum +(i.quantity || 1),0) <= 1 ? category:`${category}s`} ({entries.reduce((sum,i)=> sum +(i.quantity || 1),0)})</h3>
+                     <ul>
                     {entries.map((entry)=>{
                         const isLand = entry.cardId.type_line?.toLowerCase().includes("land");
                         const symbols = entry.cardId.mana_cost?.match(/\{([^}]+)\}/g)|| [];
                         return (
+
                             <li key={entry._id}
                             className="card_list-item"
                             onClick={()=>{
@@ -93,6 +96,7 @@ export default function DeckList({
                             </li>
                         );
                     })}
+                    </ul>
                     </li>
                 ))}
                 </ul>
