@@ -50,15 +50,11 @@ export const CardSearchProvider = ({ children }) => {
       alert("No card selected to add.");
       return;
     }
-    console.log("color identity " + colorIdentity);
     if(colorIdentity !== null){
-      console.log("Checking color identity constraints...");
       const deckColors = (colorIdentity || "")
       .toLowerCase().replace(/[^wubrg]/g,"");
       const cardColors = (selectedCard.color_identity || []).join("").toLowerCase();
-      console.log(`Deck colors: ${deckColors}, Card colors: ${cardColors}`);
       const illegalColors = [...cardColors].filter(c => !deckColors.includes(c));
-      console.log("Illegal colors found:", illegalColors);
       if(illegalColors.length > 0){
         alert(`Cannot add card. It contains colors not in the deck's color identity: ${illegalColors.join(", ")}`);
         return;
