@@ -11,7 +11,7 @@ import Players from "./Players";
 import Logo from '../photos/Logo.2.png'
 import MyDecks from "./MyDecks";
 import SearchContainer from "../features/cardSearch/SearchContainer";
-
+import SearchInputForm from "../features/cardSearch/SearchInputForm";
 function Dashboard( {isLoggedIn} ) {
   const [game, setGame] = useState(false);
   const wubrgPhrases = [

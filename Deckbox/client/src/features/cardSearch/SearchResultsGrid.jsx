@@ -48,7 +48,6 @@ function SearchResultsGrid({searchString}) {
                 if(data?.data){
                     let results = data.data;
 
-                    console.log(colorIdentity)
                     if(colorIdentity !==null){
                         const deckColors = colorIdentity.toLowerCase();
                          results = results.filter(card =>{
@@ -56,7 +55,6 @@ function SearchResultsGrid({searchString}) {
                             return [...cardColors].every(c => deckColors.includes(c));
                          })
                     }
-                    console.log(results)
                     setSameNameCard(results);
                     setSelectedCard(results[0] || null);
                 } else {

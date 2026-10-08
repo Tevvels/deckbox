@@ -16,9 +16,12 @@ function SearchContainer() {
         <CardSearchProvider>
             <SearchInputForm />
             {hasQuery ? <SearchResultsGrid  searchString={search}/>:(
+                (location === "/search" && (
                 <div className="search-welcome-msg">
                     <p>search for a new card</p>
                 </div>
+                ))
+
             )}
         
         </CardSearchProvider>

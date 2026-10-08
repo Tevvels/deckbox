@@ -48,7 +48,6 @@ export default function DeckList({
                 {Object.entries(sortedCards).map(([category,entries])=>(
                     
                     <li key={category} className="decklist-item">
-                        {console.log(entries.reduce((sum,i)=> sum +(i.quantity || 1),0))}
                     
                         <h3 className="decklist-category-header">{entries.reduce((sum,i)=> sum +(i.quantity || 1),0) <= 1 ? category:`${category}s`} ({entries.reduce((sum,i)=> sum +(i.quantity || 1),0)})</h3>
                      <ul>

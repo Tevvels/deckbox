@@ -57,7 +57,6 @@ export function useOracleParser(text) {
                 />
             );
             lastIndex = regex.lastIndex;
-            console.log(match)
         }
         if(lastIndex < text.length){
             elements.push(text.substring(lastIndex));
