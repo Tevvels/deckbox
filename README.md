@@ -70,7 +70,7 @@ Open your browser and navigate to `http://localhost:5173` (or the port specified
 
 ## 📸 Screenshots
 
-*(Tip: Add a screenshot or an animated GIF of your app interface right here to grab visitors' attention!)*
+![Deckbox Demo](.\client\src/photos/screenshot_fullscreen.png).
 
 <p align="center">
   ![Deckbox Demo](./assets/deckbox-demo.png)
