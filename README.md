@@ -1,84 +1,166 @@
-v# 🎴 Deckbox
+# DeckBox
 
-A clean, intuitive web application designed for Magic the Gathering (MTG) enthusiasts to **create, manage, and share decks**. Whether you are theory crafting the latest meta-defining strategy or organizing casual decks, Deckbox simplifies your workflow with smooth organization tools and easy sharing.
+A comprehensive deck‑building and community‑driven card management system designed for Magic: The Gathering players. Build decks, browse community lists, and manage your MTG collection with a clean, modern interface.
+
+---
+
+## 🏷️ Badges
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![VS Code](https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+
+---
+
+## 🔗 Live Links
+
+- **Live Demo:** https://deckbox-r8ok.vercel.app  
+- **Backend API:** https://deckbox.onrender.com  
+
+---
+
+## 📸 Preview
+
+![Demo](https://github.com/Tevvels/deckbox/blob/main/Deckbox/client/src/photos/screenshot_fullscreen.png)
 
 ---
 
 ## 🚀 Features
 
-- **Intuitive Deck Builder:** Add, remove, and sort cards seamlessly with a highly responsive user interface.
-- **Deck Metrics & Analytics:** View breakdowns of your card types or mana curves at a glance.
-- **Cross-Device Responsive:** Build your decks on your desktop, tablet, or smartphone without losing your workflow.
+- **Deck Creation** – Search MTG cards via Scryfall and build decks digitally  
+- **Commander Color Identity Enforcement** – Fully implemented legality checks  
+- **Public Deck Display** – Browse decks created by other users  
+- **User Authentication** – JWT‑based login and registration  
+- **Responsive UI** – Clean, modern React interface  
 
 ---
 
-## 🛠️ Built With
+## 🛠️ Tech Stack
 
-Frontend and state management are powered by modern, reliable web tools:
-
-## Tech Stack
-
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=fff)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=fff)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=fff)
-![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=fff)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=fff)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=fff)
-![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=000)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=fff)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=fff)
-![VSCode](https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=fff)
+**Frontend:** React, CSS  
+**Backend:** Node.js, Express  
+**Database:** MongoDB + Mongoose  
+**Auth:** JWT  
+**Deployment:** Vercel + Render  
 
 ---
 
 ## 💻 Getting Started
 
-Follow these instructions to set up the project locally on your machine.
+Follow these steps to run DeckBox locally.
 
-### Prerequisites
+---
 
-Ensure you have **Node.js** (v18 or higher recommended) and **npm** installed.
+### 1. Clone the repository
 
 ```bash
-node -v
-npm -v
+git clone https://github.com/Tevvels/deckbox.git
+cd deckbox
 ```
 
-### Installation
+---
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com
-   cd deckbox
-   ```
+### 2. Install dependencies
 
-2. **Install the dependencies:**
-   ```bash
-   npm install
-   ```
+#### Backend:
 
-3. **Start the local development server:**
-   ```bash
-   npm run dev
-   ```
+```bash
+cd server
+npm install
+```
 
-Open your browser and navigate to `http://localhost:5173` (or the port specified by Vite) to view your local deployment.
+#### Frontend:
+
+```bash
+cd ../client
+npm install
+```
 
 ---
 
-## 📸 Screenshots
+### 3. Environment Variables
 
-![Demo](https://github.com/Tevvels/deckbox/blob/main/Deckbox/client/src/photos/screenshot_fullscreen.png)
+Create a `.env` file inside the **server** directory:
 
-<p align="center">
-  ![Deckbox Demo](./assets/deckbox-demo.png)
-</p>
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+CORS_ORIGIN=http://localhost:3000
+```
+
+If your frontend needs environment variables, create:
+
+```env
+# client/.env (optional)
+```
 
 ---
 
+### 4. Start the backend
 
-## 📝 License
+```bash
+cd server
+npm run dev
+```
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+Backend runs at:
+
+```
+http://localhost:5000
+```
+
+---
+
+### 5. Start the frontend
+
+```bash
+cd client
+npm start
+```
+
+Frontend runs at:
+
+```
+http://localhost:3000
+```
+
+---
+
+### ✔ Your app is now running locally.
+
+---
+
+## 📦 Folder Structure
+
+```
+deckbox/
+├── client/        # React frontend
+├── server/        # Express backend
+└── README.md
+```
+
+---
+
+## 🧠 What I Learned
+
+- Building full MERN stack applications  
+- Managing complex React state with custom hooks  
+- Integrating external APIs (Scryfall)  
+- Enforcing Commander color identity rules  
+- Deploying full‑stack apps (Vercel + Render)  
+
+---
+
+## 📬 Contact
+
+Created by **Christopher Watkins**  
+GitHub: https://github.com/Tevvels
