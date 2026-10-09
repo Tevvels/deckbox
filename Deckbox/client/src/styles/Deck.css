@@ -1,81 +1,147 @@
 .deck{
     display:grid;
     grid-template-columns: 1fr;
-    grid-template-rows:1fr;
+    grid-template-rows: 1fr;
     grid-template-areas:
-    "deck-header"
-    "deck-container-stats"
-    "deck-commander"
-    "deck-decklist"
-    "tokens";
+    " deck-header "
+    " deck-commander "
+    " deck-container-stats "
+    " add-card "
+    " deck-decklist "
+    " tokens ";
     gap:1rem;
     border: .5rem solid transparent
 }
-.deck-header{
-    grid-area:deck-header;
-    text-decoration: underline;
-    padding:0 1rem;
+.add-card{
+    grid-area:add-card;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 5rem;
+    background: var(--dark);
+    border-radius: .5rem;
 }
-.deck-commander{
-    grid-area:deck-commander;
-    display:grid;
-    grid-template-columns:1fr;
-    grid-template-rows:1fr;
-    grid-template-areas:
-   "img"
-   "name"
-   "type"
-   "oracle";
-    gap: .5rem;
-    border:.5rem solid transparent;
-}
-.deck-commander-img{
-    width: 100%;
-    justify-self: center;
-}
-
 .mana_symbols-stats{
     grid-area:stats;
     display:flex;
     min-height:15rem;
     width: 80%; 
-    background:grey;
+    background:var(--dark);
     box-shadow: 0 0 .2rem inset var(--dark),0 0 .2rem var(--light);
     border-radius: .5rem;
     gap: 1rem;
     color:var(--text-color);
 }
-.deck-container-stats{
-    display: flex;
-    justify-content: center;
+
+.decklist{
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     gap:.5rem;
-}
-.deck-decklist{
     grid-area:deck-decklist;
-    background:grey;
-    
 }
 .decklist-item{
     display: flex;
     flex-direction: column;
     min-height:5rem;
-}
-.tokens{
-    grid-area:tokens;
-}
-
-.graph_bar{
-    border:1px solid white;
-}
-.mana_graph-column{
-    display:flex;
-    flex-direction: column-reverse;
-    align-items: center;
+    background: var(--dark);
+    border-radius: .5rem;
     
 }
 .card_list-item{
+    display: flex;
+    flex-direction: column;
+    gap:.5rem;
+    width: auto;
+
+}
+.card_quantity{
     display:flex;
-    justify-content: space-evenly;
-    border:1px solid var(--text-color);
-    width: 50%;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--dark);
+    border-radius: .5rem;
+}
+
+.decklist-category{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+}
+.card_list-item-text{
+    display:flex;
+    justify-content:space-evenly
+}
+.noImage > .card_list-item{
+    flex-direction: row;
+}
+@media screen and (min-width: 768px) {
+    
+    .deck-header{
+        grid-area:deck-header;
+        text-decoration: underline;
+        padding:0 1rem;
+    }
+    .deck-commander{
+        grid-area:deck-commander;
+        display:grid;
+        grid-template-columns:1fr;
+        grid-template-rows:1fr;
+        grid-template-areas:
+    "img"
+    "name"
+    "type"
+    "oracle";
+        gap: .5rem;
+        border:.5rem solid transparent;
+    }
+    .deck-commander-img{
+        width: 100%;
+        justify-self: center;
+    }
+
+    .deck-container-stats{
+        grid-area:deck-container-stats;
+        display: flex;
+        justify-content: center;
+        gap:.5rem;
+    }
+    .deck-decklist{
+        grid-area:deck-decklist;
+    }
+    
+
+    .card_list-item .buttons_delete{
+        background: rgba(255,0,0,0.5);
+        overflow: hidden;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .decklist-category, .withImage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+    .tokens{
+        grid-area:tokens;
+    }
+
+    .graph_bar{
+        border:1px solid white;
+    }
+    .mana_graph-column{
+        display:flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        
+    }
+
 }

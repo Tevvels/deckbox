@@ -23,34 +23,34 @@ export default function DeckList({
   return (
     <>
         <section className="deck-decklist">
-            <div className='sort_controls'>
+            <div className="control_group">
                 <span className="control_label">
                     Group By:
                 </span>
-                {["type","none"].map((s)=>(
+                {["type","Alphabet"].map((s)=>(
                     <button key={s} onClick={()=> setSortBy(s)} className={`buttons ${sortBy === s? "active_sort":""}`}>
                         {s.charAt(0).toUpperCase() + s.slice(1)}
                         </button>
                 ))}
-            </div>
-            <div className="control_group">
+            
+            
                 <span className="control_label"> Sort By:</span>
                 {["name","cmc","value"].map((s)=>(
-                    <button key={s} onClick={()=> setSubSortBy(s)} className={`buttons ${subSortBy === s ?"active _sort":""}`}>
+                    <button key={s} onClick={()=> setSubSortBy(s)} className={`buttons ${subSortBy === s ?"active_sort":""}`}>
                         {s.toUpperCase()}
                     </button>
                 ))}
-            </div>
                 <button className="buttons button_imageToggle" onClick={()=> setWithImage(!withImage)}>
                     {withImage? "Name list":"Image list"}
                 </button>
+            </div>
             <ul className={`decklist ${sortBy}`}>
                 {Object.entries(sortedCards).map(([category,entries])=>(
                     
                     <li key={category} className="decklist-item">
                     
                         <h3 className="decklist-category-header">{entries.reduce((sum,i)=> sum +(i.quantity || 1),0) <= 1 ? category:`${category}s`} ({entries.reduce((sum,i)=> sum +(i.quantity || 1),0)})</h3>
-                     <ul>
+                     <ul className={`decklist-category ${withImage? "withImage":"noImage"}`}>
                     {entries.map((entry)=>{
                         const isLand = entry.cardId.type_line?.toLowerCase().includes("land");
                         const symbols = entry.cardId.mana_cost?.match(/\{([^}]+)\}/g)|| [];
@@ -73,13 +73,15 @@ export default function DeckList({
 
 
                             {/* text display */}
-                            {!withImage && !isLand &&(
+                            <div className="card_list-item-text">
+
+                            {!isLand &&(
                                 <div className="mana_cost_container">
                                 {symbols.length > 0? symbols.map((s,i)=>{
-                                    const sym = s.replace("{","").replace("}","");
+                                    const sym = s.replace(/[{}/]/g,"").replace("}","").toLowerCase();
                                     return (
                                         <span key={i} className={`mana_symbol }`}>
-                                        <i className={`ms ms-${sym.toLowerCase()} ms-cost ms-span`} />
+                                        <i className={`ms ms-${sym} ms-cost ms-span`} />
                                         </span>
                                     );
                                 }):
@@ -88,10 +90,11 @@ export default function DeckList({
                                 </span>}
                             </div>
                             )}
-                           {entry.quantity > 1 ? <span className="card_quantity">X{entry.quantity}</span>:""}
+                           {entry.quantity > 0 ? <span className="card_quantity"> x{entry.quantity}</span>:""}
                             {isOwner && (
                                 <button className="buttons buttons_delete" onClick={(e)=>{e.stopPropagation(); onDeleteCard(entry._id || entry.cardId.id);}}>X</button>
                             )}
+                            </div>
                             </li>
                         );
                     })}

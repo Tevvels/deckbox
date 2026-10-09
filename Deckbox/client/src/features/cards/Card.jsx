@@ -1,6 +1,7 @@
 import React from 'react'
 
 // Function to get the card image based on the available data
+import { useOracleParser } from "../../hooks/useOracleParser";
 
 const getCardImage = (card, size = "small") => {
   if (card.image_uris) {
@@ -18,7 +19,7 @@ function Card({currentImage,Allprints,onSelectPrint,OnUpdateArt,onClose}) {
         <button onClick={OnUpdateArt}>Update Art</button>
         <button onClick={onClose}>Close</button>
         <h1>{currentImage.name}</h1>
-        <p>{currentImage.oracle_text}</p>
+        <p>{useOracleParser(currentImage.oracle_text)}</p>
         <p>{currentImage.type_line}</p>
         {Allprints.map((print) => (
             <img 
