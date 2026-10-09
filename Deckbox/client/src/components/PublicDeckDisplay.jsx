@@ -21,7 +21,6 @@ function PublicDeckDisplay() {
         }
 
         const data = await response.json();
-        console.log("Fetched public decks:", data);
         setPublicDecks(data);
         setLoading(false);
       } catch (err) {

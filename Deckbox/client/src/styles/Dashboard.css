@@ -12,10 +12,11 @@
 /* Header/Top Bar */
 .dashboard_topBar {
   display: flex;
+  container-type: inline-size;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--dark);
 }
 
 .dashboard_Logo {

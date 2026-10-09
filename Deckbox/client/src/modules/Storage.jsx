@@ -143,7 +143,6 @@ function Storage() {
             className="search_container-sub search_container-card"
             style={{ display: "flex", overflowX: "auto", padding: "10px" }}
           >
-            {console.log(sameNameCard)}
             {sameNameCard.slice(0,visibleCount).map((card) => (
               <div
                 className="search_card"

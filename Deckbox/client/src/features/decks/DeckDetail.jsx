@@ -11,7 +11,7 @@ import { CardSearchProvider } from '../../hooks/useCardSearch';
 const getSortedGroups = (cards,sortBy,subSortBy) =>{
     const filteredList = cards.filter((entry)=>entry?.cardId);
     let groups = {};
-    if(sortBy === 'none'){
+    if(sortBy === 'Alphabet'){
         groups = {"All Cards:": filteredList};
     } else {
         groups = filteredList.reduce((acc,entry)=>{
@@ -46,7 +46,8 @@ return groups;
 const MANA_TYPES = ["W","U","B","R","G","C"];
 
 
-export default function DeckDetail({    cards =[],
+export default function DeckDetail({   
+    cards =[],
     isOwner,
     name,
     onCardClick,
@@ -73,7 +74,6 @@ export default function DeckDetail({    cards =[],
             </h1>
         </header>
         <>
-            <CardSearchProvider />
                 <DeckOverview
                     manaTypes={MANA_TYPES}
                     name={name}

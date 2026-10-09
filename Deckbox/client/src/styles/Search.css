@@ -1,76 +1,52 @@
-.search_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.5rem;
+.search-form{
   width: 100%;
-  min-height: 7rem;
-}
-.search_container-sub{
-  flex-direction:column;
+  justify-content: center;
+  display: flex;
+  padding: 0.5rem;
   
 }
-.search_form {
+.search-wrapper{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95%;
-  height: 95%;
-}
-
-.search_input-wrapper {
-  grid-area: wrapper;
   width: 100%;
-  height: 2rem;
-}
-.suggestions_list {
-  grid-area: suggestions;
-  z-index: 10001;
-
-}
-.search_submit {
-  grid-area: submit;
-  border-radius: 0 0.5rem 0.5rem 0;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 0 2px inset var(--accent),
-    0 0 2px var(--accent);
-  border: 2px solid black;
-}
-.search_submit:hover {
-  background-color: var(--accent);
-  color: var(--dark);
+  height: 2.5rem;
 }
 
-.search_searchBar {
+
+.search-searchbar, .search-input{
   background: var(--dark);
-  height: 100%;
-  width: 100%;
-  color: var(--text-color);
-  border-radius: 0.5rem 0 0 0.5rem;
-  box-shadow:
-    0 0 2px inset var(--accent),
-    0 0 2px var(--accent);
-  border: 2px solid black;
+  height: 2.5rem;
+  border:none;
+
 }
 
-.suggestions_list {
-  display: flex;
-  position: absolute;
-  flex-direction: column;
-  gap: 0.25rem;
-  width: 95%;
-  background: var(--light);
+.search-searchbar{
+  border-radius: 0.5rem 0 0 0.5rem;
+  border-right: 1px solid white;
+  width: 100%;
+
 }
-.suggestions_list li {
-  color: var(--text-color);
-  border: 2px solid var(--accent);
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.25rem;
+.search-input{
+  border-radius: 0 0.5rem 0.5rem 0;
+  width: 6rem;
+  justify-content: center;
   align-items: center;
+}
+.search-provider-container{
+  display: flex;
+  flex-direction: column;
+  width:auto;
+   height: max(150px, 80vh);
+}
+
+.dashboard_searchContainer{
+  position: relative;
+}
+.dashboard_searchContainer .search-provider-container{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 }

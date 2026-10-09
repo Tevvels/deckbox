@@ -20,6 +20,7 @@ import Gradient from "./modules/Gradient.jsx";
 import "./styles/Deck.css";
 import "./styles/Dice.css";
 import "./styles/Menu.css";
+import "./styles/Search.css";
 import Deck from "./features/decks/Deck.jsx";
 import SearchContainer from "./features/cardSearch/SearchContainer.jsx";
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";

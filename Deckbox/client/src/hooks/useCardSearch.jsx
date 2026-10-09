@@ -115,7 +115,6 @@ export const CardSearchProvider = ({ children }) => {
 
   setColorIdentity(normalized);
 }
-          console.log(colorIdentity, data.color_identity);
           if (data.isOwner !== undefined) {
             setIsOwner(data.isOwner);
           } else {
@@ -195,7 +194,9 @@ const handleInputChange = (e) => {
 
   return (
     <CardSearchContext.Provider value={value}>
-      {children}
+        <div className="search-provider-container">
+          {children}
+        </div>
     </CardSearchContext.Provider>
   );
 };
@@ -203,7 +204,7 @@ const handleInputChange = (e) => {
 // 2. Consume Shared Context values across your elements
 export const useCardSearch = () => {
   const context = useContext(CardSearchContext);
-  if (!context) {
+  if (!context && location === "/search") {
     throw new Error("useCardSearch must be executed inside a <CardSearchProvider /> block.");
   }
   return context;

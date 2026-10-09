@@ -10,6 +10,7 @@ A comprehensive deck-building, community-driven card management system designed 
 
 ## Screenshots / Preview
 
+![Deckbox Demo](.\client\src/photos/screenshot_fullscreen.png).
 
 ## 🚀 Key Features
 
