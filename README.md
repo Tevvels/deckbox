@@ -1,4 +1,4 @@
-# 🎴 Deckbox
+v# 🎴 Deckbox
 
 A clean, intuitive web application designed for Magic the Gathering (MTG) enthusiasts to **create, manage, and share decks**. Whether you are theory crafting the latest meta-defining strategy or organizing casual decks, Deckbox simplifies your workflow with smooth organization tools and easy sharing.
 
@@ -70,7 +70,7 @@ Open your browser and navigate to `http://localhost:5173` (or the port specified
 
 ## 📸 Screenshots
 
-![Deckbox Demo](.\client\src/photos/screenshot_fullscreen.png).
+![Demo](https://github.com/Tevvels/deckbox/blob/main/Deckbox/client/src/photos/screenshot_fullscreen.png)
 
 <p align="center">
   ![Deckbox Demo](./assets/deckbox-demo.png)
