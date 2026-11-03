@@ -25,7 +25,6 @@
     grid-area:stats;
     display:flex;
     min-height:15rem;
-    width: 80%; 
     background:var(--dark);
     box-shadow: 0 0 .2rem inset var(--dark),0 0 .2rem var(--light);
     border-radius: .5rem;
